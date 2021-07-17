@@ -177,6 +177,203 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/configure-linux-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/Linux/configure-linux-tools/" class="post-title-link" itemprop="url">ZSH 配置與好用的工具</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-17 15:13:24" itemprop="dateCreated datePublished" datetime="2021-07-17T15:13:24+08:00">2021-07-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>先前的文章有介紹如何在<code>Windows WSL</code> 內安裝<code>Oh My Zsh</code> 與<code>Powerlevel10k</code>，<br>還沒設定的請移步到<a href="https://shoudevops.github.io/Windows/wsl-terminal/">Windows Terminal 搭配WSL</a></p>
+<p>這裡會再延伸說明<code>Oh My Zsh</code> 下有什麼方便好用的工具</p>
+<h2 id="ZSH-Autosuggestions"><a href="#ZSH-Autosuggestions" class="headerlink" title="ZSH-Autosuggestions"></a>ZSH-Autosuggestions</h2><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-autosuggestions">官方文件</a></p>
+</li>
+<li><p>Clone this repository into $ZSH_CUSTOM/plugins (by default ~/.oh-my-zsh/custom/plugins)</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-autosuggestions $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Add the plugin to the list of plugins for Oh My Zsh to load (inside ~/.zshrc):</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plugins=( </span><br><span class="line">    # other plugins...</span><br><span class="line">    zsh-autosuggestions</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Refresh ~/.zshrc</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="ZSH-Syntax-Highlighting"><a href="#ZSH-Syntax-Highlighting" class="headerlink" title="ZSH-Syntax-Highlighting"></a>ZSH-Syntax-Highlighting</h2><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting">官方文件</a></p>
+</li>
+<li><p>Clone this repository in oh-my-zsh’s plugins directory:</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Activate the plugin in ~/.zshrc:</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=( [plugins...] zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Refresh ~/.zshrc</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="ZSH-Completions"><a href="#ZSH-Completions" class="headerlink" title="ZSH-Completions"></a>ZSH-Completions</h2><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-completions">官方文件</a></p>
+</li>
+<li><p>Clone the repository inside your oh-my-zsh repo:</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-completions $&#123;ZSH_CUSTOM:=~/.oh-my-zsh/custom&#125;/plugins/zsh-completions</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Enable it in your .zshrc by adding it to your plugin list and reloading the completion:</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plugins=(… zsh-completions)</span><br><span class="line"></span><br><span class="line"># 加入到~/.zshrc 的最後一行</span><br><span class="line">autoload -U compinit &amp;&amp; compinit</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Refresh ~/.zshrc</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux-Homebrew"><a href="#Linux-Homebrew" class="headerlink" title="Linux Homebrew"></a>Linux Homebrew</h2><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://brew.sh/">官方文件</a></p>
+</li>
+<li><p>Install Homebrew</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y curl</span><br><span class="line"></span><br><span class="line">/bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&quot;</span><br><span class="line"></span><br><span class="line">echo &#x27;eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;&#x27; &gt;&gt; $HOME/.zshrc</span><br><span class="line"></span><br><span class="line">eval &quot;$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)&quot;</span><br><span class="line"></span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line"></span><br><span class="line">brew install gcc</span><br></pre></td></tr></table></figure>
+
+<h2 id="其它工作需求工具"><a href="#其它工作需求工具" class="headerlink" title="其它工作需求工具"></a>其它工作需求工具</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update &amp;&amp; sudo apt-get upgrade -y</span><br><span class="line"></span><br><span class="line">sudo apt-get install git-core</span><br><span class="line"></span><br><span class="line">git config --global user.name &quot;$USER_NAME&quot;</span><br><span class="line"></span><br><span class="line">git config --global user.email &quot;$USER_EMAIL&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Docker-Engine"><a href="#Docker-Engine" class="headerlink" title="Docker Engine"></a>Docker Engine</h3><ul>
+<li>參考<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/ubuntu/">官方文件</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://get.docker.com -o get-docker.sh</span><br><span class="line">sudo sh get-docker.sh</span><br><span class="line">sudo usermod -aG docker $USER_NAME</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Logout or Reboot</li>
+</ul>
+<h3 id="Google-Cloud-SDK"><a href="#Google-Cloud-SDK" class="headerlink" title="Google Cloud SDK"></a>Google Cloud SDK</h3><ul>
+<li>參考<a target="_blank" rel="noopener" href="https://cloud.google.com/sdk/docs/install">官方文件</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main&quot; | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list</span><br><span class="line"></span><br><span class="line">sudo apt-get install apt-transport-https ca-certificates gnupg</span><br><span class="line"></span><br><span class="line">curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -</span><br><span class="line"></span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install google-cloud-sdk</span><br></pre></td></tr></table></figure>
+
+<h3 id="Kubectl"><a href="#Kubectl" class="headerlink" title="Kubectl"></a>Kubectl</h3><ul>
+<li>如果先裝好<code>Google Cloud SDK</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install kubectl</span><br></pre></td></tr></table></figure>
+
+<h3 id="Kubectx"><a href="#Kubectx" class="headerlink" title="Kubectx"></a>Kubectx</h3><ul>
+<li>參考<a target="_blank" rel="noopener" href="https://cloud.google.com/sdk/docs/install">官方文件</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx</span><br><span class="line"></span><br><span class="line">sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx</span><br><span class="line"></span><br><span class="line">sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>套用到<code>Oh-My-Zsh</code> 的<code>zsh-completions</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~/.oh-my-zsh/completions</span><br><span class="line"></span><br><span class="line">chmod -R 755 ~/.oh-my-zsh/completions</span><br><span class="line"></span><br><span class="line">ln -s /opt/kubectx/completion/kubectx.zsh ~/.oh-my-zsh/completions/_kubectx.zsh</span><br><span class="line"></span><br><span class="line">ln -s /opt/kubectx/completion/kubens.zsh ~/.oh-my-zsh/completions/_kubens.zsh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果已經設定好<code>zsh-completions</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h3><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://nodejs.org/zh-tw/download/package-manager/">官方文件</a></p>
+</li>
+<li><p>Node.js v16.x:</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Using Ubuntu</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Node.js v14.x</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Using Ubuntu</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Node.js v12.x</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Using Ubuntu</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_12.x | sudo -E bash -</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Node.js LTS</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Using Ubuntu</span></span><br><span class="line">curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -</span><br><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><ul>
+<li><p>參考<a target="_blank" rel="noopener" href="https://hexo.io/zh-tw/docs/">官方文件</a></p>
+</li>
+<li><p>如果已經安裝好Git, Node.js v12.x</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -878,83 +1075,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shou's 技術部落">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/Windows/windows-subsystem-for-linux/" class="post-title-link" itemprop="url">Windows Subsystem for Linux(WSL) 環境配置</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-31 15:32:53" itemprop="dateCreated datePublished" datetime="2020-07-31T15:32:53+08:00">2020-07-31</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows/" itemprop="url" rel="index">
-                    <span itemprop="name">Windows</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>原先在尋找Windows 有什麼好用的Terminal 軟體，就找到了WSL ，一個能直接在Windows 上使用Linux 指令操作系統。<br>本篇文章簡單紀錄如何配置WSL 環境，後續會在其它文件針對好用的工具進行說明。</p>
-<h3 id="WSL-原理"><a href="#WSL-原理" class="headerlink" title="WSL 原理"></a>WSL 原理</h3><p>想要瞭WSL 背後運作的原理，可以參考：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/archive/blogs/wsl/windows-subsystem-for-linux-overview">Windows Subsystem for Linux Overview</a>這篇官方文章，或是這篇：<a target="_blank" rel="noopener" href="https://blog.jessfraz.com/post/windows-for-linux-nerds/">Windows for Linux Nerds</a>一位Microsoft員工的文章。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Windows/windows-subsystem-for-linux/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1003,7 +1123,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

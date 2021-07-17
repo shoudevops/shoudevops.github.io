@@ -177,6 +177,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/files-read-write/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/Python/files-read-write/" class="post-title-link" itemprop="url">檔案 － 讀取與寫入</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-19 18:31:49" itemprop="dateCreated datePublished" datetime="2019-12-19T18:31:49+08:00">2019-12-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本篇要學習處理檔案，讓程式能快速分析大量資料。</p>
+<h3 id="從檔案中讀取資料"><a href="#從檔案中讀取資料" class="headerlink" title="從檔案中讀取資料"></a>從檔案中讀取資料</h3><p>當需要分析或修改儲存在檔案中的資訊時，能讀取檔案是很有用的能力，對資料分析應用程式來說更是不可少。<br>我們能編寫一支程式讀取某個文字檔的內容，重新設定這些資訊的格式，然後寫入檔案內，讓瀏覽器能顯示這些內容。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Python/files-read-write/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/class-import/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -866,83 +943,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/dictionary-nesting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shou's 技術部落">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/Python/dictionary-nesting/" class="post-title-link" itemprop="url">字典 － 巢狀嵌套</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-12-06 10:22:39" itemprop="dateCreated datePublished" datetime="2019-12-06T10:22:39+08:00">2019-12-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index">
-                    <span itemprop="name">Python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="巢狀嵌套"><a href="#巢狀嵌套" class="headerlink" title="巢狀嵌套"></a>巢狀嵌套</h3><p>有時候可能需要把一組字典存放在串列中，有時又需要把串列的項目當成值存在字典內，這些都叫作「巢狀嵌套（ nesting ）」。<br>可以把一組字典巢狀嵌套入串列內，也可以把一系列的串列項目巢狀嵌套入字典中，或是在字典中存入字典。</p>
-<h4 id="字典串列"><a href="#字典串列" class="headerlink" title="字典串列"></a>字典串列</h4>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/Python/dictionary-nesting/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -991,7 +991,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
