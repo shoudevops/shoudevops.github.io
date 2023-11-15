@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本篇將學習如何以迴圈來遍訪整個串列，不管串列有多長，只需要幾行程式碼就搞定。 迴圈遍訪整個串列在程式設計時常需要遍訪整個串列的所有項目，並對每個項目進行相同的操作處理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="串列的操作與運用 Part I.">
+<meta property="og:url" content="https://shoudevops.github.io/Python/list-operating-applications/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="本篇將學習如何以迴圈來遍訪整個串列，不管串列有多長，只需要幾行程式碼就搞定。 迴圈遍訪整個串列在程式設計時常需要遍訪整個串列的所有項目，並對每個項目進行相同的操作處理。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-27T17:17:58.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.887Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="list">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/list-operating-applications/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>串列的操作與運用 Part I. | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/list-operating-applications/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          串列的操作與運用 Part I.
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-28 01:17:58" itemprop="dateCreated datePublished" datetime="2019-11-28T01:17:58+08:00">2019-11-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本篇將學習如何以迴圈來遍訪整個串列，<br>不管串列有多長，只需要幾行程式碼就搞定。</p>
+<h3 id="迴圈遍訪整個串列"><a href="#迴圈遍訪整個串列" class="headerlink" title="迴圈遍訪整個串列"></a>迴圈遍訪整個串列</h3><p>在程式設計時常需要遍訪整個串列的所有項目，並對每個項目進行相同的操作處理。</p>
+<span id="more"></span>
+
+<p>可使用<code>Python</code> 的 for 迴圈來完成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician)</span><br></pre></td></tr></table></figure>
+<p>在第二行定義<code>for</code>迴圈，告知<code>Python</code>從magicians 串列中取出名字，並將它存放到magician變數內。<br>在第三行告訴<code>Python</code>把存放在 magician變數內的名字輸出。<br>之後<code>Python</code>會對串列中的每個名稱重覆執行第二行和第三行。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">alice</span><br><span class="line">david</span><br><span class="line">carolina</span><br></pre></td></tr></table></figure>
+<p>在編寫 for 迴圈時，可以取任一個合法的名字用於存放串列中每一個值的臨時變數。<br>不過還是建議取個具有描述性又有意義的名字是比較好的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for magician in magicians:</span><br><span class="line">for car in cars:</span><br><span class="line">for item in list_of items:</span><br></pre></td></tr></table></figure>
+<p>這種取名的慣例有助於讓大家明白 for 迴圈中對每個項目要進行操作處理。<br>利用英文單字的單數和複數來命名，能協助判斷這段程式是處理單個項目還是整個串列。</p>
+<h4 id="在-for-迴圈中進行更多操作"><a href="#在-for-迴圈中進行更多操作" class="headerlink" title="在 for 迴圈中進行更多操作"></a>在 for 迴圈中進行更多操作</h4><p>在 for 迴圈中可對每個項目執行任何的操作：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician.title() + <span class="string">&quot;, that was a great trick!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>輸出的內容是對串列中每位魔術師都印出一條屬於他個人的訊息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Alice, that was a great trick!</span><br><span class="line">David, that was a great trick!</span><br><span class="line">Carolina, that was a great trick!</span><br></pre></td></tr></table></figure>
+<p>之後想在 for 迴圈中放多少行程式碼都可以，在 for magician in magicians 這行程式之後，<br>每行縮排的程式碼都算在迴圈之內，且都會對串列中每個項目執行一次。<br>接著可以新增第二行程式碼輸出另一條訊息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">magicians = [&#x27;alice&#x27;, &#x27;david&#x27;, &#x27;carolina&#x27;]</span><br><span class="line">for magician in magicians:</span><br><span class="line">    print(magician.title() + &quot;, that was a great trick!&quot;)</span><br><span class="line">    print(&quot;I can&#x27;t wait to see your next trick, &quot; + magician.title() + &quot;.\n&quot;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="for-迴圈結束後的處理"><a href="#for-迴圈結束後的處理" class="headerlink" title="for 迴圈結束後的處理"></a>for 迴圈結束後的處理</h4><p>在 for 迴圈之後沒有縮排的程式碼都只執行一次，不會重覆：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician.title() + <span class="string">&quot;, that was a great trick!&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I can&#x27;t wait to see your next trick, &quot;</span> + magician.title() + <span class="string">&quot;.\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Thank you, everyone. That was a great magic show!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>最後一行的 print陳述句沒有縮排，它不屬於 for 迴圈，不會重覆執行，只在迴圈結束後再執行一次：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Alice, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, Alice.</span><br><span class="line"></span><br><span class="line">David, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, David.</span><br><span class="line"></span><br><span class="line">Carolina, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, Carolina.</span><br><span class="line"></span><br><span class="line">Thank you, everyone. That was a great magic show!</span><br></pre></td></tr></table></figure>
+<p>使用 for 迴圈來處理資料，會發覺這是彙總整個資料集執行操作的好方法。</p>
+<hr>
+<h3 id="避免縮排的誤用"><a href="#避免縮排的誤用" class="headerlink" title="避免縮排的誤用"></a>避免縮排的誤用</h3><p><code>Python</code>會依據這行程式的縮排(indentation)來判斷與前一行程式的連結，並利用縮排讓程式變得更易讀，<br>基本上它就是要我們使用空白縮排來讓程式碼整齊而結構分明。<br>開始運用適當的縮排來編寫程式時，需要注意一些常見的縮排錯誤。</p>
+<h4 id="忘了縮排"><a href="#忘了縮排" class="headerlink" title="忘了縮排"></a>忘了縮排</h4><p>在 for 陳述句後面屬於迴圈的程式行都要縮排，如果忘了縮排，<code>Python</code> 會顯示錯誤訊息提醒：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line"><span class="built_in">print</span>(magician)</span><br></pre></td></tr></table></figure>
+<p>在 for 迴圈內的print 陳述句應該要縮排卻沒有縮排，當<code>Python</code> 找不到縮排的程式區堆時，<br>會讓您知道哪一行程式碼可能有問題：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;text.py&quot;, line 3</span><br><span class="line">    print(magician)</span><br><span class="line">        ^</span><br><span class="line">IndentationError: expected an indented block</span><br></pre></td></tr></table></figure>
+<p>只要把 for 陳述句後面的程式行或程式區塊縮排，就能修正這樣的錯誤。</p>
+<h4 id="忘了縮排其它程式行"><a href="#忘了縮排其它程式行" class="headerlink" title="忘了縮排其它程式行"></a>忘了縮排其它程式行</h4><p>有時迴圈能執行且不會報錯，但輸出的結果不是想要的內容；<br>在迴圈中進行多項工作卻忘了縮排某行程式，這種情況就會發生：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician.title() + <span class="string">&quot;, that was a great trick!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;I can&#x27;t wait to see your next trick, &quot;</span> + magician.title() + <span class="string">&quot;.\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>第二條print陳述句原本要縮排，但因為已滿足<code>Python</code> 要 for 陳述句後至少要有一行縮排的程式行，因此執行後不會有錯誤訊息。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Alice, that was a great trick!</span><br><span class="line">David, that was a great trick!</span><br><span class="line">Carolina, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, Carolina.</span><br></pre></td></tr></table></figure>
+<p>由於magician 變數最後迴圈存放的值為<code>carolina</code>，因此就只印出「I can’t wait to see your next trick, Carolina.」。<br>這算是個邏輯錯誤（logical error）。從語法上來看都是合法的，但有邏輯上的錯誤，導致執行結果不是我們想要的。</p>
+<h4 id="不需要的縮排"><a href="#不需要的縮排" class="headerlink" title="不需要的縮排"></a>不需要的縮排</h4><p>如果程式中不小心縮排了不需要縮排的程式行，<code>Python</code> 會顯示意外縮排的錯誤訊息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;text.py&quot;, line 2</span><br><span class="line">    print(message)</span><br><span class="line">    ^</span><br><span class="line">IndentationError: unexpected indent</span><br></pre></td></tr></table></figure>
+<p>為了避免意外縮排的錯誤，在縮排程式行時要小心。</p>
+<h4 id="迴圈之後不需要的縮排"><a href="#迴圈之後不需要的縮排" class="headerlink" title="迴圈之後不需要的縮排"></a>迴圈之後不需要的縮排</h4><p>如果不小心把應在迴圈結束後才執行的程式行縮排了，該程式行就會跟著迴圈對每個串列中的項目重覆執行。<br>有些時候<code>Python</code> 會回報錯誤訊息，但大多數都是邏輯錯誤，不會顯示錯誤訊息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician.title() + <span class="string">&quot;, that was a great trick!&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;I can&#x27;t wait to see your next trick, &quot;</span> + magician.title() + <span class="string">&quot;.\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Thank you, everyone. That was a great magic show!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>這是個邏輯錯誤，與前面「忘了縮排其它程式行」的錯誤相似，<br>如果原本設計的只應該執行顯示一次卻執行了多次，請確定是否對程式行做了不需要的縮排。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Alice, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, Alice.</span><br><span class="line"></span><br><span class="line">Thank you, everyone. That was a great magic show!</span><br><span class="line">David, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, David.</span><br><span class="line"></span><br><span class="line">Thank you, everyone. That was a great magic show!</span><br><span class="line">Carolina, that was a great trick!</span><br><span class="line">I can&#x27;t wait to see your next trick, Carolina.</span><br><span class="line"></span><br><span class="line">Thank you, everyone. That was a great magic show!</span><br></pre></td></tr></table></figure>
+
+<h4 id="忘記加冒號"><a href="#忘記加冒號" class="headerlink" title="忘記加冒號"></a>忘記加冒號</h4><p>在 for 陳述句尾端的冒號是用來告訴Python下一行是迴圈的開始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">magicians = [<span class="string">&#x27;alice&#x27;</span>, <span class="string">&#x27;david&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</span><br><span class="line">    <span class="built_in">print</span>(magician)</span><br></pre></td></tr></table></figure>
+<p>如果忘了加冒號，就會導致語法錯誤，因為Python不知道您想要做什麼。<br>雖然這個簡單的錯誤很容易修正，但卻不容易發現。</p>
+<hr>
+<p>其它更多關於串列的操作與運用，請看 <code>Part II.</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/list/" rel="tag"># list</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/list/" rel="next" title="串列簡介">
+                  <i class="fa fa-chevron-left"></i> 串列簡介
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/number-slice-tuple/" rel="prev" title="串列的操作與運用 Part II.">
+                  串列的操作與運用 Part II. <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%B4%E5%9C%88%E9%81%8D%E8%A8%AA%E6%95%B4%E5%80%8B%E4%B8%B2%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">迴圈遍訪整個串列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8-for-%E8%BF%B4%E5%9C%88%E4%B8%AD%E9%80%B2%E8%A1%8C%E6%9B%B4%E5%A4%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">在 for 迴圈中進行更多操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#for-%E8%BF%B4%E5%9C%88%E7%B5%90%E6%9D%9F%E5%BE%8C%E7%9A%84%E8%99%95%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">for 迴圈結束後的處理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E7%B8%AE%E6%8E%92%E7%9A%84%E8%AA%A4%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">避免縮排的誤用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%98%E4%BA%86%E7%B8%AE%E6%8E%92"><span class="nav-number">2.1.</span> <span class="nav-text">忘了縮排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%98%E4%BA%86%E7%B8%AE%E6%8E%92%E5%85%B6%E5%AE%83%E7%A8%8B%E5%BC%8F%E8%A1%8C"><span class="nav-number">2.2.</span> <span class="nav-text">忘了縮排其它程式行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E7%B8%AE%E6%8E%92"><span class="nav-number">2.3.</span> <span class="nav-text">不需要的縮排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%B4%E5%9C%88%E4%B9%8B%E5%BE%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E7%B8%AE%E6%8E%92"><span class="nav-number">2.4.</span> <span class="nav-text">迴圈之後不需要的縮排</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%98%E8%A8%98%E5%8A%A0%E5%86%92%E8%99%9F"><span class="nav-number">2.5.</span> <span class="nav-text">忘記加冒號</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="巢狀嵌套有時候可能需要把一組字典存放在串列中，有時又需要把串列的項目當成值存在字典內，這些都叫作「巢狀嵌套（ nesting ）」。可以把一組字典巢狀嵌套入串列內，也可以把一系列的串列項目巢狀嵌套入字典中，或是在字典中存入字典。 字典串列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字典 － 巢狀嵌套">
+<meta property="og:url" content="https://shoudevops.github.io/Python/dictionary-nesting/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="巢狀嵌套有時候可能需要把一組字典存放在串列中，有時又需要把串列的項目當成值存在字典內，這些都叫作「巢狀嵌套（ nesting ）」。可以把一組字典巢狀嵌套入串列內，也可以把一系列的串列項目巢狀嵌套入字典中，或是在字典中存入字典。 字典串列">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-06T02:22:39.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="dictionary">
+<meta property="article:tag" content="nesting">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/dictionary-nesting/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>字典 － 巢狀嵌套 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/dictionary-nesting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          字典 － 巢狀嵌套
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-06 10:22:39" itemprop="dateCreated datePublished" datetime="2019-12-06T10:22:39+08:00">2019-12-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="巢狀嵌套"><a href="#巢狀嵌套" class="headerlink" title="巢狀嵌套"></a>巢狀嵌套</h3><p>有時候可能需要把一組字典存放在串列中，有時又需要把串列的項目當成值存在字典內，這些都叫作「巢狀嵌套（ nesting ）」。<br>可以把一組字典巢狀嵌套入串列內，也可以把一系列的串列項目巢狀嵌套入字典中，或是在字典中存入字典。</p>
+<h4 id="字典串列"><a href="#字典串列" class="headerlink" title="字典串列"></a>字典串列</h4><span id="more"></span>
+
+<p>建立一個外星異形串列，其中每個項目都是一個外星異形的字典，該字典中又存放外星異形的各種資訊：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">alien_0 = &#123;<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;points&#x27;</span>: <span class="number">5</span>&#125;</span><br><span class="line">alien_1 = &#123;<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;yellow&#x27;</span>, <span class="string">&#x27;points&#x27;</span>: <span class="number">10</span>&#125;</span><br><span class="line">alien_2 = &#123;<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;points&#x27;</span>: <span class="number">15</span>&#125;</span><br><span class="line"></span><br><span class="line">aliens = [alien_0, alien_1, alien_2]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> alien <span class="keyword">in</span> aliens:</span><br><span class="line">    <span class="built_in">print</span>(alien)</span><br></pre></td></tr></table></figure>
+<p>先建立三個字典，每個字典代表一個外星異形，再將這三個外星異形字典存放入 aliens 串列中，最後再以迴圈遍訪這個串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;yellow&#x27;, &#x27;points&#x27;: 10&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;red&#x27;, &#x27;points&#x27;: 15&#125;</span><br></pre></td></tr></table></figure>
+<p>以現實情況來看，外星異形不止三個，有可能是使用程式動生成的，下面使用 range()生成30個外星異形：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Make an empty list for aliens.</span></span><br><span class="line">aliens = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> alien_number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    new_alien = &#123;<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;points&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;speed&#x27;</span>: <span class="string">&#x27;slow&#x27;</span>&#125;</span><br><span class="line">    aliens.append(new_alien)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show the first 5 aliens.</span></span><br><span class="line"><span class="keyword">for</span> alien <span class="keyword">in</span> aliens[:<span class="number">5</span>]:</span><br><span class="line">    <span class="built_in">print</span>(alien)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;...&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show how many aliens have been created.</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Total number of aliens: &quot;</span> + <span class="built_in">str</span>(<span class="built_in">len</span>(aliens)))</span><br></pre></td></tr></table></figure>
+<p>先建立一個空串列 aliens，用來存放自動生成的外星異形。<br>用range() 返回一系列的數字告訴 <code>Python</code> 要迭代重複迴圈幾次。<br>每次執行這個迴圈時都會生成一個外星異形字典，並將它新增到 aliens 串列的尾端。<br>使用切片切出串列前5個外星異形，並將其輸出顯示。<br>最後輸出串列的總長度，證實生成了30個外星異形字典：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">...</span><br><span class="line">Total number of aliens: 30</span><br></pre></td></tr></table></figure>
+<p>在遊戲程式的進行中，我們會希望外星異形會以不同顏色和不同移動速度程現在畫面上，<br>當需要變更顏色時，我們會用 for 迴圈和 if 陳述句來修改某些外星異形字典中的 ‘color’：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Make an empty list for aliens.</span></span><br><span class="line">aliens = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> alien_number <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">30</span>):</span><br><span class="line">    new_alien = &#123;<span class="string">&#x27;color&#x27;</span>: <span class="string">&#x27;green&#x27;</span>, <span class="string">&#x27;points&#x27;</span>: <span class="number">5</span>, <span class="string">&#x27;speed&#x27;</span>: <span class="string">&#x27;slow&#x27;</span>&#125;</span><br><span class="line">    aliens.append(new_alien)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> alien <span class="keyword">in</span> aliens[<span class="number">0</span>:<span class="number">3</span>]:</span><br><span class="line">    <span class="keyword">if</span> alien[<span class="string">&#x27;color&#x27;</span>] == <span class="string">&#x27;green&#x27;</span>:</span><br><span class="line">        alien[<span class="string">&#x27;color&#x27;</span>] = <span class="string">&#x27;yellow&#x27;</span></span><br><span class="line">        alien[<span class="string">&#x27;points&#x27;</span>] = <span class="number">10</span></span><br><span class="line">        alien[<span class="string">&#x27;speed&#x27;</span>] = <span class="string">&#x27;medium&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Show the first 5 aliens.</span></span><br><span class="line"><span class="keyword">for</span> alien <span class="keyword">in</span> aliens[:<span class="number">5</span>]:</span><br><span class="line">    <span class="built_in">print</span>(alien)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;...&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>修改前三個外星異形，可用串列的切片來配合迴圈遍訪。<br>if 陳述句確保只改顏色是 ‘green’ 的外星異形，將 ‘color’ 是 ‘green’的外星異形修改成其它樣式的外星異形：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;color&#x27;: &#x27;yellow&#x27;, &#x27;points&#x27;: 10, &#x27;speed&#x27;: &#x27;medium&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;yellow&#x27;, &#x27;points&#x27;: 10, &#x27;speed&#x27;: &#x27;medium&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;yellow&#x27;, &#x27;points&#x27;: 10, &#x27;speed&#x27;: &#x27;medium&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">&#123;&#x27;color&#x27;: &#x27;green&#x27;, &#x27;points&#x27;: 5, &#x27;speed&#x27;: &#x27;slow&#x27;&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>還可以再擴充這個迴圈，在其中加入 elif 程式區塊，把 ‘yellow’ 黃色的外星異形改為 ‘red’ 紅色、<br>‘speed’ 速度是 ‘fast’、而得分 ‘points’ 是15。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for alien in aliens[0:3]:</span><br><span class="line">    if alien[&#x27;color&#x27;] == &#x27;green&#x27;:</span><br><span class="line">        alien[&#x27;color&#x27;] = &#x27;yellow&#x27;</span><br><span class="line">        alien[&#x27;points&#x27;] = 10</span><br><span class="line">        alien[&#x27;speed&#x27;] = &#x27;medium&#x27;</span><br><span class="line">    elif alien[&#x27;color&#x27;] == &#x27;yellow&#x27;:</span><br><span class="line">        alien[&#x27;color&#x27;] = &#x27;red&#x27;</span><br><span class="line">        alien[&#x27;points&#x27;] = 15</span><br><span class="line">        alien[&#x27;speed&#x27;] = &#x27;fast&#x27;</span><br></pre></td></tr></table></figure>
+<p>在串列中存放大量的字典，而每個字典又含有特定物件的多項資訊，這種情況在編寫程式的歷程中很常遇到。</p>
+<h4 id="字典中的串列"><a href="#字典中的串列" class="headerlink" title="字典中的串列"></a>字典中的串列</h4><p>除了在把字典存放在串列內，有時候也會有需要用到把串列存放到字典內的情況。<br>以描述顧客點的披薩來說，如果使用串列，就只能存放加點披薩的配料，<br>但如果使用字典來儲存，就不僅能存放配料的資訊，還可存放其它關於披薩的描述。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Store information about a pizza being ordered.</span></span><br><span class="line">pizza = &#123;</span><br><span class="line">    <span class="string">&#x27;crust&#x27;</span>: <span class="string">&#x27;thick&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;toppings&#x27;</span>: [<span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>],</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Summarize the order.</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;You ordered a &quot;</span> + pizza[<span class="string">&#x27;crust&#x27;</span>] + <span class="string">&quot;-crust pizza &quot;</span> + <span class="string">&quot;with the following toppings:&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> topping <span class="keyword">in</span> pizza[<span class="string">&#x27;toppings&#x27;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\t&quot;</span> + topping)</span><br></pre></td></tr></table></figure>
+<p>建立一個字典存放關於顧客所點披薩的資訊，其中第二個鍵是 ‘toppings’，關聯的值是個字串存放顧客所點的配料。<br>披薩製作前輸出了客人要點的披薩描述，然後用 for 迴圈把所點的配料輸出。<br>若想存取配料串列，這裡用了 ‘toppings’ 當成「鍵」，讓 <code>Python</code> 從字典中擷取配料串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">You ordered a thick-crust pizza with the following toppings:</span><br><span class="line">	mushrooms</span><br><span class="line">	extra cheese</span><br></pre></td></tr></table></figure>
+<p>當您想要在字典中以一個鍵關聯到多個值時，可以在字典中巢狀嵌套串列進去。<br>以先前提到的最愛程式語言的範例，如果把每個人的喜好存放在在一個串列內，就可以選擇多種喜歡的程式語言。<br>字典以這種情況存放串列，當迴圈遍訪字典時，關聯每個人員的都是一個程式語言的串列，而不是單個程式語言項：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">favorite_languages = &#123;</span><br><span class="line">    <span class="string">&#x27;jen&#x27;</span>: [<span class="string">&#x27;python&#x27;</span>, <span class="string">&#x27;ruby&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;sarah&#x27;</span>: [<span class="string">&#x27;c&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;edward&#x27;</span>: [<span class="string">&#x27;ruby&#x27;</span>, <span class="string">&#x27;go&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;phil&#x27;</span>: [<span class="string">&#x27;python&#x27;</span>, <span class="string">&#x27;haskell&#x27;</span>],</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, languages <span class="keyword">in</span> favorite_languages.items():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span> + name.title() + <span class="string">&quot;&#x27;s favorite languages are:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> language <span class="keyword">in</span> languages:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\t&quot;</span> + language.title())</span><br></pre></td></tr></table></figure>
+<p>以迴圈遍訪字典時，使用了 languages 變數來存放從字典中取出的每個值，因為我們知道這些值是串列。<br>在字典主迴圈的遍訪內，又加了一個 for 迴圈來遍訪每個人喜歡的程式語言，現在要列出多少種喜歡的程式語言都可以：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Jen&#x27;s favorite languages are:</span><br><span class="line">	Python</span><br><span class="line">	Ruby</span><br><span class="line"></span><br><span class="line">Sarah&#x27;s favorite languages are:</span><br><span class="line">	C</span><br><span class="line"></span><br><span class="line">Edward&#x27;s favorite languages are:</span><br><span class="line">	Ruby</span><br><span class="line">	Go</span><br><span class="line"></span><br><span class="line">Phil&#x27;s favorite languages are:</span><br><span class="line">	Python</span><br><span class="line">	Haskell</span><br></pre></td></tr></table></figure>
+
+<h4 id="字典中的字典"><a href="#字典中的字典" class="headerlink" title="字典中的字典"></a>字典中的字典</h4><p>可以在字典中再巢狀嵌套另一個字典，但這樣程式碼很快就變得更複雜了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">users = &#123;</span><br><span class="line">    <span class="string">&#x27;aeinstein&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;first&#x27;</span>: <span class="string">&#x27;albert&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;last&#x27;</span>: <span class="string">&#x27;einstein&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;location&#x27;</span>: <span class="string">&#x27;princeton&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    <span class="string">&#x27;mcurie&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;first&#x27;</span>: <span class="string">&#x27;marie&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;last&#x27;</span>: <span class="string">&#x27;curie&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;location&#x27;</span>: <span class="string">&#x27;paris&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> username, user_info <span class="keyword">in</span> users.items():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nUsername: &quot;</span> + username)</span><br><span class="line">    full_name = user_info[<span class="string">&#x27;first&#x27;</span>] + <span class="string">&quot; &quot;</span> + user_info[<span class="string">&#x27;last&#x27;</span>]</span><br><span class="line">    location = user_info[<span class="string">&#x27;location&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\tFull name: &quot;</span> + full_name.title())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\tLocation: &quot;</span> + location.title())</span><br></pre></td></tr></table></figure>
+<p>定義一個 users 字典，其中有兩個鍵：使用者帳號’aeinstein’和’mcurie’，而與這兩個鍵關聯的值都是個字典。<br>用迴圈遍訪 users 字典，讓<code>Python</code>將每個鍵存到 username 變數中，並依序將與鍵關聯的字典存放到 user_info 變數內。<br>先輸出顯示使用者帳號，再來存取字典內部資訊，並存放到各自的變數名稱後輸出顯示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Username: aeinstein</span><br><span class="line">	Full name: Albert Einstein</span><br><span class="line">	Location: Princeton</span><br><span class="line"></span><br><span class="line">Username: mcurie</span><br><span class="line">	Full name: Marie Curie</span><br><span class="line">	Location: Paris</span><br></pre></td></tr></table></figure>
+<p>每位使用者帳號所關聯的字典內部結構是相同的，雖然 <code>Python</code> 沒有要求一定要相同，<br>但為了在處理巢狀嵌套字典時較簡單容易，這樣作才是正確的。<br>假日每位使用者帳號所關聯的字典內部都用不同的「鍵」，那麼 for 迴圈內部要存取每位使用者的資訊時就會變得十分複雜。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/dictionary/" rel="tag"># dictionary</a>
+              <a href="/tags/nesting/" rel="tag"># nesting</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/dictionary-loop/" rel="next" title="字典 － 迴圈的應用">
+                  <i class="fa fa-chevron-left"></i> 字典 － 迴圈的應用
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/input/" rel="prev" title="使用者輸入">
+                  使用者輸入 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A2%E7%8B%80%E5%B5%8C%E5%A5%97"><span class="nav-number">1.</span> <span class="nav-text">巢狀嵌套</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E4%B8%B2%E5%88%97"><span class="nav-number">1.1.</span> <span class="nav-text">字典串列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E4%B8%AD%E7%9A%84%E4%B8%B2%E5%88%97"><span class="nav-number">1.2.</span> <span class="nav-text">字典中的串列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E4%B8%AD%E7%9A%84%E5%AD%97%E5%85%B8"><span class="nav-number">1.3.</span> <span class="nav-text">字典中的字典</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

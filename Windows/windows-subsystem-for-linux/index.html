@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="原先在尋找Windows 有什麼好用的Terminal 軟體，就找到了WSL ，一個能直接在Windows 上使用Linux 指令操作系統。本篇文章簡單紀錄如何配置WSL 環境，後續會在其它文件針對好用的工具進行說明。 WSL 原理想要瞭WSL 背後運作的原理，可以參考：Windows Subsystem for Linux Overview這篇官方文章，或是這篇：Windows for Linu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Subsystem for Linux(WSL) 環境配置">
+<meta property="og:url" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="原先在尋找Windows 有什麼好用的Terminal 軟體，就找到了WSL ，一個能直接在Windows 上使用Linux 指令操作系統。本篇文章簡單紀錄如何配置WSL 環境，後續會在其它文件針對好用的工具進行說明。 WSL 原理想要瞭WSL 背後運作的原理，可以參考：Windows Subsystem for Linux Overview這篇官方文章，或是這篇：Windows for Linu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/wsl-components.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/enable-wsl-with-ui.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/store-wsl-distro.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/initial-linux.jpg">
+<meta property="article:published_time" content="2020-07-31T07:32:53.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.913Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="wsl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/wsl-components.jpg">
+
+<link rel="canonical" href="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Windows Subsystem for Linux(WSL) 環境配置 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Windows/windows-subsystem-for-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows Subsystem for Linux(WSL) 環境配置
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-31 15:32:53" itemprop="dateCreated datePublished" datetime="2020-07-31T15:32:53+08:00">2020-07-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>原先在尋找Windows 有什麼好用的Terminal 軟體，就找到了WSL ，一個能直接在Windows 上使用Linux 指令操作系統。<br>本篇文章簡單紀錄如何配置WSL 環境，後續會在其它文件針對好用的工具進行說明。</p>
+<h3 id="WSL-原理"><a href="#WSL-原理" class="headerlink" title="WSL 原理"></a>WSL 原理</h3><p>想要瞭WSL 背後運作的原理，可以參考：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/archive/blogs/wsl/windows-subsystem-for-linux-overview">Windows Subsystem for Linux Overview</a>這篇官方文章，或是這篇：<a target="_blank" rel="noopener" href="https://blog.jessfraz.com/post/windows-for-linux-nerds/">Windows for Linux Nerds</a>一位Microsoft員工的文章。</p>
+<span id="more"></span>
+
+<p>基本上是可以讓Linux ELF64 binary文件透過WSL 在Windows 運行的元件，包含User Mode 與Kernel Mode，<br>主要包括：</p>
+<ol>
+<li>User Mode 的Session Manager Service處理Linux Instance 生命週期</li>
+<li>Pico Provider 驅動元件(lxss.sys, lxcore.sys)透過轉換Linux 系統調用來模擬Linux kernel</li>
+<li>Pico Processes 管理未修改的User Mode Linux(e.g. &#x2F;bin&#x2F;bash)</li>
+</ol>
+<p>透過在Pico Processes中放置未修改的Linux binary文件，使Linux 系統調用可以導向到Windows Kernel，<br>lxss.sys, lxcore.sys驅動元件將Linux 系統調用轉換為Windows NT 的APIs 並模擬Linux Kernel</p>
+<img src="/Windows/windows-subsystem-for-linux/wsl-components.jpg" class="" title="WSL Components">
+
+<p>更多細節可以參閱原文。</p>
+<h3 id="啟用WSL"><a href="#啟用WSL" class="headerlink" title="啟用WSL"></a>啟用WSL</h3><p>在新版（1909）的Windows 版本中，啟用WSL 不再需要開啟開發者模式，<br>只要直接從【控制台】→【程式和功能】→【開啟或關閉Windows 功能】中，<br>將【適用於Linux 的Windows 子系統】功能打勾就能開啟：</p>
+<img src="/Windows/windows-subsystem-for-linux/enable-wsl-with-ui.jpg" class="" title="Enable WSL with Control Panel">
+
+<p>也可以透過PowerShell 以系統管理員身份下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝WSL-Distro"><a href="#安裝WSL-Distro" class="headerlink" title="安裝WSL Distro"></a>安裝WSL Distro</h3><p>開啟Microsoft Store 搜尋Linux，可以找到所有WSL 散發版本：</p>
+<img src="/Windows/windows-subsystem-for-linux/store-wsl-distro.jpg" class="" title="WSL Distro in Microsoft Store">
+
+<p>如果無法使用 Microsoft Store 應用程式，也可以按一下下列連結，下載並手動安裝 Linux 散發版本：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://aka.ms/wslubuntu2004">Ubuntu 20.04</a></li>
+<li><a target="_blank" rel="noopener" href="https://aka.ms/wsl-ubuntu-1804">Ubuntu 18.04</a></li>
+<li><a target="_blank" rel="noopener" href="https://aka.ms/wsl-ubuntu-1604">Ubuntu 16.04</a></li>
+<li><a target="_blank" rel="noopener" href="https://aka.ms/wsl-debian-gnulinux">Debian GNU&#x2F;Linux</a></li>
+</ul>
+<p>其它版本與安裝方法可以到<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/windows/wsl/install-manual">官網查看</a><br>安裝後只算完成第一步，接下來還必須從【Microsoft Store】或【開始】中打開對應的Linux 散發版本，<br>本文以【Ubuntu】做示範，開啟後等待數分鐘的初始化，<br>接著設定好Linux User 的帳號、密碼即可完成安裝，並會自動進入Ubuntu 環境</p>
+<img src="/Windows/windows-subsystem-for-linux/initial-linux.jpg" class="" title="Initial and install Linux">
+
+<p>也可以開啟<code>PowerShell</code>或<code>Command Prompt</code>，輸入下列指令進入Ubuntu</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl</span><br></pre></td></tr></table></figure>
+
+<p>WSL 環境配置就到這裡完成了，開始享受在Windows 使用Linux Command吧！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/windows/" rel="tag"># windows</a>
+              <a href="/tags/wsl/" rel="tag"># wsl</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/PostgreSQL/postgresql-with-docker/" rel="next" title="PostgreSQL for Docker">
+                  <i class="fa fa-chevron-left"></i> PostgreSQL for Docker
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Windows/wsl-with-docker/" rel="prev" title="Docker on WSL">
+                  Docker on WSL <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#WSL-%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">WSL 原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%9F%E7%94%A8WSL"><span class="nav-number">2.</span> <span class="nav-text">啟用WSL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DWSL-Distro"><span class="nav-number">3.</span> <span class="nav-text">安裝WSL Distro</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

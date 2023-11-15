@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="建立數字串列串列很適合用來存放數值集合，而Python也提供了許多工具可協助我們有效地處理數字串列。 使用 range()函式Python 的 range()函式能很輕鬆地產生一系列的數字：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="串列的操作與運用 Part II.">
+<meta property="og:url" content="https://shoudevops.github.io/Python/number-slice-tuple/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="建立數字串列串列很適合用來存放數值集合，而Python也提供了許多工具可協助我們有效地處理數字串列。 使用 range()函式Python 的 range()函式能很輕鬆地產生一系列的數字：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-29T03:00:53.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.887Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="number">
+<meta property="article:tag" content="slice">
+<meta property="article:tag" content="tuple">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/number-slice-tuple/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>串列的操作與運用 Part II. | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/number-slice-tuple/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          串列的操作與運用 Part II.
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-29 11:00:53" itemprop="dateCreated datePublished" datetime="2019-11-29T11:00:53+08:00">2019-11-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="建立數字串列"><a href="#建立數字串列" class="headerlink" title="建立數字串列"></a>建立數字串列</h3><p>串列很適合用來存放數值集合，而<code>Python</code>也提供了許多工具可協助我們有效地處理數字串列。</p>
+<h4 id="使用-range-函式"><a href="#使用-range-函式" class="headerlink" title="使用 range()函式"></a>使用 range()函式</h4><p><code>Python</code> 的 range()函式能很輕鬆地產生一系列的數字：</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">5</span>):</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+<p>雖然這段程式看起來像要輸出1到5的數字，但實際上5是不會輸出的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<p>range()只輸出1到4的數字，這是我們常在程式語言中所看到的差 1（ off-by-one ）因素所造成的結果。<br>range()函式會讓<code>Python</code>從指定的第一個值開始算起，到指定的第二個值就停止，因此輸出並不含第二個值。<br>想要出1到5這幾個數字，要使用 range(1,6)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">6</span>):</span><br><span class="line">    <span class="built_in">print</span>(value)</span><br></pre></td></tr></table></figure>
+<p>在使用range()函式時，若輸出結果不符合預期，請試著對指定的值加1或減1。</p>
+<h4 id="使用-range-製作數字串列"><a href="#使用-range-製作數字串列" class="headerlink" title="使用 range()製作數字串列"></a>使用 range()製作數字串列</h4><p>如果要製作數字串列，可使用 list()函式把 range()的結果直接轉成串列。<br>將 range()當成參數包在 list()中來呼叫執行，輸出的結果就會是個數字串列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">1</span>,<span class="number">6</span>))</span><br><span class="line"><span class="built_in">print</span>(numbers)</span><br></pre></td></tr></table></figure>
+<p>結果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+<p>使用 range()時可以指定讓<code>Python</code>遞增的數值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">even_numbers = <span class="built_in">list</span>(<span class="built_in">range</span>(<span class="number">2</span>,<span class="number">11</span>,<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(even_numbers)</span><br></pre></td></tr></table></figure>
+<p>range()函式是從2開始起算，以2來，直到或超過第二個數值11才停止：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2, 4, 6, 8, 10]</span><br></pre></td></tr></table></figure>
+<p>使用 range()函式幾乎可以製作任何數字集，<br>製作存放一個1到10的平方值的串列，在<code>Python</code>中用兩個星號（ ** ）來表示乘方的運算：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">squares = []</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    square = value ** <span class="number">2</span></span><br><span class="line">    squares.append(square)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(squares)</span><br></pre></td></tr></table></figure>
+<p>首先建立空串列，接著使用 range()函式讓<code>Python</code> 以迴圈遍訪1到10的整數值，<br>將在迴圈內的運算結果存入 square變數內，並使用 append()方法把每個平方值新增到 squares串列尾端，<br>最後在迴圈結束後輸出 squares串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</span><br></pre></td></tr></table></figure>
+<p>也可以用更簡潔的方式得到相同的運算結果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">squares = []</span><br><span class="line"><span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>):</span><br><span class="line">    squares.append(value ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(squares)</span><br></pre></td></tr></table></figure>
+
+<h4 id="數字串列的簡單統計運算"><a href="#數字串列的簡單統計運算" class="headerlink" title="數字串列的簡單統計運算"></a>數字串列的簡單統計運算</h4><p><code>Python</code>中有幾個函式可專門用來高數字串列的運算：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; digits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]</span><br><span class="line">&gt;&gt;&gt; min(digits)</span><br><span class="line">0</span><br><span class="line">&gt;&gt;&gt; max(digits)</span><br><span class="line">9</span><br><span class="line">&gt;&gt;&gt; sum(digits)</span><br><span class="line">45</span><br></pre></td></tr></table></figure>
+
+<h4 id="串列推導解析"><a href="#串列推導解析" class="headerlink" title="串列推導解析"></a>串列推導解析</h4><p>前面描述的製作 squares 串列的方式用了三到四行程式碼，<br>而串列推導解析（ list comprehension ）則讓我們只用一行程式製作相同的串列。<br>串列推導解析把 for 迴圈和建立新元素的程式碼合併成一行，並自動地新增每個新的元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">squares = [ value ** <span class="number">2</span> <span class="keyword">for</span> value <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">11</span>)]</span><br><span class="line"><span class="built_in">print</span>(squares)</span><br></pre></td></tr></table></figure>
+<p>請留意這裡的 for 陳述句尾端並沒有冒號哦！</p>
+<hr>
+<h3 id="處理串列中某部份的內容"><a href="#處理串列中某部份的內容" class="headerlink" title="處理串列中某部份的內容"></a>處理串列中某部份的內容</h3><p>我們還可只處理串列中某部份的內容，在<code>Python</code> 中稱之為「切片（ slice ）」</p>
+<h4 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h4><p>切片需要指定使用的第一個元素和最後一個元素的索引足標。<br>與 range()函式相同，<code>Python</code> 在算到指定的第二個索引足標前的元素就會停止，<br>所以處理範圍不含第二個索引足標的元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(players[<span class="number">0</span>:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>此切片有三名隊員，輸出的結果也是個串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;charles&#x27;, &#x27;martina&#x27;, &#x27;michael&#x27;]</span><br></pre></td></tr></table></figure>
+<p>若想擷取串列中第2到第4個元素，就把切片的起始索引足標設為1，結尾索引足標設為4：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(players[<span class="number">1</span>:<span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<p>結果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;martina&#x27;, &#x27;michael&#x27;, &#x27;florence&#x27;]</span><br></pre></td></tr></table></figure>
+<p>如果沒有指定第一個索引足標，<code>Python</code> 會自動以串列的開頭為切片的起始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(players[:<span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<p>結果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;charles&#x27;, &#x27;martina&#x27;, &#x27;michael&#x27;, &#x27;florence&#x27;]</span><br></pre></td></tr></table></figure>
+<p>也有類似的作法讓切片可擷取到串列結尾：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(players[<span class="number">2</span>:])</span><br></pre></td></tr></table></figure>
+<p><code>Python</code> 會返回串列從第三個到結尾的所有項目元素：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;michael&#x27;, &#x27;florence&#x27;, &#x27;eli&#x27;]</span><br></pre></td></tr></table></figure>
+<p>此外也可以使用負數來當索引足標，負數是從尾端往回推的距離，因此可取出串列任意尾段的切片：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(players[-<span class="number">3</span>:])</span><br></pre></td></tr></table></figure>
+<p>這段程式會輸出串列到數後三名的元素項目，就算串列長度有變化也不影響。</p>
+<h4 id="迴圈遍訪切片"><a href="#迴圈遍訪切片" class="headerlink" title="迴圈遍訪切片"></a>迴圈遍訪切片</h4><p>若想以迴圈遍訪串列某部份的項目元素，可在 for 迴圈中使用切片來達成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">players = [<span class="string">&#x27;charles&#x27;</span>, <span class="string">&#x27;martina&#x27;</span>, <span class="string">&#x27;michael&#x27;</span>, <span class="string">&#x27;florence&#x27;</span>, <span class="string">&#x27;eli&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Here are the first three players on my team:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> player <span class="keyword">in</span> players[:<span class="number">3</span>]:</span><br><span class="line">    <span class="built_in">print</span>(player.title())</span><br></pre></td></tr></table></figure>
+<p>for 迴圈並沒有遍訪整個 players 串列，<code>Python</code> 只遍訪串列的前三項：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Here are the first three players on my team:</span><br><span class="line">Charles</span><br><span class="line">Martina</span><br><span class="line">Michael</span><br></pre></td></tr></table></figure>
+
+<h4 id="複製串列"><a href="#複製串列" class="headerlink" title="複製串列"></a>複製串列</h4><p>在編寫程式時，很常需要以現在的串列為基礎來建立全新的串列。<br>若想要複製串列，可以先建立一個含有原本整個串列的切片，其做法就是都不放起始和結尾索引足標，<br>只留一個冒號在中括號內（ [:] ），這樣就能複製整個串列了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my_foods = [<span class="string">&#x27;pizza,&#x27;</span>, <span class="string">&#x27;falafel&#x27;</span>, <span class="string">&#x27;carrot cake&#x27;</span>]</span><br><span class="line">friend_foods = my_foods[:]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(my_foods)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nMy friend&#x27;s favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(friend_foods)</span><br></pre></td></tr></table></figure>
+<p>不指定索引足標的方法從 my_foods 串列擷取整個串列當切片，等於複製了這個串列並指定到 friend_foods 變數內：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">My favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;]</span><br><span class="line"></span><br><span class="line">My friend&#x27;s favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;]</span><br></pre></td></tr></table></figure>
+<p>可以分別新增不同食物到各自的串列內，確定這兩個串列都存放了自己和朋友最喜歡的食物：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my_foods = [<span class="string">&#x27;pizza,&#x27;</span>, <span class="string">&#x27;falafel&#x27;</span>, <span class="string">&#x27;carrot cake&#x27;</span>]</span><br><span class="line">friend_foods = my_foods[:]</span><br><span class="line"></span><br><span class="line">my_foods.append(<span class="string">&#x27;cannoli&#x27;</span>)</span><br><span class="line">friend_foods.append(<span class="string">&#x27;ice cream&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(my_foods)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nMy friend&#x27;s favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(friend_foods)</span><br></pre></td></tr></table></figure>
+<p>將 my_foods 與 複製出來的 friend_foods 兩個串列分別新增新的項目進去，最後輸出兩個串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">My favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;, &#x27;cannoli&#x27;]</span><br><span class="line"></span><br><span class="line">My friend&#x27;s favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;, &#x27;ice cream&#x27;]</span><br></pre></td></tr></table></figure>
+<p>假如只是單純地把 my_foods 指定給 friend_foods （ friend_foods &#x3D; my_foods ），<br>這樣並不會真的建立兩個串列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">my_foods = [<span class="string">&#x27;pizza,&#x27;</span>, <span class="string">&#x27;falafel&#x27;</span>, <span class="string">&#x27;carrot cake&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># This doesn&#x27;t work:</span></span><br><span class="line">friend_foods = my_foods</span><br><span class="line"></span><br><span class="line">my_foods.append(<span class="string">&#x27;cannoli&#x27;</span>)</span><br><span class="line">friend_foods.append(<span class="string">&#x27;ice cream&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(my_foods)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nMy friend&#x27;s favorite foods are:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(friend_foods)</span><br></pre></td></tr></table></figure>
+<p>這樣並不是把 my_foods 的複製品指定存入 friend_foods。<br>這種指定語法在 <code>Python</code> 中是讓新的 friend_foods 變數連接到 my_foods 已存放的串列上，<br>兩個變數都指向同一個串列:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">My favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;, &#x27;cannoli&#x27;, &#x27;ice cream&#x27;]</span><br><span class="line"></span><br><span class="line">My friend&#x27;s favorite foods are:</span><br><span class="line">[&#x27;pizza&#x27;, &#x27;falafel&#x27;, &#x27;carrot cake&#x27;, &#x27;cannoli&#x27;, &#x27;ice cream&#x27;]</span><br></pre></td></tr></table></figure>
+<p>這樣的輸出結果並不是我們所要的。</p>
+<hr>
+<h3 id="多元組"><a href="#多元組" class="headerlink" title="多元組"></a>多元組</h3><p>有時候相要建立一個不能被修改的資料集合，這時「多元組（ tuples，或元組 ）」能滿足這項要求。<br><code>Python</code> 把不能修改的值稱為不可變的（ immutable ），而這個不可變的串列就稱為多元組。</p>
+<h4 id="定義多元組"><a href="#定義多元組" class="headerlink" title="定義多元組"></a>定義多元組</h4><p>多元組看起來很像串列，但用的是小括號（ () ）而不是中括號（ [] ）來定義標示。<br>在定義完多元組之後就可以用項目的索引足標來提取其中的元素，作法和串列相同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line"><span class="built_in">print</span>(dimensions[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(dimensions[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>使用小括號定義多元組後，再將每個項目分別輸出，使用的語法和存取串列中的元素是一樣的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">200</span><br><span class="line">50</span><br></pre></td></tr></table></figure>
+<p>試著修改多元組中的任一元素會有什麼結果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line">dimensions[<span class="number">0</span>] = <span class="number">250</span></span><br></pre></td></tr></table></figure>
+<p>試著修改多元組中的第一個項目的值，結果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;test.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    dimensions[0] = 250</span><br><span class="line">TypeError: &#x27;tuple&#x27; object does not support item assignment</span><br></pre></td></tr></table></figure>
+<p>因為修改多元組是不允許的，所以<code>Python</code>會告知不能對多元組中的項目指定新值。</p>
+<h4 id="遍訪多元組中所有的值"><a href="#遍訪多元組中所有的值" class="headerlink" title="遍訪多元組中所有的值"></a>遍訪多元組中所有的值</h4><p>就像在處理串列一樣，可以使用 for 迴圈遍訪多元組中所有的值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    <span class="built_in">print</span>(dimension)</span><br></pre></td></tr></table></figure>
+<p>結果與串列一樣，<code>Python</code>會返回多元組中所有的元素</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">200</span><br><span class="line">50</span><br></pre></td></tr></table></figure>
+
+<h4 id="重寫多元組"><a href="#重寫多元組" class="headerlink" title="重寫多元組"></a>重寫多元組</h4><p>雖然不能修改多元組，但卻可以把新的值指定給存放多元組的變數內：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">dimensions = (<span class="number">200</span>, <span class="number">50</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Original dimensions:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    <span class="built_in">print</span>(dimension)</span><br><span class="line"></span><br><span class="line">dimensions = (<span class="number">400</span>, <span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nModified dimensions:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</span><br><span class="line">    <span class="built_in">print</span>(dimension)</span><br></pre></td></tr></table></figure>
+<p>執行後<code>Python</code> 沒有回報錯誤訊息，因為重寫多元組並指定到變數是合法的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Original dimensions:</span><br><span class="line">200</span><br><span class="line">50</span><br><span class="line"></span><br><span class="line">Modified dimensions:</span><br><span class="line">400</span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+<p>與串列相比，多元組算是簡單的資料結構。<br>如果在程式的整個生命週期中想要存放一組都不會改變的值，就很適合用多元組來定義。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/number/" rel="tag"># number</a>
+              <a href="/tags/slice/" rel="tag"># slice</a>
+              <a href="/tags/tuple/" rel="tag"># tuple</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/list-operating-applications/" rel="next" title="串列的操作與運用 Part I.">
+                  <i class="fa fa-chevron-left"></i> 串列的操作與運用 Part I.
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/conditional-test/" rel="prev" title="if 陳述句 － 條件檢測">
+                  if 陳述句 － 條件檢測 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E6%95%B8%E5%AD%97%E4%B8%B2%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">建立數字串列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-range-%E5%87%BD%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">使用 range()函式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-range-%E8%A3%BD%E4%BD%9C%E6%95%B8%E5%AD%97%E4%B8%B2%E5%88%97"><span class="nav-number">1.2.</span> <span class="nav-text">使用 range()製作數字串列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B8%E5%AD%97%E4%B8%B2%E5%88%97%E7%9A%84%E7%B0%A1%E5%96%AE%E7%B5%B1%E8%A8%88%E9%81%8B%E7%AE%97"><span class="nav-number">1.3.</span> <span class="nav-text">數字串列的簡單統計運算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%B2%E5%88%97%E6%8E%A8%E5%B0%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">串列推導解析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%95%E7%90%86%E4%B8%B2%E5%88%97%E4%B8%AD%E6%9F%90%E9%83%A8%E4%BB%BD%E7%9A%84%E5%85%A7%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">處理串列中某部份的內容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%87%E7%89%87"><span class="nav-number">2.1.</span> <span class="nav-text">切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%B4%E5%9C%88%E9%81%8D%E8%A8%AA%E5%88%87%E7%89%87"><span class="nav-number">2.2.</span> <span class="nav-text">迴圈遍訪切片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A4%87%E8%A3%BD%E4%B8%B2%E5%88%97"><span class="nav-number">2.3.</span> <span class="nav-text">複製串列</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%85%83%E7%B5%84"><span class="nav-number">3.</span> <span class="nav-text">多元組</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E7%BE%A9%E5%A4%9A%E5%85%83%E7%B5%84"><span class="nav-number">3.1.</span> <span class="nav-text">定義多元組</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%8D%E8%A8%AA%E5%A4%9A%E5%85%83%E7%B5%84%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84%E5%80%BC"><span class="nav-number">3.2.</span> <span class="nav-text">遍訪多元組中所有的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%AF%AB%E5%A4%9A%E5%85%83%E7%B5%84"><span class="nav-number">3.3.</span> <span class="nav-text">重寫多元組</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本篇會學習 json 模組，這個模組能幫我們儲存使用者的資料，以免在程式停止執行後就消失掉。 儲存資料許多程式都會要求使用者輸入某種資訊，不管程式的焦點在哪裡，都是要把使用者所提供的資訊存放到串列和字典等資料結果內。使用者關閉程式時，我們大都會希望把這些資訊都保存下來，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="儲存資料">
+<meta property="og:url" content="https://shoudevops.github.io/Python/data-stored/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="本篇會學習 json 模組，這個模組能幫我們儲存使用者的資料，以免在程式停止執行後就消失掉。 儲存資料許多程式都會要求使用者輸入某種資訊，不管程式的焦點在哪裡，都是要把使用者所提供的資訊存放到串列和字典等資料結果內。使用者關閉程式時，我們大都會希望把這些資訊都保存下來，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-27T10:21:30.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="data processing">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/data-stored/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>儲存資料 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/data-stored/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          儲存資料
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-27 18:21:30" itemprop="dateCreated datePublished" datetime="2019-12-27T18:21:30+08:00">2019-12-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本篇會學習 json 模組，這個模組能幫我們儲存使用者的資料，以免在程式停止執行後就消失掉。</p>
+<h3 id="儲存資料"><a href="#儲存資料" class="headerlink" title="儲存資料"></a>儲存資料</h3><p>許多程式都會要求使用者輸入某種資訊，不管程式的焦點在哪裡，<br>都是要把使用者所提供的資訊存放到串列和字典等資料結果內。<br>使用者關閉程式時，我們大都會希望把這些資訊都保存下來，</p>
+<span id="more"></span>
+
+<p>這裡提供的簡單方式就是用 json 模組來儲存資料。</p>
+<p>json 模組能讓我們把簡單的 <code>Python</code> 資料結構轉成到檔內，並在程式再次執行時載入這份檔案內的資料。<br>我們還可以利用 json 模組，讓 <code>Python</code> 程式彼此可共享資料。<br>更重要的是，JSON 資料格式並不是 <code>Python</code> 專用的，這能讓我們把以 JSON 格式儲存的資料與使用其它程式語言的人可以共用分享。<br>這是種輕便、好用又容易學習的格式。</p>
+<p><em>JSON(JavaScript Object Notation) 格式最初是為 JavaScript 所開發的格式，</em><br><em>但之後就普遍成為一種常見的格式，也被 Python 等許多程式語言採用。</em></p>
+<h4 id="使用-json-dump-和-json-load"><a href="#使用-json-dump-和-json-load" class="headerlink" title="使用 json.dump() 和 json.load()"></a>使用 json.dump() 和 json.load()</h4><p>嘗試編寫一支簡短的程式來儲存一組數字，然後再編寫一支程式把這組數字讀取回記憶體中。<br>前面的程式要用 json.dump() 來儲存這組數字，後面的程式則用 json.load() 將這組數字載入。</p>
+<p>json.dump() 函試接收兩個引數，第一個是儲存的資料，第二個是用來儲存資料的檔案物件。<br>下最範例示範如何使用 json.dump() 儲存數字串例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">numbers = [<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>]</span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;numbers.json&#x27;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f_obj:</span><br><span class="line">    json.dump(numbers, f_obj)</span><br></pre></td></tr></table></figure>
+<p>先匯入 json 模組，再建立一個數字串列。<br>指定要把數字串列儲存進去的檔案名稱(.json)。<br>在 with 程式下使用 json.dump() 函式把數字串列儲存到 numbers.json 檔案內。</p>
+<p>這支程式執行後並沒有輸出顯示，但我們可以開啟 numbers.json 檔，存放在這個檔案內的資料與在 <code>Python</code> 中是一樣的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2, 3, 5, 7, 11, 13]</span><br></pre></td></tr></table></figure>
+<p>再編寫一支程式，使用 json.load() 把這個串列讀取到記憶體內：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;numbers.json&#x27;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">    numbers = json.load(f_obj)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(numbers)</span><br></pre></td></tr></table></figure>
+<p>我們確定讀取的是前面寫入的檔案，這次以讀取模式來開啟這份檔案，因為 <code>Python</code> 只需讀取不用寫入。<br>在 with 程式區塊內用 json.load() 載入存放在 numbers.json 檔內的資訊，並將其指定到 numbers 變數中。<br>最後印出這個數字串列，看是否為 json.dump() 範例中所建立的數字串列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[2, 3, 5, 7, 11, 13]</span><br></pre></td></tr></table></figure>
+<p>這是一種在程式之間可共享資料的簡單處理方式。</p>
+<h4 id="儲存和讀取使用者生成的資料"><a href="#儲存和讀取使用者生成的資料" class="headerlink" title="儲存和讀取使用者生成的資料"></a>儲存和讀取使用者生成的資料</h4><p>在處理使用者生成的資料時，使用 json 格式來儲存是很有助益的，<br>因為如果不以某種方式儲存，等程式結束後使用者的資訊就會被丟掉。<br>以下範例是使用者在第一次執行程式時會被提示輸入自己的名字，<br>等再次執行時程式能記得這個名字，從儲存使用者的名字開始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">username = <span class="built_in">input</span>(<span class="string">&quot;What is your name? &quot;</span>)</span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;username.json&#x27;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f_obj:</span><br><span class="line">    json.dump(username, f_obj)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;We&#x27;ll remember you when you come back, &quot;</span> + username + <span class="string">&quot;!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>先提示輸入名字，並將輸入存放到變數中。<br>隨後呼叫 json.dump() , 以使用者名字和檔案物件當引數傳入，讓使用者名字儲存入檔案內。<br>最後輸出一條訊息，告知我們儲存了使用者所輸入的資訊：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">What is your name? Charles</span><br><span class="line">We&#x27;ll remember you when you come back, Charles!</span><br></pre></td></tr></table></figure>
+<p>再讓我們編寫一支程式，對已存的使用者發出問候文句：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;username.json&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">    username = json.load(f_obj)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Welcome back, &quot;</span> + username + <span class="string">&quot;!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>這邊使用了 json.load() 把儲存在 username.json 中的資訊讀取到 username 變數內，<br>載入回復使用者名字後，就可以發出歡迎回來的問候文句：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome back, Charles!</span><br></pre></td></tr></table></figure>
+<p>再來需要把這兩支程式合併成一支，等這支程式執行時，就會嘗試從 username.json 檔中取出使用者名字，<br>因此我們要先編寫一個試著回復使用者名字的 try 程式碼區塊，如果檔案不存在，<br>就在 except 程式碼區塊中執行提示使用者輸入名字的處理，並把輸入儲存到 username.json 中，<br>方便程式再次執行時能載入回復：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="comment"># Load the username, if it has been stored previously.</span></span><br><span class="line"><span class="comment">#  Otherwise, prompt for the username and store it.</span></span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;username.json&#x27;</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">        username = json.load(f_obj)</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    username = <span class="built_in">input</span>(<span class="string">&quot;What is your name? &quot;</span>)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f_obj:</span><br><span class="line">        json.dump(username, f_obj)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;We&#x27;ll remember you when you come back, &quot;</span> + username + <span class="string">&quot;!&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Welcome back, &quot;</span> + username + <span class="string">&quot;!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>先試著開啟 username.json 檔，如果檔案存在，就把檔案內的伬畢者名字載入到記憶體中，<br>再執行 else 程式碼區塊，輸出一條歡迎回來的訊息文字。<br>當第一次執行程式時， username.json 並不存在，此時會引發 FileNotFoundError 例外，<br>因此 <code>Python</code> 會執行 except 程式碼區塊，提供使用者輸入名字，再使用 json.dump() 儲存這個名字，<br>再輸出一句問候文句。  </p>
+<p>無論執行的是 except 程式碼區塊還是 else 程式碼區塊，<br>都會顯示使用者名字和適當的問候文句，如果這支程式第一次執行，<br>其輸出如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">What is your name? Charles</span><br><span class="line">We&#x27;ll remember you when you come back, Charles!</span><br></pre></td></tr></table></figure>
+<p>如果已執行過，則輸出如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Welcome back, Charles!</span><br></pre></td></tr></table></figure>
+<p>這是程式之前已至少執行過一次時會呈現的輸出結果。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/data-processing/" rel="tag"># data processing</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/exception/" rel="next" title="例外">
+                  <i class="fa fa-chevron-left"></i> 例外
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/refactoring/" rel="prev" title="重構">
+                  重構 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%84%B2%E5%AD%98%E8%B3%87%E6%96%99"><span class="nav-number">1.</span> <span class="nav-text">儲存資料</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-json-dump-%E5%92%8C-json-load"><span class="nav-number">1.1.</span> <span class="nav-text">使用 json.dump() 和 json.load()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%84%B2%E5%AD%98%E5%92%8C%E8%AE%80%E5%8F%96%E4%BD%BF%E7%94%A8%E8%80%85%E7%94%9F%E6%88%90%E7%9A%84%E8%B3%87%E6%96%99"><span class="nav-number">1.2.</span> <span class="nav-text">儲存和讀取使用者生成的資料</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

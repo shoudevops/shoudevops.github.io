@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="把函式儲存在模組中 函式有個優點是它們和主程式部份可以分開放置，為函式取一個具有描述性的名字，這樣在主程式中使用時能讓程式更易讀好懂。 可以更進一步將函式儲存在一個獨立的檔案中，這個檔案稱為模組（ module ），需要使用函式時匯入這個模組到主程式中。 Import 陳述句告知 Python 在目前執行的程式檔中可取用模組內的程式碼。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函式 － 模組化應用">
+<meta property="og:url" content="https://shoudevops.github.io/Python/function-module/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="把函式儲存在模組中 函式有個優點是它們和主程式部份可以分開放置，為函式取一個具有描述性的名字，這樣在主程式中使用時能讓程式更易讀好懂。 可以更進一步將函式儲存在一個獨立的檔案中，這個檔案稱為模組（ module ），需要使用函式時匯入這個模組到主程式中。 Import 陳述句告知 Python 在目前執行的程式檔中可取用模組內的程式碼。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-13T01:09:17.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.889Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="function">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/function-module/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>函式 － 模組化應用 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/function-module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          函式 － 模組化應用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-13 09:09:17" itemprop="dateCreated datePublished" datetime="2019-12-13T09:09:17+08:00">2019-12-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="把函式儲存在模組中"><a href="#把函式儲存在模組中" class="headerlink" title="把函式儲存在模組中"></a>把函式儲存在模組中</h3><ul>
+<li>函式有個優點是它們和主程式部份可以分開放置，為函式取一個具有描述性的名字，這樣在主程式中使用時能讓程式更易讀好懂。</li>
+<li>可以更進一步將函式儲存在一個獨立的檔案中，這個檔案稱為模組（ module ），需要使用函式時匯入這個模組到主程式中。</li>
+<li>Import 陳述句告知 <code>Python</code> 在目前執行的程式檔中可取用模組內的程式碼。</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="匯入整個模組"><a href="#匯入整個模組" class="headerlink" title="匯入整個模組"></a>匯入整個模組</h4><p>要讓函式變成可以匯入，首先就要建立模組，模組的副檔名為 <code>.py</code>，其中放了要匯入程式中的程式碼。<br>首先建立一個存放了 make_pizza() 函式的模組，檔案名稱為 pizza.py：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_pizza</span>(<span class="params">size, *toppings</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Summarize the pizza we are about to make.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nMaking a &quot;</span> + <span class="built_in">str</span>(size) + <span class="string">&quot;-inch pizza with the following toppings:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;- &quot;</span> + topping)</span><br></pre></td></tr></table></figure>
+<p>接著在 pizza.py 所在的資料夾中建立另一個檔案名稱為 making_pizzas.py 的檔案，<br>這個檔案會匯入上面建立的模組，再呼叫 make_pizza() 函式兩次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pizza</span><br><span class="line"></span><br><span class="line">pizza.make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">pizza.make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>import pizza</code> 這行指令會讓 <code>Python</code> 開啟 pizza.py 檔案，並將其中所有的函式都複雜到這個檔案內。<br>若想要呼叫匯入模組內的函式，可指定匯入的模組名稱（ pizza ）和函式名稱（ make_pizza() ），並以句點（ . ）分隔連接。<br>輸出的內容與沒有用匯入模組的原始版本程式是相同的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Making a 16-inch pizza with the following toppings:</span><br><span class="line">- pepperoni</span><br><span class="line"></span><br><span class="line">Making a 12-inch pizza with the following toppings:</span><br><span class="line">- mushrooms</span><br><span class="line">- green peppers</span><br><span class="line">- extra cheese</span><br></pre></td></tr></table></figure>
+<p>上面為第一種匯入的方式，使用 import 陳述句並指定模組名稱。<br>使用這個 import 語法匯入 module_name.py 的整個模組，就能以下最這樣的語法來取用其中的任何一個函式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">module_name.function_name()</span><br></pre></td></tr></table></figure>
+
+<h4 id="匯入特定的函式"><a href="#匯入特定的函式" class="headerlink" title="匯入特定的函式"></a>匯入特定的函式</h4><p>還可以匯入模組中某個特定的函式，其匯入的語法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import function_name</span><br></pre></td></tr></table></figure>
+<p>若要從模組中匯入多個函式時，可用逗號分隔：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import function_0, function_1, function_2</span><br></pre></td></tr></table></figure>
+<p>以上面的 making_pizzas.py 為例，如果只想匯入想要用使用的函式，指令語法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pizza <span class="keyword">import</span> make_pizza</span><br><span class="line"></span><br><span class="line">make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>使用這種語法，呼叫函式時就不需要加模組名稱和句號，<br>在 import 陳述句已經明顯匯入了 make_pizza() 函式，因此呼叫時只需直接指定這個函式名稱即可。</p>
+<h4 id="使用-as-為函式指定別名"><a href="#使用-as-為函式指定別名" class="headerlink" title="使用 as 為函式指定別名"></a>使用 as 為函式指定別名</h4><p>如果要匯入的函式名稱可能會與您程式中現有的函式名稱產生衝突，或是函式的名稱太長等因素下，<br>我們可以為匯入的函式取一個獨一無二的別名（ alias ），在匯入函式時就能為它指定別名：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pizza <span class="keyword">import</span> make_pizza <span class="keyword">as</span> mp</span><br><span class="line"></span><br><span class="line">mp(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">mp(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>範例中的 import 陳述句為 make_pizza() 函式取了別名為 mp()，後讀要呼叫 make_pizza() 時，可縐寫成 mp()，<br><code>Python</code> 會找到匯入的 make_pizza() 來執行，使用別名也能避開程式中若也有寫了 make_pizza() 函式的混淆。</p>
+<p>指定別名的匯入語法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import function_name as fn</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-as-為模組指定別名"><a href="#使用-as-為模組指定別名" class="headerlink" title="使用 as 為模組指定別名"></a>使用 as 為模組指定別名</h4><p>也可以為匯入的模組取一個別名。給定模組一個較短的別名，例如 pizza 模組取一個別名叫 p，<br>這樣就能更輕鬆簡潔的呼叫模組中的函式。與寫入 pizza.make_pizza() 語句， p.make_pizza 會更簡短：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pizza <span class="keyword">as</span> p</span><br><span class="line"></span><br><span class="line">p.make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">p.make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>上面範例中的 import 陳述句為 pizza 模組取了個叫作 p 的別名，但在該模組內的所有函式的名稱都沒變。<br>呼叫函式時，可寫入 p.make_pizza() ，這樣就使程式碼更簡潔，也能讓我們降低對模組名稱的注意，集中關注在函式名稱上。<br>這些函式名稱很明確指出它們的功用，從理解程式碼來看，它們比模組名稱更為重要。</p>
+<p>為模組取一個別名的語法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import module_name as mn</span><br></pre></td></tr></table></figure>
+
+<h4 id="匯入模組中所有函式"><a href="#匯入模組中所有函式" class="headerlink" title="匯入模組中所有函式"></a>匯入模組中所有函式</h4><p>使用星號（ * ）運算子可讓 <code>Python</code> 匯入模組中所有的函式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pizza <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>import 陳述句中的星號會讓 <code>Python</code> 把 pizza 模組中所有函式都複製一份到這個程式檔中。<br>因為每個函式都已匯入，所以可直接用函式名稱來呼叫，不需要再加上模組名稱和句點的表示法。<br>不過在使用不是自己編寫的大型模組時，最好不要用這種匯入方式，<br>如果模組中有的函式名稱剛好與您專案中所使用的名稱相同時，可能會產生不預期的結果，<br> <code>Python</code> 可能在遇到多個名稱相同的函式或變量，因為名稱相同而直接覆蓋過去，不是以分開的方式來呼叫使用。</p>
+<p>最好的做法是只匯入需要的函式，或是匯入模組並使用句點表示法。這樣能讓程式變得更清楚且易讀好懂。<br>匯入模組所有函式語法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import *</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="函式的風格"><a href="#函式的風格" class="headerlink" title="函式的風格"></a>函式的風格</h3><p>編寫函式時要記住幾個編排風格上的細節。</p>
+<ul>
+<li>函式取名字時要指定具有描述性的名字，且只用小寫英文字母和底線。</li>
+<li>具有描述性的名字能幫助您首別人知道這段程式碼的功能。</li>
+<li>每個函式中應該放入簡介此函式功用的注釋，這個注釋應緊接在函式定義的後面，並使用 docstring 格式。</li>
+<li>在文件編寫良好的函式中，能讓其它程式設計人員只需閱讀這段 docstring 的文字描述就知道其功能用使用方法。</li>
+<li>只需要知道函式名稱和需傳入的引數，以及迴回值的型別，就能在自己的程式中取用它。</li>
+</ul>
+<p>在定義函式時，在對參數指定預設值時，等號兩側不要放空格：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">def function_name(parameter_0, parameter_1=&#x27;default value&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>在呼叫函式時傳入關鍵字引數時也應遵守這項約定，等號兩側不要放空格：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function_name(value_0, parameter_1=&#x27;value&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>PEP8 中建議程式碼一行的長度不要超過 79 個字元，這樣只要文字編輯器的視窗大小適中，就能完整呈現一整行程式。<br>如果參數很多，使得函式定義的長度超過 79 個字元，那麼可以在函式定義中所輸入的左號後面用 Enter 鍵換行，<br>並在下一行按兩次 Tab 鍵（ 8 格空白 ）內縮，讓所有參數和只內縮一層的函式本體有所區別。<br>大多數的文字編輯器在第一個參數設好後按下 Enter 鍵，都會有自動對齊後續參數的功能，其內縮會與第一個參數對齊：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def function_name(</span><br><span class="line">        parameter_0, parameter_1, parameter_2, </span><br><span class="line">        parameter_3, parameter_4, parameter_5):</span><br><span class="line">    function body...</span><br></pre></td></tr></table></figure>
+
+<p>如果程式或模組中含有很多函式，可用兩行空行來把相鄰的函式分隔開來，<br>這樣能更容易判斷上個函式在什麼位置是結尾，而下個函式是從哪裡開始。</p>
+<p>所有的 import 陳述句都要放程式檔案的最開頭的位置，除非程式檔案開頭已放了注釋說明程式功用的文字。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/function/" rel="tag"># function</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/function-list/" rel="next" title="函式 － 串列應用與任意數量的引數">
+                  <i class="fa fa-chevron-left"></i> 函式 － 串列應用與任意數量的引數
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/class-create-and-use/" rel="prev" title="類別 － 建立類別和實例的運用">
+                  類別 － 建立類別和實例的運用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A%E5%87%BD%E5%BC%8F%E5%84%B2%E5%AD%98%E5%9C%A8%E6%A8%A1%E7%B5%84%E4%B8%AD"><span class="nav-number">1.</span> <span class="nav-text">把函式儲存在模組中</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E6%95%B4%E5%80%8B%E6%A8%A1%E7%B5%84"><span class="nav-number">1.1.</span> <span class="nav-text">匯入整個模組</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E7%89%B9%E5%AE%9A%E7%9A%84%E5%87%BD%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">匯入特定的函式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-as-%E7%82%BA%E5%87%BD%E5%BC%8F%E6%8C%87%E5%AE%9A%E5%88%A5%E5%90%8D"><span class="nav-number">1.3.</span> <span class="nav-text">使用 as 為函式指定別名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-as-%E7%82%BA%E6%A8%A1%E7%B5%84%E6%8C%87%E5%AE%9A%E5%88%A5%E5%90%8D"><span class="nav-number">1.4.</span> <span class="nav-text">使用 as 為模組指定別名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E6%A8%A1%E7%B5%84%E4%B8%AD%E6%89%80%E6%9C%89%E5%87%BD%E5%BC%8F"><span class="nav-number">1.5.</span> <span class="nav-text">匯入模組中所有函式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E5%BC%8F%E7%9A%84%E9%A2%A8%E6%A0%BC"><span class="nav-number">2.</span> <span class="nav-text">函式的風格</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

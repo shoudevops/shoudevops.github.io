@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="程式設計的工作中常會碰到要檢查一組條件，並依據條件來進行對應的處理。Python 的 if 陳述句能檢查程式目前的狀況，並依據該狀況來進行適當的回應。 從簡單的範例開始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="if 陳述句 － 條件檢測">
+<meta property="og:url" content="https://shoudevops.github.io/Python/conditional-test/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="程式設計的工作中常會碰到要檢查一組條件，並依據條件來進行對應的處理。Python 的 if 陳述句能檢查程式目前的狀況，並依據該狀況來進行適當的回應。 從簡單的範例開始">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-02T02:06:57.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="conditional test">
+<meta property="article:tag" content="if">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/conditional-test/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>if 陳述句 － 條件檢測 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/conditional-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          if 陳述句 － 條件檢測
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-02 10:06:57" itemprop="dateCreated datePublished" datetime="2019-12-02T10:06:57+08:00">2019-12-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>程式設計的工作中常會碰到要檢查一組條件，並依據條件來進行對應的處理。<br><code>Python</code> 的 if 陳述句能檢查程式目前的狀況，並依據該狀況來進行適當的回應。</p>
+<h3 id="從簡單的範例開始"><a href="#從簡單的範例開始" class="headerlink" title="從簡單的範例開始"></a>從簡單的範例開始</h3><span id="more"></span>
+
+<p>例如有個串列裡存放了汽車廠牌，對大多數廠片來說，首字要以大寫字母呈現，但 BMW 要全部都大寫，<br>以下示範怎麼用 if陳述句正確地回應處理特別的情況：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> car <span class="keyword">in</span> cars:</span><br><span class="line">    <span class="keyword">if</span> car == <span class="string">&#x27;bmw&#x27;</span>:</span><br><span class="line">        <span class="built_in">print</span>(car.upper())</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(car.title())</span><br></pre></td></tr></table></figure>
+<p>for 迴圈中會先檢查目前的廠牌名稱是否為 ‘bmw’，<br>如果是，則以全部大寫來輸出，不然就是首字大寫來輸出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Audi</span><br><span class="line">BMW</span><br><span class="line">Subaru</span><br><span class="line">Toyota</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="條件檢測"><a href="#條件檢測" class="headerlink" title="條件檢測"></a>條件檢測</h3><p>每一條 if 陳述句的核心就是表示式，它會運算求值為<code>True</code>或<code>False</code>的結果，這個表示式就稱為條件檢測（ conditional test ）。<br><code>Python</code>會依據條件檢測的結果來決定是否要執行 if 陳述句內的程式碼。</p>
+<h4 id="檢查是否相等"><a href="#檢查是否相等" class="headerlink" title="檢查是否相等"></a>檢查是否相等</h4><p>大部份的條件檢測中都是對變數內目前的值與特定的值進行比較，最簡單的就是檢查變數的值是否與特定值相等：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; car = &#x27;bmw&#x27;</span><br><span class="line">&gt;&gt;&gt; car == &#x27;bmw&#x27;</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>先把 ‘bmw’ 指定到變數內，接著用兩個等號檢查變數中的值是否等於 ‘bmw’。<br>當變數中的值不是 ‘bmw’ 時，就會返回<code>False</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; car = &#x27;audi&#x27;</span><br><span class="line">&gt;&gt;&gt; car == &#x27;bmw&#x27;</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<h4 id="檢查是否相等時忽略大小寫"><a href="#檢查是否相等時忽略大小寫" class="headerlink" title="檢查是否相等時忽略大小寫"></a>檢查是否相等時忽略大小寫</h4><p><code>Python</code> 中檢查是否相等時是有區分大小寫的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; car = &#x27;Audi&#x27;</span><br><span class="line">&gt;&gt;&gt; car == &#x27;audi&#x27;</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<p>若不想區分大小寫，可以先把變數的值轉換成小寫再來比較：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; car = &#x27;Audi&#x27;</span><br><span class="line">&gt;&gt;&gt; car.lower() == &#x27;audi&#x27;</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>且lower() 函式不會變更存放在變數的值：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; car = &#x27;Audi&#x27;</span><br><span class="line">&gt;&gt;&gt; car.lower() == &#x27;audi&#x27;</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; car</span><br><span class="line">&#x27;Audi&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="檢查是否不相等"><a href="#檢查是否不相等" class="headerlink" title="檢查是否不相等"></a>檢查是否不相等</h4><p>若想檢查兩個值是否不相等，可用驚嘆號和等號（ !&#x3D; ）所組合的運算子來處理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">requested_topping = <span class="string">&#x27;mushrooms&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> requested_topping != <span class="string">&#x27;anchovies&#x27;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hold the anchovies!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>若變數與值不相等，<code>Python</code> 會返回<code>True</code> 並執行 if 陳述句後面的程式；<br>若這兩個值相等則返回<code>False</code> ，因此不會執行 if 陳述句後面的程式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hold the anchovies!</span><br></pre></td></tr></table></figure>
+
+<h4 id="數值的比較"><a href="#數值的比較" class="headerlink" title="數值的比較"></a>數值的比較</h4><p>比較檢查數值是很直接的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; age = 18</span><br><span class="line">&gt;&gt;&gt; age ==18</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>還可以檢查兩個數值是否不相等，若不相等時輸出一條文字訊息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">answer = <span class="number">17</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> answer != <span class="number">42</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;That is not the correct answer. Please try again!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>answer（ 17 ）不等於42，條件滿足，因此會執行內縮的程式區塊：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">That is not the correct answer. Please try again!</span><br></pre></td></tr></table></figure>
+<p>在條件陳述句中可放入各種數學的比較：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; age = 19</span><br><span class="line">&gt;&gt;&gt; age &lt; 21</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; age &lt;= 21</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; age &gt; 21</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; age &gt;=21</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<h4 id="檢測多個條件"><a href="#檢測多個條件" class="headerlink" title="檢測多個條件"></a>檢測多個條件</h4><p>有可需會同時間需檢測多個條件，在這種狀況下，<code>and</code>和<code>or</code>關鍵字能幫得上忙</p>
+<h5 id="使用-and-檢測多個條件"><a href="#使用-and-檢測多個條件" class="headerlink" title="使用 and 檢測多個條件"></a>使用 and 檢測多個條件</h5><p>若要檢測兩個條件是否為<code>True</code>，可用 and 關鍵字把兩個條件連結起來，<br>如果兩個條件都是 True，則整個連結起來的表示式就為 True，<br>若只要有一個條件是 False，則整個表示式就為 False：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; age_0 = 22</span><br><span class="line">&gt;&gt;&gt; age_1 = 18</span><br><span class="line">&gt;&gt;&gt; age_0 &gt;= 21 and age_1 &gt;= 21</span><br><span class="line">False</span><br><span class="line">&gt;&gt;&gt; age_1 = 22</span><br><span class="line">&gt;&gt;&gt; age_0 &gt;= 21 and age_1 &gt;= 21</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>若要增加可讀性，可以將每個單獨的檢測條件用括弧括起來，但這並不是必要的處理：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(age_0 &gt;= 21) and (age_1 &gt;= 21)</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用-or-檢測多個條件"><a href="#使用-or-檢測多個條件" class="headerlink" title="使用 or 檢測多個條件"></a>使用 or 檢測多個條件</h5><p>or 關鍵字也允許進行多個條件的檢測，只要有一個條件滿足，就能通過整個檢測。<br>若以 or 連接兩個條件，只有在兩個條件都沒通過時，整個 or 表示式才會是 False：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; age_0 = 22</span><br><span class="line">&gt;&gt;&gt; age_1 = 18</span><br><span class="line">&gt;&gt;&gt; age_0 &gt;= 21 or age_1 &gt;= 21</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; age_0 = 18</span><br><span class="line">&gt;&gt;&gt; age_0 &gt;= 21 or age_1 &gt;= 21</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<h4 id="檢測某個特定值是否在串列之中"><a href="#檢測某個特定值是否在串列之中" class="headerlink" title="檢測某個特定值是否在串列之中"></a>檢測某個特定值是否在串列之中</h4><p>在進行處理動作之前有件重要的事是，先檢測某個特定值是否有在串列之中，<br>若要判別某個特定值是否在串列之後，可以使用 <code>in</code> 關鍵字來配合：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; requested_toppings = [&#x27;mushroom&#x27;, &#x27;onions&#x27;, &#x27;pineapple&#x27;]</span><br><span class="line">&gt;&gt;&gt; requested_toppings = [&#x27;mushrooms&#x27;, &#x27;onions&#x27;, &#x27;pineapple&#x27;]</span><br><span class="line">&gt;&gt;&gt; &#x27;mushrooms&#x27; in requested_toppings</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; &#x27;pepperoni&#x27; in requested_toppings</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+
+<h4 id="檢測某個特定值是否不在串列中"><a href="#檢測某個特定值是否不在串列中" class="headerlink" title="檢測某個特定值是否不在串列中"></a>檢測某個特定值是否不在串列中</h4><p>有些時候想要確定在串列中並沒有存放某個特定值，在這樣的情況下，可使用 <code>not in</code> 關鍵字來協助：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">banned_users = [<span class="string">&#x27;andrew&#x27;</span>, <span class="string">&#x27;carolina&#x27;</span>, <span class="string">&#x27;david&#x27;</span>]</span><br><span class="line">user = <span class="string">&#x27;marie&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> user <span class="keyword">not</span> <span class="keyword">in</span> banned_users:</span><br><span class="line">    <span class="built_in">print</span>(user.title() + <span class="string">&quot;, you can post a response if you wish.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>如果 user的值沒有在 banned_users串列中，Python 會返回True，下到內縮的程式區塊會執行：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Marie, you can post a response if you wish.</span><br></pre></td></tr></table></figure>
+
+<h4 id="布林表示式"><a href="#布林表示式" class="headerlink" title="布林表示式"></a>布林表示式</h4><p>當學習更多關於程式設計的課題，就會遇到「布林表示式（ Boolean  expression）」，<br>它只是條件檢測的另一個稱呼而已。與條件檢測的表示式一樣，布林表示式的求值結果一定是<code>True</code>或<code>False</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">game_active = <span class="literal">True</span></span><br><span class="line">can_edit = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/conditional-test/" rel="tag"># conditional test</a>
+              <a href="/tags/if/" rel="tag"># if</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/number-slice-tuple/" rel="next" title="串列的操作與運用 Part II.">
+                  <i class="fa fa-chevron-left"></i> 串列的操作與運用 Part II.
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/if-statements/" rel="prev" title="if 陳述句">
+                  if 陳述句 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%9E%E7%B0%A1%E5%96%AE%E7%9A%84%E7%AF%84%E4%BE%8B%E9%96%8B%E5%A7%8B"><span class="nav-number">1.</span> <span class="nav-text">從簡單的範例開始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%9D%E4%BB%B6%E6%AA%A2%E6%B8%AC"><span class="nav-number">2.</span> <span class="nav-text">條件檢測</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89"><span class="nav-number">2.1.</span> <span class="nav-text">檢查是否相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E6%98%AF%E5%90%A6%E7%9B%B8%E7%AD%89%E6%99%82%E5%BF%BD%E7%95%A5%E5%A4%A7%E5%B0%8F%E5%AF%AB"><span class="nav-number">2.2.</span> <span class="nav-text">檢查是否相等時忽略大小寫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E6%98%AF%E5%90%A6%E4%B8%8D%E7%9B%B8%E7%AD%89"><span class="nav-number">2.3.</span> <span class="nav-text">檢查是否不相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B8%E5%80%BC%E7%9A%84%E6%AF%94%E8%BC%83"><span class="nav-number">2.4.</span> <span class="nav-text">數值的比較</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%B8%AC%E5%A4%9A%E5%80%8B%E6%A2%9D%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">檢測多個條件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-and-%E6%AA%A2%E6%B8%AC%E5%A4%9A%E5%80%8B%E6%A2%9D%E4%BB%B6"><span class="nav-number">2.5.1.</span> <span class="nav-text">使用 and 檢測多個條件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-or-%E6%AA%A2%E6%B8%AC%E5%A4%9A%E5%80%8B%E6%A2%9D%E4%BB%B6"><span class="nav-number">2.5.2.</span> <span class="nav-text">使用 or 檢測多個條件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%B8%AC%E6%9F%90%E5%80%8B%E7%89%B9%E5%AE%9A%E5%80%BC%E6%98%AF%E5%90%A6%E5%9C%A8%E4%B8%B2%E5%88%97%E4%B9%8B%E4%B8%AD"><span class="nav-number">2.6.</span> <span class="nav-text">檢測某個特定值是否在串列之中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AA%A2%E6%B8%AC%E6%9F%90%E5%80%8B%E7%89%B9%E5%AE%9A%E5%80%BC%E6%98%AF%E5%90%A6%E4%B8%8D%E5%9C%A8%E4%B8%B2%E5%88%97%E4%B8%AD"><span class="nav-number">2.7.</span> <span class="nav-text">檢測某個特定值是否不在串列中</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%83%E6%9E%97%E8%A1%A8%E7%A4%BA%E5%BC%8F"><span class="nav-number">2.8.</span> <span class="nav-text">布林表示式</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

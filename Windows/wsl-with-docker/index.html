@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本篇教學會說明如何在WSL 下使用Docker 指令：主要針對以下步驟說明：  開啟Windows Hyper-V 安裝與設定Docker Desktop for Windows WSL 安裝Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker on WSL">
+<meta property="og:url" content="https://shoudevops.github.io/Windows/wsl-with-docker/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="本篇教學會說明如何在WSL 下使用Docker 指令：主要針對以下步驟說明：  開啟Windows Hyper-V 安裝與設定Docker Desktop for Windows WSL 安裝Docker">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/controlpanel_programs.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/programs_open_close_windows.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/windows_functions_hyper_v.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/docker_get_stable.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/docker_expose_daemon.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/add_to_profile.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/docker_command.jpg">
+<meta property="article:published_time" content="2020-08-03T06:30:18.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.921Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="wsl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shoudevops.github.io/Windows/wsl-with-docker/controlpanel_programs.jpg">
+
+<link rel="canonical" href="https://shoudevops.github.io/Windows/wsl-with-docker/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Docker on WSL | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Windows/wsl-with-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker on WSL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-03 14:30:18" itemprop="dateCreated datePublished" datetime="2020-08-03T14:30:18+08:00">2020-08-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本篇教學會說明如何在WSL 下使用Docker 指令：<br>主要針對以下步驟說明：</p>
+<ol>
+<li>開啟Windows Hyper-V</li>
+<li>安裝與設定Docker Desktop for Windows</li>
+<li>WSL 安裝Docker</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="開啟Windows-Hyper-V"><a href="#開啟Windows-Hyper-V" class="headerlink" title="開啟Windows Hyper-V"></a>開啟Windows Hyper-V</h3><p>開啟Hyper-V 的方式有分為指令與UI 操作，這裡僅介紹UI 操作<br>在【控制台】可以找到【程式和功能】</p>
+<img src="/Windows/wsl-with-docker/controlpanel_programs.jpg" class="" title="程式與功能">
+
+<p>左邊選單可以找到【開啟或關閉Windows 功能】</p>
+<img src="/Windows/wsl-with-docker/programs_open_close_windows.jpg" class="" title="開啟或關閉Windows 功能">
+
+<p>【Windows 功能】視窗內將【Hyper-V】勾選</p>
+<img src="/Windows/wsl-with-docker/windows_functions_hyper_v.jpg" class="" title="勾選Hyper-V">
+
+<p>按下【確定】後，Windows 會自動下載必要檔案進行安裝，並要求重新啟動，重新啟動後就可以進行下個步驟</p>
+<h3 id="安裝與設定Docker-Desktpo-for-Windows"><a href="#安裝與設定Docker-Desktpo-for-Windows" class="headerlink" title="安裝與設定Docker Desktpo for Windows"></a>安裝與設定Docker Desktpo for Windows</h3><p>到Docker Hub的<a target="_blank" rel="noopener" href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">Docker Desktop for Windows</a><br>點擊【Get Stable】下載安裝檔</p>
+<img src="/Windows/wsl-with-docker/docker_get_stable.jpg" class="" title="Get Stable">
+
+<p>安裝步驟就一直點【Next】就好，就不再描述，之後就可以在WSL 安裝Docker</p>
+<h3 id="WSL-安裝Docker"><a href="#WSL-安裝Docker" class="headerlink" title="WSL 安裝Docker"></a>WSL 安裝Docker</h3><p>進到WSL 的Terminal ，並執行下列指令安裝Docker</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker.io</span><br><span class="line">sudo usermod.aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<p>安裝完成後，會發現不管下什麼指令，都會出現錯誤訊息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?. See &#x27;docker run --help&#x27;.</span><br></pre></td></tr></table></figure>
+<p>這是因為WSL 本身無法支援Docker Engine（WSL2有支援）。<br>若希望能在WSl 中運行Docker，就需要將Docker Client expose 到Windows 的Docker Engine（這就是需要安裝Docker Desktop for Windows）</p>
+<p>開啟<code>Docker Desktop for Windows</code> 的<code>Settings</code> 介面，並在<code>General</code> 中勾選</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expose daemon on tcp://localhost:2375 without TLS</span><br></pre></td></tr></table></figure>
+<img src="/Windows/wsl-with-docker/docker_expose_daemon.jpg" class="" title="Expose daemon">
+
+<p>之後將以下指令加入到<code>~/.profile</code> 中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export DOCKER_HOST=127.0.0.1:2375</span><br></pre></td></tr></table></figure>
+<img src="/Windows/wsl-with-docker/add_to_profile.jpg" class="" title="Add command to profile">
+
+<p>並將該檔案更新</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.profile</span><br></pre></td></tr></table></figure>
+
+<p>就可以執行Docker 指令了！</p>
+<img src="/Windows/wsl-with-docker/docker_command.jpg" class="" title="Docker Version">
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+              <a href="/tags/wsl/" rel="tag"># wsl</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Windows/windows-subsystem-for-linux/" rel="next" title="Windows Subsystem for Linux(WSL) 環境配置">
+                  <i class="fa fa-chevron-left"></i> Windows Subsystem for Linux(WSL) 環境配置
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Windows/wsl-terminal/" rel="prev" title="Windows Terminal 搭配WSL">
+                  Windows Terminal 搭配WSL <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%96%8B%E5%95%9FWindows-Hyper-V"><span class="nav-number">1.</span> <span class="nav-text">開啟Windows Hyper-V</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9ADocker-Desktpo-for-Windows"><span class="nav-number">2.</span> <span class="nav-text">安裝與設定Docker Desktpo for Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WSL-%E5%AE%89%E8%A3%9DDocker"><span class="nav-number">3.</span> <span class="nav-text">WSL 安裝Docker</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

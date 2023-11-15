@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="匯入類別隨著不斷為類別新增功能，程式檔會變得愈來愈長，就算已使用繼承功能也是如此。為遵循 Python 的設計理念，檔案要盡量維持簡潔乾淨。因此 Python 允許我們把類別儲存在模組中，在需要使用時由主程式匯入使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="類別 － 匯入類別">
+<meta property="og:url" content="https://shoudevops.github.io/Python/class-import/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="匯入類別隨著不斷為類別新增功能，程式檔會變得愈來愈長，就算已使用繼承功能也是如此。為遵循 Python 的設計理念，檔案要盡量維持簡潔乾淨。因此 Python 允許我們把類別儲存在模組中，在需要使用時由主程式匯入使用。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-18T02:15:39.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="class">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/class-import/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>類別 － 匯入類別 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/class-import/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          類別 － 匯入類別
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-18 10:15:39" itemprop="dateCreated datePublished" datetime="2019-12-18T10:15:39+08:00">2019-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="匯入類別"><a href="#匯入類別" class="headerlink" title="匯入類別"></a>匯入類別</h3><p>隨著不斷為類別新增功能，程式檔會變得愈來愈長，就算已使用繼承功能也是如此。<br>為遵循 <code>Python</code> 的設計理念，檔案要盡量維持簡潔乾淨。<br>因此 <code>Python</code> 允許我們把類別儲存在模組中，在需要使用時由主程式匯入使用。</p>
+<span id="more"></span>
+
+<h4 id="匯入單個類別"><a href="#匯入單個類別" class="headerlink" title="匯入單個類別"></a>匯入單個類別</h4><p>先建立一個只放入 Car 類別的模組（ car.py ），並從現在開始使用這個模組的程式都要以更具體的名字來命名，如：my_car.py。<br>下列是 car.py 模組的內容，只放入 Car 類別的程式碼：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;A class that can be used to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br></pre></td></tr></table></figure>
+<p>在第一行放入模組層級的文件字串（ docstring ），描述此模組的內容及其功用，在建立模組時都應該要放入這樣的文件字串。</p>
+<p>再來建立另一份 my_car.py 檔案，在其中匯入 Car 類別來建立實例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> car <span class="keyword">import</span> Car</span><br><span class="line"></span><br><span class="line">my_new_car = Car(<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;a4&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_new_car.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_new_car.odometer_reading = <span class="number">23</span></span><br><span class="line">my_new_car.read_odometer()</span><br></pre></td></tr></table></figure>
+<p>第一行的 import 陳述句會讓 <code>Python</code> 開啟 car 模組，並匯入 Car 類別。<br>如此就可以直接取用 Car 類別，執行的輸出結果如下所示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Audi A4</span><br><span class="line">This car has 23 miles on it.</span><br></pre></td></tr></table></figure>
+<p>匯入類別是很有效率的程式設計方式。若在這支程式中直接寫入整個 Car 類別，那檔案內容就會變很長。<br>將這個類別移到一個單獨的模組檔案中，再匯入模組，一樣可以使用所有的功能，但主程式的檔案就變得簡潔乾淨而易讀好懂。<br>這樣的處理方式能把大部份的程式邏輯存放在獨立的檔案中，確定好這個類別有遵照我們所期望的方式運作，就可以不再管這個檔案了，<br>轉而把程式設計的施點放在主程式更高層的邏輯思維上。</p>
+<h4 id="在模組中存放多個類別"><a href="#在模組中存放多個類別" class="headerlink" title="在模組中存放多個類別"></a>在模組中存放多個類別</h4><p>在一個模組中可存放任意數量的類別，但放在其中的類別彼此之間還是要有某種相關性比較好。<br>Battery 類別和 ElectricCar 類別都是車子相關功用的塑模，所以把它們都放入 car.py 模組內：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;A set of classes used to represent gas and electric cars.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Battery</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a battery for an electric car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, battery_size=<span class="number">70</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize the battery&#x27;s attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.battery_size = battery_size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_range</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement about the range this battery provdies.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.battery_size == <span class="number">70</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">240</span></span><br><span class="line">        <span class="keyword">elif</span> self.battery_size == <span class="number">85</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">270</span></span><br><span class="line">        </span><br><span class="line">        message = <span class="string">&quot;This car can go approximately &quot;</span> + <span class="built_in">str</span>(<span class="built_in">range</span>)</span><br><span class="line">        message += <span class="string">&quot; miles on a full charge.&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(message)      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery = Battery()</span><br></pre></td></tr></table></figure>
+<p>現在可以建立一個 my_electric_car.py 的檔案，匯入 ElectricCar 類別，再建立一台電動車實例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> car <span class="keyword">import</span> ElectricCar</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br><span class="line">my_tesla.battery.describe_battery()</span><br><span class="line">my_tesla.battery.get_range()</span><br></pre></td></tr></table></figure>
+<p>輸出的結果與之前所看到的相同，但這支程式把大部份的處理邏輯都隱藏到模組中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2016 Tesla Model S</span><br><span class="line">This car has a 70-kWh battery.</span><br><span class="line">This car can go approximately 240 miles on a full charge.</span><br></pre></td></tr></table></figure>
+
+<h4 id="從模組中匯入多個類別"><a href="#從模組中匯入多個類別" class="headerlink" title="從模組中匯入多個類別"></a>從模組中匯入多個類別</h4><p>也可以依據需要在主程式檔案中匯入多個類別。<br>假設要在同一支程式中建立一般車和電動車的實例，這衡就需要把 Car 和 ElectricCar 類別都匯入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> car <span class="keyword">import</span> Car, ElectricCar</span><br><span class="line"></span><br><span class="line">my_beetle = Car(<span class="string">&#x27;volkswagen&#x27;</span>, <span class="string">&#x27;beetle&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_beetle.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br></pre></td></tr></table></figure>
+<p>第一行是指從一個模組中匯入多個類別，其中多個類別是以逗號分隔開。匯入必要的類別後就可依據需要建立類別各自的實例。<br>這個範例建立了一台 Volkswagen Beetle 的一般車實例與 Tesla Roadster 的電動車實例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Volkswagen Beetle</span><br><span class="line">2016 Tesla Roadster</span><br></pre></td></tr></table></figure>
+
+<h4 id="匯入整個模組"><a href="#匯入整個模組" class="headerlink" title="匯入整個模組"></a>匯入整個模組</h4><p>還可以匯入整個模組，再用句點標示法存取所需的類別。這樣匯入方法簡單，程式也易讀好懂。<br>由於建立類別實例的程式碼都含有模組名稱和句點，因此不會與目前檔案中使用的相同名稱產生衝突。<br>下列範例匯入整個 car 模組，並建立一台一般車和一台電動車：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> car</span><br><span class="line"></span><br><span class="line">my_beetle = car.Car(<span class="string">&#x27;volkswagen&#x27;</span>, <span class="string">&#x27;beetle&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_beetle.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_tesla = car.ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;roadster&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br></pre></td></tr></table></figure>
+<p>第一行即匯入整個 car 模組，接著用 module_name.class_name 語法存取需要的類別。<br>建立一台 Volkswagen Beetle 車子實例與 Tesla Roadster 車子實例。</p>
+<h4 id="匯入模組中的所有類別"><a href="#匯入模組中的所有類別" class="headerlink" title="匯入模組中的所有類別"></a>匯入模組中的所有類別</h4><p>我們可以匯入模組中的每一個類別，語法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from module_name import *</span><br></pre></td></tr></table></figure>
+<p>不推薦使用這種方式匯入，假如可以在程式檔開端處所看到的 import 陳述句中看到匯入哪些類別，對於程式的理解是很有幫助的。<br>上面範例以一個星號匯入所有類別是很難看出到底匯了什麼類別，也可能引起名稱衝突之類的問題，<br>如果不小心匯入一個與主程式檔案內取名稱同的類別，就會引發判讀上的錯誤。</p>
+<p>當需要從一個模組中要匯入很多類別時，最好還是以匯入整個模組的方式匯入，<br>然後用 module_name.class_name 語法來存取需要的類別。<br>這樣雖然程式檔案的開頭並沒有列出用到的模組，但因為存取匯入類別需要加上模組名稱和句點，<br>就能清楚知道程式中哪些地方用了這樣的匯入模組，進而避免類別同名的衝突。</p>
+<h4 id="在模組中匯入另一個模組"><a href="#在模組中匯入另一個模組" class="headerlink" title="在模組中匯入另一個模組"></a>在模組中匯入另一個模組</h4><p>有時候需要把類別分到多個模組內，避免某個模組過於龐大，或避免在同一個模組中儲存太多不相干的類別。<br>把類別存放到多個模組中時，可能會發現某個模組中的類別是依賴著另一個模組中的類別，<br>在這種情況下，就會在模組中匯入所依賴的模組。</p>
+<p>例如 Car 類別存放在一個模組中，而 ElectricCar 和 Battery 類別則存放在另一個模組。<br>把第二個模組取名為 electric_car.py ，並將 ElectricCar 和 Bettery 類別移到這個模組中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;A set of classes that can be used to represent electric cars.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> car <span class="keyword">import</span> Car</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Battery</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a battery for an electric car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, battery_size=<span class="number">70</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize the battery&#x27;s attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.battery_size = battery_size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_range</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement about the range this battery provdies.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.battery_size == <span class="number">70</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">240</span></span><br><span class="line">        <span class="keyword">elif</span> self.battery_size == <span class="number">85</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">270</span></span><br><span class="line"></span><br><span class="line">        message = <span class="string">&quot;This car can go approximately &quot;</span> + <span class="built_in">str</span>(<span class="built_in">range</span>)</span><br><span class="line">        message += <span class="string">&quot; miles on a full charge.&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(message)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery = Battery()</span><br></pre></td></tr></table></figure>
+<p>ElectricCar 類別需要用到 Car 這個父類別，因此直接把 Car 類別匯入這個模組內。</p>
+<p>現在就可以從每個模組中匯入需要的類別，並根據需要建立各種類型的車子實例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> car <span class="keyword">import</span> Car</span><br><span class="line"><span class="keyword">from</span> electric_car <span class="keyword">import</span> ElectricCar</span><br><span class="line"></span><br><span class="line">my_beetle = Car(<span class="string">&#x27;volkswagen&#x27;</span>, <span class="string">&#x27;beetle&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_beetle.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;roadster&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br></pre></td></tr></table></figure>
+<p>分別匯入 car 模組中的 Car 類別與 electric_car 模組中的 ElectricCar 類別。<br>從輸出結果來看這兩台車子實例都有正確建立：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Volkswagen Beetle</span><br><span class="line">2016 Tesla Roadster</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/class/" rel="tag"># class</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/class-inheritance/" rel="next" title="類別 － 繼承">
+                  <i class="fa fa-chevron-left"></i> 類別 － 繼承
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/files-read-write/" rel="prev" title="檔案 － 讀取與寫入">
+                  檔案 － 讀取與寫入 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E9%A1%9E%E5%88%A5"><span class="nav-number">1.</span> <span class="nav-text">匯入類別</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E5%96%AE%E5%80%8B%E9%A1%9E%E5%88%A5"><span class="nav-number">1.1.</span> <span class="nav-text">匯入單個類別</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E6%A8%A1%E7%B5%84%E4%B8%AD%E5%AD%98%E6%94%BE%E5%A4%9A%E5%80%8B%E9%A1%9E%E5%88%A5"><span class="nav-number">1.2.</span> <span class="nav-text">在模組中存放多個類別</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%9E%E6%A8%A1%E7%B5%84%E4%B8%AD%E5%8C%AF%E5%85%A5%E5%A4%9A%E5%80%8B%E9%A1%9E%E5%88%A5"><span class="nav-number">1.3.</span> <span class="nav-text">從模組中匯入多個類別</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E6%95%B4%E5%80%8B%E6%A8%A1%E7%B5%84"><span class="nav-number">1.4.</span> <span class="nav-text">匯入整個模組</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%AF%E5%85%A5%E6%A8%A1%E7%B5%84%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E9%A1%9E%E5%88%A5"><span class="nav-number">1.5.</span> <span class="nav-text">匯入模組中的所有類別</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E6%A8%A1%E7%B5%84%E4%B8%AD%E5%8C%AF%E5%85%A5%E5%8F%A6%E4%B8%80%E5%80%8B%E6%A8%A1%E7%B5%84"><span class="nav-number">1.6.</span> <span class="nav-text">在模組中匯入另一個模組</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

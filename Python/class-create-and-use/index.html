@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="物件導向程式設計（ Object-oriented programming ）是編寫應用軟體最有效率的方法之一。在物件導向程式設計中，我們設計編寫出類別（ class ），用來代表現實世界的各種事物和情景，並以這些類別為基礎來建立物件。從類別建立物件的過程稱之為例示或實例化（ instantiation ），這樣就能運用類別的實例（ instance ）。 建立和使用類別使用類別（ class ）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="類別 － 建立類別和實例的運用">
+<meta property="og:url" content="https://shoudevops.github.io/Python/class-create-and-use/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="物件導向程式設計（ Object-oriented programming ）是編寫應用軟體最有效率的方法之一。在物件導向程式設計中，我們設計編寫出類別（ class ），用來代表現實世界的各種事物和情景，並以這些類別為基礎來建立物件。從類別建立物件的過程稱之為例示或實例化（ instantiation ），這樣就能運用類別的實例（ instance ）。 建立和使用類別使用類別（ class ）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-15T03:08:54.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.887Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="class">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/class-create-and-use/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>類別 － 建立類別和實例的運用 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/class-create-and-use/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          類別 － 建立類別和實例的運用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-15 11:08:54" itemprop="dateCreated datePublished" datetime="2019-12-15T11:08:54+08:00">2019-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>物件導向程式設計（ Object-oriented programming ）是編寫應用軟體最有效率的方法之一。<br>在物件導向程式設計中，我們設計編寫出類別（ class ），用來代表現實世界的各種事物和情景，並以這些類別為基礎來建立物件。<br>從類別建立物件的過程稱之為例示或實例化（ instantiation ），這樣就能運用類別的實例（ instance ）。</p>
+<h3 id="建立和使用類別"><a href="#建立和使用類別" class="headerlink" title="建立和使用類別"></a>建立和使用類別</h3><p>使用類別（ class ）可以對幾乎任何事物進行塑模（ model ）。</p>
+<span id="more"></span>
+
+<p>接下來會編寫一個代表小狗的簡單 Dog 類別，此類別代表的是任意一隻小狗，並不是只針對某一特定的小狗。<br>思考一下大多數的寵物狗具有什麼特性？有名字和年齡（資訊），還會蹲下和翻滾（行為），<br>在 Dog 類別中都放入這些資訊和行為。此類別會讓 <code>Python</code> 知道如何建立代表小狗的物件。<br>這個類別後，將會使用它建立代表特定小狗的實例。</p>
+<h4 id="建立-Dog-類別"><a href="#建立-Dog-類別" class="headerlink" title="建立 Dog 類別"></a>建立 Dog 類別</h4><p>以 Dog 類別所建立的每個實例都會存放有名字（ name ）和年齡（ age ），<br>也讓每隻小狗有蹲下（ sit() ）和翻滾（ roll_over() ）的行為能力：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a dog.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize name and age attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sit</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate a dog sitting in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; is now sitting&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">roll_over</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate rolling over in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; rolled over!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>先定義一個 Dog 的類別，在 <code>Python</code> 中，第一個字母為大寫是類別的命名慣例。<br>這個類別定義的括號中是空的，因為我們要從零開始來建立這個類別。</p>
+<h5 id="init-方法"><a href="#init-方法" class="headerlink" title="__init__ 方法"></a><code>__init__</code> 方法</h5><p>屬於類別的函式稱為方法（method），之前學習函式的一切都適用於這裡所提到的「方法」，唯一最不同的就是呼叫方法的方式。<br><code>__init__</code>方法是一種特殊的方法，每次當我們以 Dog 類別為基礎建立新的實例時， <code>Python</code> 都會自動執行這個方法。<br>這個方法的名字在開頭跟結尾都有兩個底線，這樣的命名慣例可防止 <code>Python</code> 的預設方法名稱與您建立的方法名稱發生衝突。</p>
+<p>定義<code>__init__</code>方法有三個參數：self、name 和 age 。在此方法的定義中， self 是必要的，必須放在其它參數的前面。<br><code>self</code> 必須放在定義中，因為當 <code>Python</code> 隨後呼叫這個<code>__init__</code>方法時，方法的呼叫會自動傳入 self 引數。<br>當建立 Dog 實例時， <code>Python</code> 會呼叫 Dog 類別的 <code>__init__</code> 方法。<br>我們會把 name 和 age 當成引數傳入 Dog() ，而 self 則會自動傳入，因此不需要由我們傳入。<br>每當以 Dog 類別為基礎建立實例時，只需要提供 name 和 age 兩個引數值就可以了。</p>
+<p>在<code>__init__</code>方法下內縮的程式區塊內，兩個變數都名字前面都有個 self 開頭，<br>以 self 為前導的變數都能提供類別中所有方法使用，還可透過任何由類別所建立的實例來存取這些變數。<br>self.name &#x3D; name 會取得 name 參數中的值，並存放到 name 變數中，該變數會連接目前所建立的實例。<br>self.age &#x3D; age 這行的處理過程跟 self.name &#x3D; name 相同。<br>可由實例來存取的數就稱為屬性（ attribute ）。</p>
+<p>Dog 類別中有定義兩個方法：sit() 和 roll_over()。<br>因為這兩個方法不需要額外的資訊，所以只定義一個 self 參數即可。之後建立的實例將可存取這兩個方法。</p>
+<h4 id="從類別建立實例"><a href="#從類別建立實例" class="headerlink" title="從類別建立實例"></a>從類別建立實例</h4><p>可以將類別想像成一組指令，指示如何建立實例的指令。<br>Dog 類別就是一系列的指令，讓 <code>Python</code> 知道如何建立代表某隻小狗的個別實例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a dog.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize name and age attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sit</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate a dog sitting in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; is now sitting&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">roll_over</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate rolling over in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; rolled over!&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_dog = Dog(<span class="string">&#x27;willie&#x27;</span>, <span class="number">6</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My dog&#x27;s name is &quot;</span> + my_dog.name.title() + <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My dog is &quot;</span> + <span class="built_in">str</span>(my_dog.age) + <span class="string">&quot; years old.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>在這裡建立一個名為 ‘willie’、年齡為 6 歲的小狗，<br><code>Python</code>讀到這行時，會使用 ‘willie’ 和 6 當成引數呼叫 Dog 類別中的 <code>__init__()</code>方法。<br><code>__init__()</code>方法建立一個表特定小狗的實例，並使用我們所提供的值來設定 name 和 age 屬性。<br><code>__init__()</code>方法並沒有很明顯地放入 return 陳述句，但 <code>Python</code> 會自動返回一個代表小狗的實例。</p>
+<h5 id="存取屬性"><a href="#存取屬性" class="headerlink" title="存取屬性"></a>存取屬性</h5><p>若要存取實例的屬性，可使用句點標示法，<br>我們編寫了下最程式碼來存取 my_dog 的 name 屬性的值：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my_dog.name</span><br></pre></td></tr></table></figure>
+<p>句點標示法在 <code>Python</code> 中很常用到，這種語法展示了 <code>Python</code> 如何取得屬性的值。<br><code>Python</code> 會先找到 my_dog 實例，再尋找與這個實例連接的 name 屬性，這個屬性與 Dog 類別中 self.name 指到的屬性相同。<br>my_dog.age 也用相同方式來取得 age 的值。</p>
+<p>輸出結果為我們期望的 my_dog 資訊的匯整：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">My dog&#x27;s name is Willie.</span><br><span class="line">My dog is 6 years old.</span><br></pre></td></tr></table></figure>
+
+<h5 id="呼叫方法"><a href="#呼叫方法" class="headerlink" title="呼叫方法"></a>呼叫方法</h5><p>以 Dog 類別為基礎建立實例後，就能使用句點標示法來呼叫 Dog 類別中所定義的任何方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a dog.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize name and age attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sit</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate a dog sitting in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; is now sitting&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">roll_over</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate rolling over in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; rolled over!&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_dog = Dog(<span class="string">&#x27;willie&#x27;</span>, <span class="number">6</span>)</span><br><span class="line">my_dog.sit()</span><br><span class="line">my_dog.roll_over()</span><br></pre></td></tr></table></figure>
+<p>呼叫方法可寫入實例的名稱（ my_dog ）和要呼叫的方法，並以句點分隔。<br>執行到 my_dog.sit() 時， <code>Python</code> 會在 Dog 類別中找到 sit() 法方並執行其中的程式。<br><code>Python</code> 也會以相同的方式解讀和處理 my_dog.roll_over()：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Willie is now sitting</span><br><span class="line">Willie rolled over!</span><br></pre></td></tr></table></figure>
+
+<h5 id="建立多個實例"><a href="#建立多個實例" class="headerlink" title="建立多個實例"></a>建立多個實例</h5><p>可以從類別依照需要建立多個實例，再建立另一個名為 your_dog的實例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a dog.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, age</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize name and age attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.age = age</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sit</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate a dog sitting in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; is now sitting&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">roll_over</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Simulate rolling over in response to a command.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(self.name.title() + <span class="string">&quot; rolled over!&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_dog = Dog(<span class="string">&#x27;willie&#x27;</span>, <span class="number">6</span>)</span><br><span class="line">your_dog = Dog(<span class="string">&#x27;lucy&#x27;</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My dog&#x27;s name is &quot;</span> + my_dog.name.title() + <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;My dog is &quot;</span> + <span class="built_in">str</span>(my_dog.age) + <span class="string">&quot; years old.&quot;</span>)</span><br><span class="line">my_dog.sit()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nYour dog&#x27;s name is &quot;</span> + your_dog.name.title() + <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Your dog is &quot;</span> + <span class="built_in">str</span>(your_dog.age) + <span class="string">&quot; years old.&quot;</span>)</span><br><span class="line">your_dog.sit()</span><br></pre></td></tr></table></figure>
+<p>每個小狗都是單獨的實例，有屬於自己的一組屬性，也能執行相同的方法：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">My dog&#x27;s name is Willie.</span><br><span class="line">My dog is 6 years old.</span><br><span class="line">Willie is now sitting</span><br><span class="line"></span><br><span class="line">Your dog&#x27;s name is Lucy.</span><br><span class="line">Your dog is 3 years old.</span><br><span class="line">Lucy is now sitting</span><br></pre></td></tr></table></figure>
+<p>就算給第二隻小狗相同的名字和年齡，<code>Python</code> 還是會以 Dog 類別為基礎建立二個個別的實例。<br>可以依照需要以類別為基礎來建立所需數量的實例，條件是每個實例都要分別存放在不同的變數內，或放入串列或字典中不同的位置上。</p>
+<hr>
+<h3 id="類別和實例的運用"><a href="#類別和實例的運用" class="headerlink" title="類別和實例的運用"></a>類別和實例的運用</h3><p>我們可以使用類別來對現實中的場景進行塑模，類別設計編寫好之後，多數的時間都會花在使用以這個類別所建立的實例上。<br>目前第一個要處理的工作是修改實例的屬性，可以直接修改實例的屬性，也可以編寫出方法，以特定的方式來進行更新修改。</p>
+<h4 id="Car-類別"><a href="#Car-類別" class="headerlink" title="Car 類別"></a>Car 類別</h4><p>下列是設計編寫出一個代表車子的類別，其中存放了關於中子的資訊，還有一個匯整這些資訊的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">my_new_car = Car(<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;a4&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_new_car.get_descriptive_name())</span><br></pre></td></tr></table></figure>
+<p>先定義了<code>__init__()</code>方法，在方法中加入三個參數：make、model 和 year 。<br>建立新的 Car 實例時要傳入製造廠商、型號和生產年份等資訊。<br>再來定義名稱為 get_descriptive_name() 的方法，使用 year、name 和 model 等屬性建來一條描述車子的文句，<br>並且用了 self.name、self.model 和 self.year，用以存取屬性的值。<br>接著以 Car 類別為基礎建立一個實例，並將它指定給 my_new_car 變數來存放。<br>隨後呼叫 get_descriptive_name() 方法，輸出關於我們所擁有車子的描述文句：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016 Audi A4</span><br></pre></td></tr></table></figure>
+<p>接著會為它新增一個隨時間變化的屬性來讓這個類別更有趣，我們將新增一個儲存汽車里程整數的屬性。</p>
+<h4 id="對屬性設定預設值"><a href="#對屬性設定預設值" class="headerlink" title="對屬性設定預設值"></a>對屬性設定預設值</h4><p>類別中每個屬性都要有初姓值，就算這個值是 0 或空字串 ‘’ 都可以。在某些情況下，在<code>__init__()</code>方法中指定這初始值是允許的。<br>如果對某個屬性進行了這樣的設定，就無須放入對此屬性提供初始值的參數。<br>下列範例新增了一個 odometer_reading 的屬性，初始值為 0。另外還新增了 read_odometer() 方法，以讀取車子的里程數：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_new_car = Car(<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;a4&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_new_car.get_descriptive_name())</span><br><span class="line">my_new_car.read_odometer()</span><br></pre></td></tr></table></figure>
+<p>現在當 <code>Python</code> 呼叫 <code>__init__()</code> 方法來建立新的實例時，會像前一個範例一樣以屬性的方式存放資訊。<br>接著 <code>Python</code> 會建立一個 odometer_reading 屬性，並將它的初始值設為 0。<br>之後定義了一個 read_odometer() 方法，此方法能讓我們輕鬆地取得車子的里程數：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Audi A4</span><br><span class="line">This car has 0 miles on it.</span><br></pre></td></tr></table></figure>
+<p>但在車子賣出時里程數為 0 的並不多，因此我們需要有一個能修改這個屬性值的方法。</p>
+<h4 id="修改屬性的值"><a href="#修改屬性的值" class="headerlink" title="修改屬性的值"></a>修改屬性的值</h4><p>有三種不同的方式可修改屬性的值：</p>
+<ul>
+<li>直接利用實例進行修改</li>
+<li>利用方法進行設定</li>
+<li>利用方法進行值的增加</li>
+</ul>
+<h5 id="直接修改屬性的值"><a href="#直接修改屬性的值" class="headerlink" title="直接修改屬性的值"></a>直接修改屬性的值</h5><p>若要修改屬性的值，最簡單的方式就是透過實例直接存取，下列示範直接把里程數設為 23：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_new_car = Car(<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;a4&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_new_car.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_new_car.odometer_reading = <span class="number">23</span></span><br><span class="line">my_new_car.read_odometer()</span><br></pre></td></tr></table></figure>
+<p>直接使用句點標示法來直接存取並設定車子的 odometer_reading屬性。<br>讓 <code>Python</code> 在 my_new_car 實例中找出 odometer_reading 屬性，並將 23 指定進去：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Audi A4</span><br><span class="line">This car has 23 miles on it.</span><br></pre></td></tr></table></figure>
+<p>有時候我們想要像這以直接存取屬性的值，但有時候則需要編寫對屬性進行更新的方法。</p>
+<h5 id="透過方法修改屬性的值"><a href="#透過方法修改屬性的值" class="headerlink" title="透過方法修改屬性的值"></a>透過方法修改屬性的值</h5><p>擁有更新屬性的方法對我們很有幫助，這樣就不需要直接存取屬性，而可將值傳入到方法，由它在內部進行更新修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Set the odometer reading to the given value.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading = mileage</span><br><span class="line"></span><br><span class="line">my_new_car = Car(<span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;a4&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_new_car.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_new_car.update_odometer(<span class="number">23</span>)</span><br><span class="line">my_new_car.read_odometer()</span><br></pre></td></tr></table></figure>
+<p>在 Car 類別新增了 update_odometer() 方法，此方法接收一個里程數值，並將它存放到 self.odometer_reading 內。<br>之後再呼叫 update_odometer() 方法並傳入 23 當引數（此引數對應於方法定義中的 mileage 參數）。<br>此方法執行後會將里程數改成 23，而 read_odometer() 會輸出此數值：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Audi A4</span><br><span class="line">This car has 23 miles on it.</span><br></pre></td></tr></table></figure>
+<p>還可以對 update_odometer() 方法進行擴充，讓它在修改里程數時做些其它的工作。<br>下面範例新增一些邏輯處理，禁止其它人將里程數往回調小：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>現在的 update_odometer() 方法要在修改屬性前檢查指定的里程值是否合理，<br>如果新的指定里程數（ mileage ）大於或等於原本的里程式，那就將新的里程數指定進原本的里程數屬性中，<br>若不是則輸出一條警告訊息，告知不能對里程數回調。</p>
+<h5 id="利用方法進行值的增加"><a href="#利用方法進行值的增加" class="headerlink" title="利用方法進行值的增加"></a>利用方法進行值的增加</h5><p>有時候我們希望讓屬性的值以特定的數值增加，而不是指定新的值進去。<br>假設有一台二手車，從購買到登記期間增加了 100 英里的里程數，下最的方法能傳入這個新增里程數，並加進原本里程數內：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line">my_used_car = Car(<span class="string">&#x27;subaru&#x27;</span>, <span class="string">&#x27;outback&#x27;</span>, <span class="number">2013</span>)</span><br><span class="line"><span class="built_in">print</span>(my_used_car.get_descriptive_name())</span><br><span class="line"></span><br><span class="line">my_used_car.update_odometer(<span class="number">23500</span>)</span><br><span class="line">my_used_car.read_odometer()</span><br><span class="line"></span><br><span class="line">my_used_car.increment_odometer(<span class="number">100</span>)</span><br><span class="line">my_used_car.read_odometer()</span><br></pre></td></tr></table></figure>
+<p>首先新增一個 increment_odometer() 方法，接收一個單位為英里的數值，並會將此數值加到 self.odometer_reading 中。<br>接著建立一台二手車實例，並呼叫 update_odometer() 方法傳入 23500，把這台二手車的里程數設為 23500。<br>之後呼叫 increment_odometer() 方法並傳入 100，把從購買到登記時新行駛的 100 英里增加到原本的里程數中：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2013 Subaru Outback</span><br><span class="line">This car has 23500 miles on it.</span><br><span class="line">This car has 23600 miles on it.</span><br></pre></td></tr></table></figure>
+<p>之後也可以很容易的修改這個方法，加入禁止增量為負數的處理，防止有人用這個來回調車子的里程數。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/class/" rel="tag"># class</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/function-module/" rel="next" title="函式 － 模組化應用">
+                  <i class="fa fa-chevron-left"></i> 函式 － 模組化應用
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/class-inheritance/" rel="prev" title="類別 － 繼承">
+                  類別 － 繼承 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E9%A1%9E%E5%88%A5"><span class="nav-number">1.</span> <span class="nav-text">建立和使用類別</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-Dog-%E9%A1%9E%E5%88%A5"><span class="nav-number">1.1.</span> <span class="nav-text">建立 Dog 類別</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#init-%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">__init__ 方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%9E%E9%A1%9E%E5%88%A5%E5%BB%BA%E7%AB%8B%E5%AF%A6%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">從類別建立實例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%98%E5%8F%96%E5%B1%AC%E6%80%A7"><span class="nav-number">1.2.1.</span> <span class="nav-text">存取屬性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BC%E5%8F%AB%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">呼叫方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%A4%9A%E5%80%8B%E5%AF%A6%E4%BE%8B"><span class="nav-number">1.2.3.</span> <span class="nav-text">建立多個實例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%9E%E5%88%A5%E5%92%8C%E5%AF%A6%E4%BE%8B%E7%9A%84%E9%81%8B%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">類別和實例的運用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Car-%E9%A1%9E%E5%88%A5"><span class="nav-number">2.1.</span> <span class="nav-text">Car 類別</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%8D%E5%B1%AC%E6%80%A7%E8%A8%AD%E5%AE%9A%E9%A0%90%E8%A8%AD%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">對屬性設定預設值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%B1%AC%E6%80%A7%E7%9A%84%E5%80%BC"><span class="nav-number">2.3.</span> <span class="nav-text">修改屬性的值</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E5%B1%AC%E6%80%A7%E7%9A%84%E5%80%BC"><span class="nav-number">2.3.1.</span> <span class="nav-text">直接修改屬性的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%8F%E9%81%8E%E6%96%B9%E6%B3%95%E4%BF%AE%E6%94%B9%E5%B1%AC%E6%80%A7%E7%9A%84%E5%80%BC"><span class="nav-number">2.3.2.</span> <span class="nav-text">透過方法修改屬性的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95%E9%80%B2%E8%A1%8C%E5%80%BC%E7%9A%84%E5%A2%9E%E5%8A%A0"><span class="nav-number">2.3.3.</span> <span class="nav-text">利用方法進行值的增加</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

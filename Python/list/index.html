@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="什麼是串列？串列(List)是個依特定順序排放的項目集合所組成。任何東西都可以放入串列中，項目之間也不需要有什麼關聯。 在Python中是用中括號（[）標示串列，其中個別元素是以逗號（,）分隔。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="串列簡介">
+<meta property="og:url" content="https://shoudevops.github.io/Python/list/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="什麼是串列？串列(List)是個依特定順序排放的項目集合所組成。任何東西都可以放入串列中，項目之間也不需要有什麼關聯。 在Python中是用中括號（[）標示串列，其中個別元素是以逗號（,）分隔。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-25T07:21:42.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.887Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="list">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/list/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>串列簡介 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          串列簡介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-25 15:21:42" itemprop="dateCreated datePublished" datetime="2019-11-25T15:21:42+08:00">2019-11-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="什麼是串列？"><a href="#什麼是串列？" class="headerlink" title="什麼是串列？"></a>什麼是串列？</h3><p>串列(List)是個依特定順序排放的項目集合所組成。<br>任何東西都可以放入串列中，項目之間也不需要有什麼關聯。</p>
+<p>在<code>Python</code>中是用中括號（[）標示串列，其中個別元素是以逗號（,）分隔。</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(bicycles)</span><br></pre></td></tr></table></figure>
+<p>若要求<code>Python</code>印出列表，<code>Python</code>會返回列表的表示形態，包括中括號：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>但這不是要讓使用者看到的輸出形態，所以要學習如何存取串列中想要的個別項目。</p>
+<hr>
+<h3 id="存取串列中的元素"><a href="#存取串列中的元素" class="headerlink" title="存取串列中的元素"></a>存取串列中的元素</h3><p>串列是有順序性的集合，因此要存取串列中的某個元素，就要告知<code>Python</code>元素的所在位置或索引足標（index）。<br>若想存取串列中的元素，寫出串列的名稱並在中括號中指出元素的索引足標：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(bicycles[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>上面的範例，<code>Python</code>返回的只有該元素的值，不會有引號和中括號，這才是我們要給使用者看到的結果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trek</span><br></pre></td></tr></table></figure>
+<p>還可以對任何元素使用字串方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(bicycles[<span class="number">0</span>].title())</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="索引足標是從0開始，不是1"><a href="#索引足標是從0開始，不是1" class="headerlink" title="索引足標是從0開始，不是1"></a>索引足標是從0開始，不是1</h3><p><code>Python</code>中串列第一個元素的項目位置之索引足標是0，第二個項目元素的索引足標為2，<br>因此只要將其第幾個位置減1當成索引足標就可以了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(bicycles[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(bicycles[<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>會返回第2和第3個項目元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cannondale</span><br><span class="line">specialized</span><br></pre></td></tr></table></figure>
+<p><code>Python</code>有個特別的語法可存取串列的最後一個項目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(bicycles[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>此段程式會返回輸出 specialized，也適用其它負數上，例如 -2是串列的倒數第2個項目，<br>-3為倒數第3個項目，以此類推。</p>
+<hr>
+<h3 id="使用串列中的個別值"><a href="#使用串列中的個別值" class="headerlink" title="使用串列中的個別值"></a>使用串列中的個別值</h3><p>也可以像使用其它變數一樣的使用串列中的個別值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bicycles = [<span class="string">&#x27;trek&#x27;</span>, <span class="string">&#x27;cannondale&#x27;</span>, <span class="string">&#x27;redline&#x27;</span>, <span class="string">&#x27;specialized&#x27;</span>]</span><br><span class="line">message = <span class="string">&quot;My first bicycle was a &quot;</span> + bicycles[<span class="number">0</span>].title() + <span class="string">&quot;.&quot;</span></span><br><span class="line"><span class="built_in">print</span>(message)</span><br></pre></td></tr></table></figure>
+<p>使用了 bicycle[0] 連接成一個句子，並把句子存到 message 變數內：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">My first bicycle was a Trek.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="修改、新增和刪除串列中的元素"><a href="#修改、新增和刪除串列中的元素" class="headerlink" title="修改、新增和刪除串列中的元素"></a>修改、新增和刪除串列中的元素</h3><p>我們所建立的大多數串列都是動態的，在串列建立後都會隨著程式的運作執行而修改增刪其中的元素。</p>
+<h4 id="修改串列中的元素"><a href="#修改串列中的元素" class="headerlink" title="修改串列中的元素"></a>修改串列中的元素</h4><p>修改串列元素所用的語法和存取串列元素的語法類似，可以先指定串列名稱和要修改項目元素的索引足標位置，<br>再指定新的值進去即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line">motorcycles[<span class="number">0</span>] = <span class="string">&#x27;ducati&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>首先定義一個motorcycles串列，再將第一個項目元素的值指定為’ducati’，輸出結果：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br><span class="line">[&#x27;ducati&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+<p>修改其它項目元素的值也使用相同方法。</p>
+<h4 id="新增元素到串列中"><a href="#新增元素到串列中" class="headerlink" title="新增元素到串列中"></a>新增元素到串列中</h4><p>新增元素到串列中的理由有很多種，<code>Python</code>也提供了很多種可以在現有串列中加入新資料的方法。</p>
+<h5 id="在串列尾端新增元素"><a href="#在串列尾端新增元素" class="headerlink" title="在串列尾端新增元素"></a>在串列尾端新增元素</h5><p>想要在字串尾端新增元素，最簡單的方式是把項目元素以「附加（append）」的方式加到串列尾端：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line">motorcycles.append(<span class="string">&#x27;ducati&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>append()方使會把’ducati’新增到串列尾端，不影響原有串列中的其它內容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;, &#x27;ducati&#x27;]</span><br></pre></td></tr></table></figure>
+<p>append()方法使得動態建立串列變簡單了，可先建一空的串列，再列用append()陳述句新增項目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = []</span><br><span class="line"></span><br><span class="line">motorcycles.append(<span class="string">&#x27;honda&#x27;</span>)</span><br><span class="line">motorcycles.append(<span class="string">&#x27;yamaha&#x27;</span>)</span><br><span class="line">motorcycles.append(<span class="string">&#x27;suzuki&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>執行結果與前面的串列完全相同：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+<p>這種方式很普遍，因為有時要等到執行程式後才知道程式中要儲存的資料有哪些。<br>為了配合使用者，可先建立一個空串列，然後把使用者所輸入的每個值附加到空串列內。</p>
+<h5 id="在串列中插入元素"><a href="#在串列中插入元素" class="headerlink" title="在串列中插入元素"></a>在串列中插入元素</h5><p>使用 insert()方法就可以在串列的位一位置加入新元素，指定新插入元素的索引足標位置和值即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"></span><br><span class="line">motorcycles.insert(<span class="number">0</span>, <span class="string">&#x27;ducati&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>範例的操作會讓原本串列中的項目值都向右移一位：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;ducati&#x27;, &#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="從串列中刪除元素"><a href="#從串列中刪除元素" class="headerlink" title="從串列中刪除元素"></a>從串列中刪除元素</h4><p>我們常需要從串列中刪除一個或一組元素，<code>Python</code>也提供了幾個方法讓我們可以依據在串列中的位置或值來刪除項目。</p>
+<h5 id="使用-del-陳述句刪除元素"><a href="#使用-del-陳述句刪除元素" class="headerlink" title="使用 del 陳述句刪除元素"></a>使用 del 陳述句刪除元素</h5><p>如果知道要刪除的元素在串列中的哪個位置，就可用del陳述句刪除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> motorcycles[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>用del刪除串列的第一個元素：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br><span class="line">[&#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+<p>如果知道索引足標位置，使用 del 陳述句即可刪除串列中該索引足標位置的內容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> motorcycles[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>刪除串列中第二個項目：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br><span class="line">[&#x27;honda&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+<p>串列中的值使用del 陳述句刪除之後就不能存取了。</p>
+<h5 id="使用-pop-方法刪除"><a href="#使用-pop-方法刪除" class="headerlink" title="使用 pop()方法刪除"></a>使用 pop()方法刪除</h5><p>在刪除串列中的某個項目值後，卻會需要使用這個值來進行其它處理。<br>pop()方法可刪除串列尾端的項目，並讓我們能使用這個被刪除的項目。<br>pop（彈出）這個術語源自於堆疊，把串列相像成堆疊，而堆疊的pop是把最頂端的項目彈出，<br>而在這個比喻中堆疊的頂端對應串列中的尾端。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line">popped_motorcycle = motorcycles.pop()</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"><span class="built_in">print</span>(popped_motorcycle)</span><br></pre></td></tr></table></figure>
+<p>定義motorcycles串列，接著從這個串列中彈出一個值，並指定存到 popped_motorcycle變數內，<br>隨即輸出 motorcycles串列，確定是否已刪除一個值，最後將單出的值輸出，證明還能繼續存取已刪除的值。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;]</span><br><span class="line">suzuki</span><br></pre></td></tr></table></figure>
+<p>實際應用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"></span><br><span class="line">last_owned = motorcycles.pop()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The last motorcycle I owned was a &quot;</span> + last_owned.title() + <span class="string">&quot;.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>即輸出一句簡單的句子，指出最近所擁有的機車是哪個廠牌：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The last motorcycle I owned was a Suzuki.</span><br></pre></td></tr></table></figure>
+
+<h5 id="彈出串列中位一位置的項目"><a href="#彈出串列中位一位置的項目" class="headerlink" title="彈出串列中位一位置的項目"></a>彈出串列中位一位置的項目</h5><p>藉由在 pop()方法的括號中指定要刪除項目的索引足標位置，就能刪除串列中任一位值的項目。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"></span><br><span class="line">first_owned = motorcycles.pop(<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The first motorcycle I owned was a &quot;</span> + first_owned.title() + <span class="string">&quot;.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>從串列中彈出第一個項目的機車廠牌，再輸出簡單的句子：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The first motorcycle I owned was a Honda.</span><br></pre></td></tr></table></figure>
+<p>請記住，每次使用 pop()之後，串列中被彈出的項目就會刪除掉了。</p>
+<p>如果不確定要用del陳述句或是pop()方法，可以用以下方法判斷：<br><strong>刪除串列中某項目且不再使用時，用del陳述句。</strong><br><strong>刪除某項目後還會用到該項目時，就用pop()方法。</strong></p>
+<h5 id="依據值來刪除項目"><a href="#依據值來刪除項目" class="headerlink" title="依據值來刪除項目"></a>依據值來刪除項目</h5><p>有時並不知道要刪除的值在串列的哪個位置，如果只知道要刪除項目的值，可使用remove()方法來處理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>, <span class="string">&#x27;ducati&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line">motorcycles.remove(<span class="string">&#x27;ducati&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br></pre></td></tr></table></figure>
+<p>告知<code>Python</code> 要從串列中找出’ducati’的所在，並移除掉這個元素：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;, &#x27;ducati&#x27;]</span><br><span class="line">[&#x27;honda&#x27;, &#x27;yamaha&#x27;, &#x27;suzuki&#x27;]</span><br></pre></td></tr></table></figure>
+<p>也可以指定串列中要移除的值使用remove()方法來移除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>, <span class="string">&#x27;ducati&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"></span><br><span class="line">too_expensive = <span class="string">&#x27;ducati&#x27;</span></span><br><span class="line">motorcycles.remove(too_expensive)</span><br><span class="line"><span class="built_in">print</span>(motorcycles)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nA &quot;</span> + too_expensive.title() + <span class="string">&quot; is too expensive for me.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>把’ducati’值指定存放到 too_expensive 變數內，接著用這個變數來告知<code>Python</code>要從串列中刪除這個值。</p>
+<hr>
+<h3 id="組織串列"><a href="#組織串列" class="headerlink" title="組織串列"></a>組織串列</h3><p><code>Python</code> 提供幾個可以組織和調整串列的方式，可依不同情況來使用。</p>
+<h4 id="使用-sort-方法對串列永久性改變排列順序"><a href="#使用-sort-方法對串列永久性改變排列順序" class="headerlink" title="使用 sort()方法對串列永久性改變排列順序"></a>使用 sort()方法對串列永久性改變排列順序</h4><p><code>Python</code> 的 sort()方法可對串列進行排序：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>]</span><br><span class="line">cars.sort()</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br></pre></td></tr></table></figure>
+<p>執行後 cars串列會依字母順序排列，且不能回覆到原來的排列順序：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;audi&#x27;, &#x27;bmw&#x27;, &#x27;subaru&#x27;, &#x27;toyota&#x27;]</span><br></pre></td></tr></table></figure>
+<p>只要在 sort()方法中傳入<code>reverse=True</code>參數，也能依字母相反順序來排列串列中的項目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>]</span><br><span class="line">cars.sort(reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br></pre></td></tr></table></figure>
+<p>串列的項目已永久性變更了順序：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;toyota&#x27;, &#x27;subaru&#x27;, &#x27;bmw&#x27;, &#x27;audi&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-sorted-函式對串列暫時性改變排列順序"><a href="#使用-sorted-函式對串列暫時性改變排列順序" class="headerlink" title="使用 sorted()函式對串列暫時性改變排列順序"></a>使用 sorted()函式對串列暫時性改變排列順序</h4><p>若要保留原本的排列順序，但在顯現時是以特定的排序呈現，可用 sorted()函式。<br>此函式能依照特定排序來顯示串列的項目內容，但不影響串列中原本來排列順序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Here is the original list:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nHere is the sorted list:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">sorted</span>(cars))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nHere is the original list again:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br></pre></td></tr></table></figure>
+<p>改變順序顯示後，串列的項目還是以原本順序排列：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Here is the original list:</span><br><span class="line">[&#x27;bmw&#x27;, &#x27;audi&#x27;, &#x27;toyota&#x27;, &#x27;subaru&#x27;]</span><br><span class="line"></span><br><span class="line">Here is the sorted list:</span><br><span class="line">[&#x27;audi&#x27;, &#x27;bmw&#x27;, &#x27;subaru&#x27;, &#x27;toyota&#x27;]</span><br><span class="line"></span><br><span class="line">Here is the original list again:</span><br><span class="line">[&#x27;bmw&#x27;, &#x27;audi&#x27;, &#x27;toyota&#x27;, &#x27;subaru&#x27;]</span><br></pre></td></tr></table></figure>
+<p>如果想要按字母反序顯示串列的項目，可在sorted()函式傳入 <code>reverse=True</code>參數。</p>
+<h4 id="反序印出串列"><a href="#反序印出串列" class="headerlink" title="反序印出串列"></a>反序印出串列</h4><p>若要反轉串列項目原本的順序，可使用reverse()方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cars = [<span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br><span class="line"></span><br><span class="line">cars.reverse()</span><br><span class="line"><span class="built_in">print</span>(cars)</span><br></pre></td></tr></table></figure>
+<p>請注意一點，reverse()並不是指按字母反序排列串列項目，只是簡單的反轉串列項目的排列順序。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;bmw&#x27;, &#x27;audi&#x27;, &#x27;toyota&#x27;, &#x27;subaru&#x27;]</span><br><span class="line">[&#x27;subaru&#x27;, &#x27;toyota&#x27;, &#x27;audi&#x27;, &#x27;bmw&#x27;]</span><br></pre></td></tr></table></figure>
+<p>reverse()方法會永久性改變串列中項目的排列順序，但可以隨時再反轉回來，只要再對串列套用<code>reverse()</code>即可。</p>
+<h4 id="找出串列的長度"><a href="#找出串列的長度" class="headerlink" title="找出串列的長度"></a>找出串列的長度</h4><p>藉由使用 len()函式能快速找出串列的長度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>cars = [<span class="string">&#x27;bmw&#x27;</span>, <span class="string">&#x27;audi&#x27;</span>, <span class="string">&#x27;toyota&#x27;</span>, <span class="string">&#x27;subaru&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(cars)</span><br><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="使用串列時避免-IndexError"><a href="#使用串列時避免-IndexError" class="headerlink" title="使用串列時避免 IndexError"></a>使用串列時避免 IndexError</h3><p>這是在剛開始使用串列時常會遇到的一種錯誤。<br>假設串列內含三個項目，但使用者卻要求了第四個項目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles[<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<p>執行結果會是索引錯誤：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;syntax_error.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    print(motorcycles[3])</span><br><span class="line">IndexError: list index out of range</span><br></pre></td></tr></table></figure>
+<p>大家常把串列第三個項目的索引足標想成是3，但<code>Python</code> 的串列第三個項目的索引足標為2，要從0開始算起才正確。</p>
+<p>當需要存取串列最後一個項目時，可使用 <code>-1</code> 來當索引足標：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = [<span class="string">&#x27;honda&#x27;</span>, <span class="string">&#x27;yamaha&#x27;</span>, <span class="string">&#x27;suzuki&#x27;</span>]</span><br><span class="line"><span class="built_in">print</span>(motorcycles[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>只有在串列是空的時候，使用 <code>-1</code>來存取最後一個項目會產生錯誤：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">motorcycles = []</span><br><span class="line"><span class="built_in">print</span>(motorcycles[-<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>motorcycles 串列是空的，沒有任何項目在其中，因此<code>Python</code>會返回索引錯誤的訊息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;syntax_error.py&quot;, line 2, in &lt;module&gt;</span><br><span class="line">    print(motorcycles[-1])</span><br><span class="line">IndexError: list index out of range</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/list/" rel="tag"># list</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/datatype-comment/" rel="next" title="注釋">
+                  <i class="fa fa-chevron-left"></i> 注釋
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/list-operating-applications/" rel="prev" title="串列的操作與運用 Part I.">
+                  串列的操作與運用 Part I. <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E4%B8%B2%E5%88%97%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什麼是串列？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%8F%96%E4%B8%B2%E5%88%97%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">2.</span> <span class="nav-text">存取串列中的元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E8%B6%B3%E6%A8%99%E6%98%AF%E5%BE%9E0%E9%96%8B%E5%A7%8B%EF%BC%8C%E4%B8%8D%E6%98%AF1"><span class="nav-number">3.</span> <span class="nav-text">索引足標是從0開始，不是1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%B2%E5%88%97%E4%B8%AD%E7%9A%84%E5%80%8B%E5%88%A5%E5%80%BC"><span class="nav-number">4.</span> <span class="nav-text">使用串列中的個別值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E3%80%81%E6%96%B0%E5%A2%9E%E5%92%8C%E5%88%AA%E9%99%A4%E4%B8%B2%E5%88%97%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">5.</span> <span class="nav-text">修改、新增和刪除串列中的元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%B2%E5%88%97%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0"><span class="nav-number">5.1.</span> <span class="nav-text">修改串列中的元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0%E5%88%B0%E4%B8%B2%E5%88%97%E4%B8%AD"><span class="nav-number">5.2.</span> <span class="nav-text">新增元素到串列中</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E4%B8%B2%E5%88%97%E5%B0%BE%E7%AB%AF%E6%96%B0%E5%A2%9E%E5%85%83%E7%B4%A0"><span class="nav-number">5.2.1.</span> <span class="nav-text">在串列尾端新增元素</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9C%A8%E4%B8%B2%E5%88%97%E4%B8%AD%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="nav-number">5.2.2.</span> <span class="nav-text">在串列中插入元素</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%9E%E4%B8%B2%E5%88%97%E4%B8%AD%E5%88%AA%E9%99%A4%E5%85%83%E7%B4%A0"><span class="nav-number">5.3.</span> <span class="nav-text">從串列中刪除元素</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-del-%E9%99%B3%E8%BF%B0%E5%8F%A5%E5%88%AA%E9%99%A4%E5%85%83%E7%B4%A0"><span class="nav-number">5.3.1.</span> <span class="nav-text">使用 del 陳述句刪除元素</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-pop-%E6%96%B9%E6%B3%95%E5%88%AA%E9%99%A4"><span class="nav-number">5.3.2.</span> <span class="nav-text">使用 pop()方法刪除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BD%88%E5%87%BA%E4%B8%B2%E5%88%97%E4%B8%AD%E4%BD%8D%E4%B8%80%E4%BD%8D%E7%BD%AE%E7%9A%84%E9%A0%85%E7%9B%AE"><span class="nav-number">5.3.3.</span> <span class="nav-text">彈出串列中位一位置的項目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BE%9D%E6%93%9A%E5%80%BC%E4%BE%86%E5%88%AA%E9%99%A4%E9%A0%85%E7%9B%AE"><span class="nav-number">5.3.4.</span> <span class="nav-text">依據值來刪除項目</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%84%E7%B9%94%E4%B8%B2%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">組織串列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-sort-%E6%96%B9%E6%B3%95%E5%B0%8D%E4%B8%B2%E5%88%97%E6%B0%B8%E4%B9%85%E6%80%A7%E6%94%B9%E8%AE%8A%E6%8E%92%E5%88%97%E9%A0%86%E5%BA%8F"><span class="nav-number">6.1.</span> <span class="nav-text">使用 sort()方法對串列永久性改變排列順序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-sorted-%E5%87%BD%E5%BC%8F%E5%B0%8D%E4%B8%B2%E5%88%97%E6%9A%AB%E6%99%82%E6%80%A7%E6%94%B9%E8%AE%8A%E6%8E%92%E5%88%97%E9%A0%86%E5%BA%8F"><span class="nav-number">6.2.</span> <span class="nav-text">使用 sorted()函式對串列暫時性改變排列順序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E5%BA%8F%E5%8D%B0%E5%87%BA%E4%B8%B2%E5%88%97"><span class="nav-number">6.3.</span> <span class="nav-text">反序印出串列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%BE%E5%87%BA%E4%B8%B2%E5%88%97%E7%9A%84%E9%95%B7%E5%BA%A6"><span class="nav-number">6.4.</span> <span class="nav-text">找出串列的長度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%B2%E5%88%97%E6%99%82%E9%81%BF%E5%85%8D-IndexError"><span class="nav-number">7.</span> <span class="nav-text">使用串列時避免 IndexError</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

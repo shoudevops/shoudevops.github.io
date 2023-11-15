@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="在Windows&#x2F; MacOS 用過Logitech Option，對它在工作上的幫助跟實用性印象深刻，可以自訂義按鈕的功能，也可以設定手勢操作。 但Logitech 並沒有在Linux 作業系統上發行相關的軟體，因此在上網找了解決方案並測試成功後，寫下文件供後續參考用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu-20.04 安裝與設定Logitech Driver">
+<meta property="og:url" content="https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="在Windows&#x2F; MacOS 用過Logitech Option，對它在工作上的幫助跟實用性印象深刻，可以自訂義按鈕的功能，也可以設定手勢操作。 但Logitech 並沒有在Linux 作業系統上發行相關的軟體，因此在上網找了解決方案並測試成功後，寫下文件供後續參考用。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/which-logid.png">
+<meta property="article:published_time" content="2021-05-05T10:18:52.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.932Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/which-logid.png">
+
+<link rel="canonical" href="https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Ubuntu-20.04 安裝與設定Logitech Driver | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubuntu-20.04 安裝與設定Logitech Driver
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-05 18:18:52" itemprop="dateCreated datePublished" datetime="2021-05-05T18:18:52+08:00">2021-05-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在Windows&#x2F; MacOS 用過Logitech Option，<br>對它在工作上的幫助跟實用性印象深刻，<br>可以自訂義按鈕的功能，也可以設定手勢操作。</p>
+<p>但Logitech 並沒有在Linux 作業系統上發行相關的軟體，<br>因此在上網找了解決方案並測試成功後，寫下文件供後續參考用。</p>
+<span id="more"></span>
+
+<h3 id="Logiops"><a href="#Logiops" class="headerlink" title="Logiops"></a>Logiops</h3><p>Logitech 滑鼠、鍵盤的非官方驅動程式，<br>目前僅與HID ++&gt; 2.0 設備相容。</p>
+<h3 id="相容設備清單"><a href="#相容設備清單" class="headerlink" title="相容設備清單"></a>相容設備清單</h3><p><a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/blob/master/TESTED.md">Compatible Devices</a></p>
+<h3 id="依賴套件"><a href="#依賴套件" class="headerlink" title="依賴套件"></a>依賴套件</h3><p>Logiops 需要依賴<code>cmake</code>, <code>libevdev</code>, <code>libudev</code>與<code>libconfig</code>，<br>以下提供幾個Linux發行版的安裝方式：</p>
+<p>Arch Linux: <code>sudo pacman -S cmake libevdev libconfig pkgconf</code></p>
+<p>Debian&#x2F;Ubuntu: <code>sudo apt install cmake libevdev-dev libudev-dev libconfig++-dev</code></p>
+<p>Fedora: <code>sudo dnf install cmake libevdev-devel systemd-devel libconfig-devel gcc-c++</code></p>
+<p>Gentoo Linux: <code>sudo emerge dev-libs/libconfig dev-libs/libevdev dev-util/cmake virtual/libudev</code></p>
+<p>Solus: <code>sudo eopkg install libevdev-devel libconfig-devel libgudev-devel</code></p>
+<h3 id="安裝Logiops"><a href="#安裝Logiops" class="headerlink" title="安裝Logiops"></a>安裝Logiops</h3><ol>
+<li>Clone Github Repository and into logiops dir</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/PixlOne/logiops.git</span><br><span class="line"><span class="built_in">cd</span> logiops</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Build instructions</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential</span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Create a System Daemon Service file</li>
+</ol>
+<p>create file <code>sudo vim /etc/systemd/system/logid.service</code> with the content</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Logitech Configuration Daemon</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/local/bin/logid -c /etc/logid.cfg</span><br><span class="line">User=root</span><br><span class="line">#ExecReload=/bin/kill -HUP $MAINPID</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>這裡需要注意的是<code>ExecStart</code>這行的logid路徑<br>可以用以下指令確認路徑：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which logid</span><br></pre></td></tr></table></figure>
+
+<img src="/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/which-logid.png" class="" title="find logid path">
+
+<ol start="4">
+<li>Create configuration file</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/logid.cfg</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>Configure the driver file</li>
+</ol>
+<p>以下設定內容是針對<code>MX Master 2S</code>, <code>M720 Triathlon</code>的設定，<br>設備完整的名稱可參考上述的<code>相容設備清單</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"># this config file is for Logiops and needs to be placed in /etc/logid.cfg</span><br><span class="line">devices: (</span><br><span class="line">&#123;</span><br><span class="line">    name: &quot;Wireless Mouse MX Master 2S&quot;; # 參考相容設備清單</span><br><span class="line">    smartshift:</span><br><span class="line">    &#123;</span><br><span class="line">        on: true; # Smartshift 功能開啟</span><br><span class="line">        threshold: 15; # 觸發閾值</span><br><span class="line">        default_threshold: 30; # 預設閾值</span><br><span class="line">    &#125;;</span><br><span class="line">    hiresscroll: # HiRes(高解析) 滾輪</span><br><span class="line">    &#123;</span><br><span class="line">        hires: true;</span><br><span class="line">        invert: false;</span><br><span class="line">        target: false;</span><br><span class="line">    &#125;;</span><br><span class="line">    thumbwheel:</span><br><span class="line">    &#123;</span><br><span class="line">        divert: true;</span><br><span class="line">        invert: false;</span><br><span class="line">    &#125;</span><br><span class="line">    dpi: 1000; # 鼠標移動的DPI</span><br><span class="line"></span><br><span class="line">    buttons: (</span><br><span class="line">        &#123;</span><br><span class="line">            cid: 0xc3; # 拇指鍵CID</span><br><span class="line">            action =</span><br><span class="line">            &#123;</span><br><span class="line">                type: &quot;Gestures&quot;; # 手勢操作</span><br><span class="line">                gestures: (</span><br><span class="line">                    &#123;</span><br><span class="line">                        direction: &quot;Up&quot;; # 拇指鍵 + 滑鼠上移</span><br><span class="line">                        threshold: 7;</span><br><span class="line">                        mode: &quot;OnRelease&quot;;</span><br><span class="line">                        action =</span><br><span class="line">                        &#123;</span><br><span class="line">                            type: &quot;Keypress&quot;; # 按下拇指鍵並下移，觸發Ctrl + Alt + 方向鍵上</span><br><span class="line">                            keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;,  &quot;KEY_UP&quot;];</span><br><span class="line">                        &#125;;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        direction: &quot;Down&quot;; # 拇指鍵 + 滑鼠下移</span><br><span class="line">                        threshold: 7;</span><br><span class="line">                        mode: &quot;OnRelease&quot;;</span><br><span class="line">                        action =</span><br><span class="line">                        &#123;</span><br><span class="line">                            type: &quot;Keypress&quot;; # 按下拇指鍵並下移，觸發Ctrl + Alt + 方向鍵下</span><br><span class="line">                            keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_DOWN&quot;];</span><br><span class="line">                        &#125;;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        direction: &quot;Left&quot;; # 拇指鍵 + 滑鼠左移</span><br><span class="line">                        mode: &quot;OnRelease&quot;;</span><br><span class="line">                        action =</span><br><span class="line">                        &#123;</span><br><span class="line">                            type: &quot;Keypress&quot;; # 按下拇指鍵並下移，觸發Ctrl + Alt + 方向鍵左</span><br><span class="line">                            keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_LEFT&quot;];</span><br><span class="line">                        &#125;;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    &#123;</span><br><span class="line">                        direction: &quot;Right&quot;; # 拇指鍵 + 滑鼠右移</span><br><span class="line">                        mode: &quot;OnRelease&quot;;</span><br><span class="line">                        action =</span><br><span class="line">                        &#123;</span><br><span class="line">                            type: &quot;Keypress&quot;; # 按下拇指鍵並下移，觸發Ctrl + Alt + 方向鍵右</span><br><span class="line">                            keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_RIGHT&quot;];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line"></span><br><span class="line">                    &#123;</span><br><span class="line">                        direction: &quot;None&quot; # 單點拇指鍵</span><br><span class="line">                        mode: &quot;OnRelease&quot;;</span><br><span class="line">                        action =</span><br><span class="line">                        &#123;</span><br><span class="line">                            type: &quot;Keypress&quot;; # 單點拇指鍵，觸發Windows鍵</span><br><span class="line">                            keys: [&quot;KEY_LEFTMETA&quot;];</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            cid: 0xc4; # Smartshift切換鍵CID</span><br><span class="line">            action =</span><br><span class="line">            &#123;</span><br><span class="line">                type = &quot;ToggleSmartshift&quot;; # 切換Smartshift</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">    );</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  name: &quot;M720 Triathlon Multi-Device Mouse&quot;;</span><br><span class="line">  hiresscroll:</span><br><span class="line">    &#123;</span><br><span class="line">        hires: true;</span><br><span class="line">        invert: false;</span><br><span class="line">        target: false;</span><br><span class="line">    &#125;;</span><br><span class="line">    dpi: 1000;</span><br><span class="line">    buttons: (</span><br><span class="line">      &#123;</span><br><span class="line">        cid: 0xd0;</span><br><span class="line">        action = </span><br><span class="line">        &#123;</span><br><span class="line">          type: &quot;Gestures&quot;;</span><br><span class="line">          gestures: (</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Up&quot;;</span><br><span class="line">              threshold: 7;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;,  &quot;KEY_UP&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Down&quot;;</span><br><span class="line">              threshold: 7;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_DOWN&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Left&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_LEFT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Right&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_RIGHT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;None&quot;;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action = </span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTMETA&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="MX-Anywhere-3"><a href="#MX-Anywhere-3" class="headerlink" title="MX Anywhere 3"></a>MX Anywhere 3</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">devices: (</span><br><span class="line">&#123;</span><br><span class="line">  name: &quot;MX Anywhere 3&quot;;</span><br><span class="line">  smartshift:</span><br><span class="line">    &#123;</span><br><span class="line">      on: true;</span><br><span class="line">      threshold: 15;</span><br><span class="line">      default_threshold: 30;</span><br><span class="line">    &#125;;</span><br><span class="line">  hiresscroll:</span><br><span class="line">    &#123;</span><br><span class="line">        hires: true;</span><br><span class="line">        invert: false;</span><br><span class="line">        target: true;</span><br><span class="line">        up: &#123;</span><br><span class="line">            mode: &quot;Axis&quot;;</span><br><span class="line">            axis: &quot;REL_WHEEL_HI_RES&quot;;</span><br><span class="line">            axis_multiplier: 3;</span><br><span class="line">        &#125;,</span><br><span class="line">        down: &#123;</span><br><span class="line">            mode: &quot;Axis&quot;;</span><br><span class="line">            axis: &quot;REL_WHEEL_HI_RES&quot;;</span><br><span class="line">            axis_multiplier: -3;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    dpi: 1000;</span><br><span class="line">    buttons: (</span><br><span class="line">      &#123;</span><br><span class="line">        cid: 0xc4;</span><br><span class="line">        action = </span><br><span class="line">        &#123;</span><br><span class="line">          type: &quot;Gestures&quot;;</span><br><span class="line">          gestures: (</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Up&quot;;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTMETA&quot;, &quot;KEY_A&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Left&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_LEFT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Right&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_RIGHT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;None&quot;;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action = </span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTMETA&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>設定內容的細項說明可參考<a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/wiki/Configuration">Configuration</a></li>
+<li>滑鼠按鍵對應的CID可參考<a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/wiki/CIDs">CIDs</a></li>
+</ul>
+<ol start="6">
+<li>設定Service Startup 與Service Start</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable logid</span><br><span class="line">sudo systemctl <span class="built_in">start</span> logid</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>驗證服務是否成功開啟</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl is-active logid # 驗證服務是否啟用</span><br><span class="line">sudo systemctl is-enabled logid # 驗證startup狀態</span><br><span class="line">sudo systemctl is-failed logid # 驗證startup狀態</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>參考文件：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops">Logiops Github</a></p>
+<p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1149310/logitech-mx-master-2s-via-bluetooth-change-pointer-speed/1246278#1246278">Ask Ubuntu</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Linux/how-to-install-windows-line-on-ubuntu/" rel="next" title="如何在Ubuntu-20.04 安裝Windows Line">
+                  <i class="fa fa-chevron-left"></i> 如何在Ubuntu-20.04 安裝Windows Line
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Linux/how-to-install-fcitx-boshiamy-on-ubuntu/" rel="prev" title="Ubuntu-20.04 安裝Fcitx 嘸蝦米輸入法">
+                  Ubuntu-20.04 安裝Fcitx 嘸蝦米輸入法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logiops"><span class="nav-number">1.</span> <span class="nav-text">Logiops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AE%B9%E8%A8%AD%E5%82%99%E6%B8%85%E5%96%AE"><span class="nav-number">2.</span> <span class="nav-text">相容設備清單</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">依賴套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DLogiops"><span class="nav-number">4.</span> <span class="nav-text">安裝Logiops</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MX-Anywhere-3"><span class="nav-number"></span> <span class="nav-text">MX Anywhere 3</span></a></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

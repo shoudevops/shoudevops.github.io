@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Ubuntu 是Linux發行版中好用的桌面版本之一，本文章會說明如何自訂Ubuntu 20.04，讓它看起看像是Mac OS，使用者也可以依自己的喜好與興趣調整其它功能或介面佈局。 安裝必要的套件在自訂Ubuntu之前，這個步驟是必須的，Ubuntu-20.04 的介面是採用Gnome，因此安裝Gnome Tweaks工具可以讓使用者調整和修改Ubuntu的外觀和行為。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="讓Ubuntu-20.04 介面像Mac OS">
+<meta property="og:url" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="Ubuntu 是Linux發行版中好用的桌面版本之一，本文章會說明如何自訂Ubuntu 20.04，讓它看起看像是Mac OS，使用者也可以依自己的喜好與興趣調整其它功能或介面佈局。 安裝必要的套件在自訂Ubuntu之前，這個步驟是必須的，Ubuntu-20.04 的介面是採用Gnome，因此安裝Gnome Tweaks工具可以讓使用者調整和修改Ubuntu的外觀和行為。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/gnome-extensions.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/open-the-user-themes.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/whitesur-gtk-theme-download.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/home-dir-themes.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/app-shell-whitesur-theme.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/whitesur-icon-download.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/home-dir-icons.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/icon-whitesur-theme.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/whitesur-cursor-download.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/home-dir-cursors.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/cursors-whitesur-theme.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/system-settings.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/system-settings-dock.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/customized-dock-command.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/hide-top-bar-extension.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/install-hide-top-bar-extension.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/tweaks-hide-top-bar.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/show-panel-when-mouse-approaches.png">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/window-top-colume-button.png">
+<meta property="article:published_time" content="2021-04-27T07:12:01.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.925Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/gnome-extensions.png">
+
+<link rel="canonical" href="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>讓Ubuntu-20.04 介面像Mac OS | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/ubuntu2004-look-like-macos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          讓Ubuntu-20.04 介面像Mac OS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-27 15:12:01" itemprop="dateCreated datePublished" datetime="2021-04-27T15:12:01+08:00">2021-04-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Ubuntu 是Linux發行版中好用的桌面版本之一，<br>本文章會說明如何自訂Ubuntu 20.04，讓它看起看像是Mac OS，<br>使用者也可以依自己的喜好與興趣調整其它功能或介面佈局。</p>
+<h3 id="安裝必要的套件"><a href="#安裝必要的套件" class="headerlink" title="安裝必要的套件"></a>安裝必要的套件</h3><p>在自訂Ubuntu之前，這個步驟是必須的，Ubuntu-20.04 的介面是採用Gnome，<br>因此安裝Gnome Tweaks工具可以讓使用者調整和修改Ubuntu的外觀和行為。</p>
+<span id="more"></span>
+
+<ol>
+<li><p>先用快捷鍵打開Terminal</p>
+<p> Ctrl + Alt + T</p>
+</li>
+<li><p>輸入下列指令</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt upgrade</span><br><span class="line">sudo apt install gnome-tweaks -y</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安裝<code>GNOME Shell Extension</code>套件<br>這個套件可以讓Ubuntu 增加更多功能。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-shell-extensions -y</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>安裝<code>Gnome Extension</code></li>
+</ol>
+<p>到<a target="_blank" rel="noopener" href="https://extensions.gnome.org/">Gnome Extensions</a>網站安裝<code>User Themes</code>的擴充套件；</p>
+<img src="/Linux/ubuntu2004-look-like-macos/gnome-extensions.png" class="" title="Gnome Extensions">
+<p>如果在首頁沒看到，可以用<code>Search for extensions...</code>的欄位進行搜尋。</p>
+<ol start="5">
+<li>開啟<code>User Themes</code></li>
+</ol>
+<p><code>User Themes</code>的功能是可以讓使用者套用自定義的主題，打開<code>Gnome Tweaks</code>工具，<br>選擇擴充套件之後，可以看到<code>User Themes</code>的項目，打開即可套件自定義的主題。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/open-the-user-themes.png" class="" title="Open the User Themes">
+
+<h3 id="套用Mac-OS-GTK-主題"><a href="#套用Mac-OS-GTK-主題" class="headerlink" title="套用Mac OS GTK 主題"></a>套用Mac OS GTK 主題</h3><p>上述步驟都完成後，現在是進入讓Ubuntu 看起來像Mac OS的第一步，<br>以下會說明如何套用Mac OS的主題、應用圖示、鼠標。</p>
+<ol>
+<li>下載主題</li>
+</ol>
+<p>在<a target="_blank" rel="noopener" href="https://www.gnome-look.org/browse/cat/135/order/latest/">Gnome-Look</a>網站，有很多主題、壁紙、鼠標、圖示…等可以提供下載，<br>在Ubuntu-20.04要選擇<code>GTK3/4 Themes</code>類型的主題，這裡用<a target="_blank" rel="noopener" href="https://www.gnome-look.org/p/1403328/">WhiteSur GTK Theme</a>示範</p>
+<img src="/Linux/ubuntu2004-look-like-macos/whitesur-gtk-theme-download.png" class="" title="Download WhiteSur Theme">
+
+<ol start="2">
+<li>套用主題</li>
+</ol>
+<p>下載後將壓縮檔的內容解開到<code>~/.themes</code>路徑<br>（如果找不到路徑可用<code>Ctrl + H</code>顯示隱藏的資料夾和文件，還是看不到的話請自行建立資料夾）</p>
+<img src="/Linux/ubuntu2004-look-like-macos/home-dir-themes.png" class="" title="~&#x2F;.themes">
+
+<p>重新開啟<code>Tweaks</code>工具，選擇外觀，將<code>應用程式</code>與<code>Shell</code>選擇<code>WhiteSur-dark</code>，會即時的看到變化。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/app-shell-whitesur-theme.png" class="" title="WhiteSur-dark">
+
+
+<h3 id="套用Mac-OS-圖標"><a href="#套用Mac-OS-圖標" class="headerlink" title="套用Mac OS 圖標"></a>套用Mac OS 圖標</h3><p>目前的主題已經讓您的Ubuntu畫面看起來像Mac OS，下一步是讓應用程式的圖示也像是Mac OS，<br>套用圖示的步驟與套用主題類似。</p>
+<ol>
+<li>下載圖示</li>
+</ol>
+<p>到<a target="_blank" rel="noopener" href="https://www.gnome-look.org/browse/cat/132/order/latest/">Gnome-Look</a>網站下載需要的圖示，這裡用<a target="_blank" rel="noopener" href="https://www.gnome-look.org/p/1405756/">WhiteSur icon theme</a>示範</p>
+<img src="/Linux/ubuntu2004-look-like-macos/whitesur-icon-download.png" class="" title="Download WhiteSur Icon">
+
+<ol start="2">
+<li>套用圖示</li>
+</ol>
+<p>下載後將壓縮檔內容解開到<code>~/.icons</code>路徑，看不到請自行建立資料夾</p>
+<img src="/Linux/ubuntu2004-look-like-macos/home-dir-icons.png" class="" title="~&#x2F;.icons">
+
+<p>重新開啟<code>Tweaks</code>工具，選擇外觀，將<code>圖示</code>選擇<code>WhiteSur-dark</code>，會即時的看到變化。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/icon-whitesur-theme.png" class="" title="WhiteSur-dark">
+
+<h3 id="套用Mac-OS-鼠標"><a href="#套用Mac-OS-鼠標" class="headerlink" title="套用Mac OS 鼠標"></a>套用Mac OS 鼠標</h3><p>鼠標平時是比較看不出來的，但為了完整性，連鼠標也一併替換吧！</p>
+<ol>
+<li>下載鼠標</li>
+</ol>
+<p>到<a target="_blank" rel="noopener" href="https://www.gnome-look.org/browse/cat/107/order/latest/">Gnome-Look</a>網站下載需要的鼠標，這裡用<a target="_blank" rel="noopener" href="https://www.gnome-look.org/p/1411743/">WhiteSur cursors</a>示範</p>
+<img src="/Linux/ubuntu2004-look-like-macos/whitesur-cursor-download.png" class="" title="Download WhiteSur Cursor">
+
+
+<ol start="2">
+<li>套用鼠標</li>
+</ol>
+<p>下載後將壓縮檔內容解開到<code>~/.icons</code>路徑，與圖示的路徑相同</p>
+<img src="/Linux/ubuntu2004-look-like-macos/home-dir-cursors.png" class="" title="~&#x2F;.icons">
+
+<p>重新開啟<code>Tweaks</code>工具，選擇外觀，將<code>游標</code>選擇<code>WhiteSur-cursors</code>，會即時的看到變化。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/cursors-whitesur-theme.png" class="" title="WhiteSur-cursor">
+
+<h3 id="調整Ubuntu-Dock-為Mac-OS-Dock"><a href="#調整Ubuntu-Dock-為Mac-OS-Dock" class="headerlink" title="調整Ubuntu Dock 為Mac OS Dock"></a>調整Ubuntu Dock 為Mac OS Dock</h3><p>這個步驟會說明如何調整與Mac OS 的Dock 相似的Dock，<br>Linux 提供了許多第三方的選擇，例如：<code>Plank</code>、<code>Cairo Dock</code>、<code>Dash to Dock</code>…等，<br>但這裡會介紹在不安裝第三方的情況，將原始的Dock 調整類似於Mac OS Dock。</p>
+<ol>
+<li>調整系統設定</li>
+</ol>
+<p>開啟系統的<code>設定值</code></p>
+<img src="/Linux/ubuntu2004-look-like-macos/system-settings.png" class="" title="系統設定值">
+
+<p>到<code>外觀</code>選項，在Dock下打開<code>自動隱藏Dock</code>(<code>Auto-hide the Dock</code>)、<br><code>螢幕上的位置</code>(<code>Position on screen</code>)改成<code>下</code>(<code>Bottom</code>)</p>
+<img src="/Linux/ubuntu2004-look-like-macos/system-settings-dock.png" class="" title="Dock設定">
+
+<ol start="2">
+<li>設定Dock 自定義參數指令</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false</span><br><span class="line">gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 40</span><br></pre></td></tr></table></figure>
+
+<p>指令輸入完之後就會得到如下圖的效果</p>
+<img src="/Linux/ubuntu2004-look-like-macos/customized-dock-command.png" class="" title="Dock自定義設定">
+
+<h3 id="設定Top-Bar會自動隱藏"><a href="#設定Top-Bar會自動隱藏" class="headerlink" title="設定Top Bar會自動隱藏"></a>設定Top Bar會自動隱藏</h3><p>Ubuntu預設的<code>Top Bar</code>會固定在畫面的上方，會有壓縮到整個畫面的感覺，<br>透過<code>Gnome Shell Extensions</code>，安裝<code>Hide Top Bar</code>套件隱藏，<br>並設定鼠標覆蓋原位置的時候出現。</p>
+<ol>
+<li>搜尋<code>Hide Top Bar</code>套件</li>
+</ol>
+<p>到<a target="_blank" rel="noopener" href="https://extensions.gnome.org/">Gnome Shell Extensions</a>的網站，<br>在<code>Search for extensions...</code>欄位搜尋<code>hide top bar</code>。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/hide-top-bar-extension.png" class="" title="Hide Top Bar">
+
+<ol start="2">
+<li>安裝<code>Hide Top Bar</code>套件</li>
+</ol>
+<p>上個步驟搜尋到<code>Hide Top Bar</code>之後點擊進入，點擊畫面右上方的<code>OFF</code>，<br>會跳出安裝的視窗，點擊安裝。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/install-hide-top-bar-extension.png" class="" title="Install Hide Top Bar">
+
+<ol start="3">
+<li>設定<code>Hide Top Bar</code></li>
+</ol>
+<p>安裝之後會看到<code>Top Bar</code>被隱藏了，要設定鼠標移過去後會自動滑下出現<br>開啟<code>Tweaks</code>工具，選擇<code>擴充套件</code>項目，看到<code>Hide top bar</code>，按下設定按鈕</p>
+<img src="/Linux/ubuntu2004-look-like-macos/tweaks-hide-top-bar.png" class="" title="Setting Hide Top Bar">
+
+<p>打開<code>Show panel when mouse approaches edge of the screen</code>，就會看到效果了。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/show-panel-when-mouse-approaches.png" class="" title="Show Top Bar panel">
+
+<h3 id="設定視窗標題列按鈕"><a href="#設定視窗標題列按鈕" class="headerlink" title="設定視窗標題列按鈕"></a>設定視窗標題列按鈕</h3><p>視窗標題列的<code>縮到最小</code>、<code>放大最大</code>、<code>關閉</code>的按鈕Ubuntu 預設是在視窗右上角<br>修改到左上角會更像是Mac OS</p>
+<p>打開<code>Tweaks</code>工具，選擇<code>視窗標題欄</code>，在<code>標題列按鈕</code>底下的位置改成<code>左側</code>就會看到效果了。</p>
+<img src="/Linux/ubuntu2004-look-like-macos/window-top-colume-button.png" class="" title="標題題按鈕">
+
+<hr>
+<p>以上修改完成後，大致上都會跟Mac OS的介面類似了，<br>桌面的壁紙或是系統的字型也可以修改跟Mac OS相同。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Windows/wsl-terminal/" rel="next" title="Windows Terminal 搭配WSL">
+                  <i class="fa fa-chevron-left"></i> Windows Terminal 搭配WSL
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Linux/ubuntu2004-windows10-time-locate-sync/" rel="prev" title="Ubuntu-20.04 與Windows 10 系統時間同步">
+                  Ubuntu-20.04 與Windows 10 系統時間同步 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E5%BF%85%E8%A6%81%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">安裝必要的套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E7%94%A8Mac-OS-GTK-%E4%B8%BB%E9%A1%8C"><span class="nav-number">2.</span> <span class="nav-text">套用Mac OS GTK 主題</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E7%94%A8Mac-OS-%E5%9C%96%E6%A8%99"><span class="nav-number">3.</span> <span class="nav-text">套用Mac OS 圖標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%97%E7%94%A8Mac-OS-%E9%BC%A0%E6%A8%99"><span class="nav-number">4.</span> <span class="nav-text">套用Mac OS 鼠標</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%BF%E6%95%B4Ubuntu-Dock-%E7%82%BAMac-OS-Dock"><span class="nav-number">5.</span> <span class="nav-text">調整Ubuntu Dock 為Mac OS Dock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9ATop-Bar%E6%9C%83%E8%87%AA%E5%8B%95%E9%9A%B1%E8%97%8F"><span class="nav-number">6.</span> <span class="nav-text">設定Top Bar會自動隱藏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A%E8%A6%96%E7%AA%97%E6%A8%99%E9%A1%8C%E5%88%97%E6%8C%89%E9%88%95"><span class="nav-number">7.</span> <span class="nav-text">設定視窗標題列按鈕</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

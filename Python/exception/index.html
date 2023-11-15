@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本篇會學習對出現錯誤時的處理，避免程式在面對例外時當掉。我們將學習和認識例外這個 Python 所建立的特殊的物件，可用來管理程式執行時出現的錯誤。 學習處理例外可協助在出現「檔案不存在」的問題時做出適當的反應，與處理其它可能引起程式當掉的問題。這能讓我們的程式在面對錯誤的資料時更強健，不管這些錯誤的資料是因為無意的錯誤，還是惡意想破壞程式的企圖，有了例外的處理就能應對這些錯誤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="例外">
+<meta property="og:url" content="https://shoudevops.github.io/Python/exception/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="本篇會學習對出現錯誤時的處理，避免程式在面對例外時當掉。我們將學習和認識例外這個 Python 所建立的特殊的物件，可用來管理程式執行時出現的錯誤。 學習處理例外可協助在出現「檔案不存在」的問題時做出適當的反應，與處理其它可能引起程式當掉的問題。這能讓我們的程式在面對錯誤的資料時更強健，不管這些錯誤的資料是因為無意的錯誤，還是惡意想破壞程式的企圖，有了例外的處理就能應對這些錯誤。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-26T06:31:11.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="exception">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/exception/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>例外 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          例外
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-26 14:31:11" itemprop="dateCreated datePublished" datetime="2019-12-26T14:31:11+08:00">2019-12-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本篇會學習對出現錯誤時的處理，避免程式在面對例外時當掉。<br>我們將學習和認識例外這個 <code>Python</code> 所建立的特殊的物件，可用來管理程式執行時出現的錯誤。</p>
+<p>學習處理例外可協助在出現「檔案不存在」的問題時做出適當的反應，與處理其它可能引起程式當掉的問題。<br>這能讓我們的程式在面對錯誤的資料時更強健，不管這些錯誤的資料是因為無意的錯誤，<br>還是惡意想破壞程式的企圖，有了例外的處理就能應對這些錯誤。</p>
+<span id="more"></span>
+
+<h3 id="例外"><a href="#例外" class="headerlink" title="例外"></a>例外</h3><p><code>Python</code> 使用稱為「例外（exception）」的特殊物件來管理程式執行時期所產生的錯誤。<br>每當發生錯誤 <code>Python</code> 不知要怎麼處理時，就會建立一個例外物件。<br>如果編寫了處理此例外的程式碼，程式就能繼續依照例外處理來執行，<br>如果未有對例外進行處理，那麼程式就會停止，並顯示 traceback 錯誤訊息，其中含有關於例外的說明。</p>
+<h4 id="處理-ZeroDivisionError-例外"><a href="#處理-ZeroDivisionError-例外" class="headerlink" title="處理 ZeroDivisionError 例外"></a>處理 ZeroDivisionError 例外</h4><p>您可能知道某個數字是不能除以 0 的，但還是讓 <code>Python</code> 進行這樣的處理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="number">5</span>/<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>當然 <code>Python</code> 沒辦法這樣運算，因此會看到一個 traceback 錯誤回報：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;division.py&quot;, line 1, in &lt;module&gt;</span><br><span class="line">    print(5/0)</span><br><span class="line">ZeroDivisionError: division by zero</span><br></pre></td></tr></table></figure>
+<p>在 traceback 訊息的最後一行指出錯誤為 <code>ZeroDivisionError</code> ，這是種例外物件。<br><code>Python</code> 無法依照我們的要求來處理時，就會建立這種物件。<br>在這種情況下 <code>Python</code> 會停止執行，並指出發生了哪種例外，而我們可依據這些資訊對程式進行修改。<br>當例外發生時，我們可告訴 <code>Python</code> 該進行什麼樣的處置，如此在錯誤發生時，就有處理準備了。</p>
+<h4 id="使用-try-except-程式區塊"><a href="#使用-try-except-程式區塊" class="headerlink" title="使用 try-except 程式區塊"></a>使用 try-except 程式區塊</h4><p>例外是使用 try-except 程式區塊來處理的，try-except 程式區塊可讓 <code>Python</code> 依照指示執行，<br>同時告知 <code>Python</code> 發生例外時要怎麼處理。</p>
+<p>使用 try-except 程式區塊時，就算出現例外，程式也能繼續執行，<br>可顯示我們編寫較為好懂友善的錯誤訊息，而不是丟出讓使用者看不太懂的 traceback。</p>
+<p>當您認為可能有錯誤發生時，可編寫一個 try-except 程式區塊來處理可能引發的例外。<br>可讓 <code>Python</code> 去執行某些程式，並告知如果這程式引發了某個特別的例外時，要做什麼樣的處置。</p>
+<p>以下列出處理 ZeroDivisionError 例外的 try-except 程式碼區塊：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">5</span>/<span class="number">0</span>)</span><br><span class="line"><span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t divide by zero!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>將會引發錯誤的程式碼 <code>print(5/0)</code> 放在 try 區塊內，如果 try 區塊中的程式執行時沒問題，<code>Python</code> 就會跳過 except 區塊。<br>如果 try 區塊中的程式碼引發錯誤，<code>Python</code>就會檢測 except 區塊是否為這種錯誤，並執行其中的程式碼。</p>
+<p>這樣使用者端會看到一條我們寫的友善錯誤文字訊息，而不是 traceback：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">You can&#x27;t divide by zero!</span><br></pre></td></tr></table></figure>
+<p>假如 try-except 程式區塊後面還有程式碼，這樣程式會接著執行，因為已告知 <code>Python</code> 如何處理錯誤了。</p>
+<h4 id="使用例外避免程式當掉"><a href="#使用例外避免程式當掉" class="headerlink" title="使用例外避免程式當掉"></a>使用例外避免程式當掉</h4><p>發生錯誤時，假如程式還有工作沒完成，那麼好好處理錯誤就十分重要。<br>這種情況常出現在要求使用者輸入資料的程式中。<br>如果程式能好好處理無效的輸入，就能再提示使用者輸入有效合法的內容，而不會讓程式當掉。</p>
+<p>以下是一個只執行除法運算的簡單計算機程式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Give me two numbers, and I&#x27;ll divide them.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Enter &#x27;q&#x27; to quit.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    first_number = <span class="built_in">input</span>(<span class="string">&quot;\nFirst number: &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_number == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    second_number = <span class="built_in">input</span>(<span class="string">&quot;Second number: &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> second_number == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    answer = <span class="built_in">int</span>(first_number) / <span class="built_in">int</span>(second_number)</span><br><span class="line">    <span class="built_in">print</span>(answer)</span><br></pre></td></tr></table></figure>
+<p>在 while 迴圈內程式會提示使用者輸入兩個數字，分別存入 first_number 與 second_number 變數內。<br>如果使用者輸入的是 q，就會離開程式，接著將兩個變數由字串轉換成整數型別，並計算兩個數字相除，算出的數字會存放到 answer 變數。<br>這支程式沒有使用錯誤處理的機制，因此當它執行到除數為 0 時，就會當掉並顯示 traceback：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">First number: 5</span><br><span class="line">Second number: 0</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;division.py&quot;, line 11, in &lt;module&gt;</span><br><span class="line">    answer = int(first_number) / int(second_number)</span><br><span class="line">ZeroDivisionError: division by zero</span><br></pre></td></tr></table></figure>
+<p>程式當掉不太好，但讓使用者看到 traceback 訊息也不太秒。<br>不懂技術的使用者會被這些訊息搞混，而且萬一使用者懷有惡意，他能從 traceback 訊息中獲取不希望讓使用者知道的訊息，<br>他會知道您的程式檔名，還會看到部份不能正確執行的程式碼。<br>有技術底的攻擊者有時候能利用這些訊息來確定對程式碼使用哪種攻擊最有效。</p>
+<h4 id="else-程式碼區塊"><a href="#else-程式碼區塊" class="headerlink" title="else 程式碼區塊"></a>else 程式碼區塊</h4><p>我們把可能引起錯誤的程式碼放入 try-except 程式區塊中，這樣能提高程式抵抗錯誤的因應能力。<br>錯誤是執行除法運算時引起的，因此我們要把這程式放入 try-except 區塊內。<br>下列範例含有 else 程式碼區塊，當 try 區塊內的程式都成功執行，else 區塊內的程式就會執行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Give me two numbers, and I&#x27;ll divide them.&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Enter &#x27;q&#x27; to quit.&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    first_number = <span class="built_in">input</span>(<span class="string">&quot;\nFirst number: &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> first_number == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    second_number = <span class="built_in">input</span>(<span class="string">&quot;Second number: &quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> second_number == <span class="string">&#x27;q&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        answer = <span class="built_in">int</span>(first_number) / <span class="built_in">int</span>(second_number)</span><br><span class="line">    <span class="keyword">except</span> ZeroDivisionError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t divide by 0!&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(answer)</span><br></pre></td></tr></table></figure>
+<p>讓 <code>Python</code> 試著執行 try 程式碼區塊中的除法運算，這個區塊只含有可能引起錯誤的程式碼，<br>要在 try 區塊都成功執行後才會執行的程式碼是放在 else 程式碼區塊內。</p>
+<p>except 程式碼區塊則是告知 <code>Python</code> 當出現 ZeroDivisionError 例外時才要執行的處置，<br>如果 try 程式碼區塊中的除法運算因除以 0 的錯誤而失敗，就會執行 except 區塊中的程式，<br>輸出一條較友善的文字訊息，告訴使用者錯誤的原因及避免方法。<br>程式隨後再繼續執行，使用者是看不到 traceback 的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Give me two numbers, and I&#x27;ll divide them.</span><br><span class="line">Enter &#x27;q&#x27; to quit.</span><br><span class="line"></span><br><span class="line">First number: 5</span><br><span class="line">Second number: 0</span><br><span class="line">You can&#x27;t divide by 0!</span><br><span class="line"></span><br><span class="line">First number: 5</span><br><span class="line">Second number: 2</span><br><span class="line">2.5</span><br><span class="line"></span><br><span class="line">First number: q</span><br></pre></td></tr></table></figure>
+<p>try-except-else 程式碼區塊的運作原理大致如下：</p>
+<ol>
+<li><code>Python</code> 試著執行 try 區塊中的程式碼，只有可能引起例外的程式碼才需要放入 try 區塊內。</li>
+<li>若有些程式是在 try 區塊的程式成功執行無誤後才要執行的，這些程式就放入 else 區塊內。</li>
+<li><code>Python</code> 在試著執行 tr益區塊中的程式引發了指定的例外時，except 區塊中放置的是要處理的程式碼。</li>
+</ol>
+<p>藉由預測可能引起錯誤的程式碼，我們可編寫出更強固的程式，就算在配對無效不合法的資料或是資源不足時，<br>也都能處置得當繼續執行，因此能抵抗使用者無意或惡意的輸入或攻擊。</p>
+<h4 id="處理-FileNotFoundError-例外"><a href="#處理-FileNotFoundError-例外" class="headerlink" title="處理 FileNotFoundError 例外"></a>處理 FileNotFoundError 例外</h4><p>使用檔案時有一種常見的錯誤是找不到檔案，要用的檔案可能在其它路徑，也可能檔名打錯或這個檔案根本不存在。<br>這些狀況我們都可以用 try-except 程式區塊以直接的方式進行處理。</p>
+<p>試著讀取一個不存在的檔案，下列程式會讀取 alice.txt 檔案，但我們並沒在這個文字檔：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">filename = <span class="string">&#x27;alice.txt&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">    contents = f_obj.read()</span><br></pre></td></tr></table></figure>
+<p>執行時 <code>Python</code> 找不到要讀取的文字檔，因此引發一個例外：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;alice.py&quot;, line 3, in &lt;module&gt;</span><br><span class="line">    with open(filename) as f_obj:</span><br><span class="line">FileNotFoundError: [Errno 2] No such file or directory: &#x27;alice.txt&#x27;</span><br></pre></td></tr></table></figure>
+<p>在上述的 traceback 中，最後一行列出 FileNotFoundError 例外，<br>這是 <code>Python</code> 找不到要開啟的檔案所引發的例外。<br>這個範例中，錯誤是由 open() 函式所引起，因此要處理這個錯誤，就必須把使用到 open() 的程式放入 try 區塊之中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">filename = <span class="string">&#x27;alice.txt&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">        contents = f_obj.read()</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    msg = <span class="string">&quot;Sorry, the file &quot;</span> + filename + <span class="string">&quot; does not exist.&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br></pre></td></tr></table></figure>
+<p>如果出現 FileNotFoundError 錯誤，會輸出一條較友善的文字訊息，而不是顯示 traceback:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sorry, the file alice.txt does <span class="keyword">not</span> exist.</span><br></pre></td></tr></table></figure>
+<p>假如檔案不存在，那麼程式就什麼都不用做，因此錯誤側理的程式就意義不大。<br>下面會繼續擴充這個範例，看看使用多個檔案時，例外處理能幫上什麼忙。</p>
+<h4 id="分析文字"><a href="#分析文字" class="headerlink" title="分析文字"></a>分析文字</h4><p>很多文學作品都是用簡單的純文字檔格式儲存，因為這些作品已經沒有版權問題，不受版權限制。<br>這裡使用的文字是取自於 Gutenberg （古騰堡計劃，<a target="_blank" rel="noopener" href="http://gutenberg.org/%EF%BC%89%EF%BC%8C">http://gutenberg.org/），</a><br>這個計劃專案的網站中提供了一系列可自由使用、沒有版權問題。</p>
+<p>讓我們來試著計算「Dracula」這部作品文字檔中的單字數量有幾個。<br>這裡會使用 <code>split()</code> 方法，此方法會從字串來建立一個單字串列。<br><code>split()</code> 方法會以空格為分隔符號來把字串分拆成獨立項目，並把這些項目存到一個串列中。<br>這個結果是一個含有該字串所有單字的串列，這種分拆法會讓有些單字含有逗號。<br>現在要計算「Dracula」這部作品到底含有多少單字，因此對整篇小說呼叫 <code>split()</code> 方法，<br>然後再計算取得的串列含有多少個項目元素，就能算出這部作品有多少單字了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">filename = <span class="string">&#x27;Dracula.txt&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">        contents = f_obj.read()</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    msg = <span class="string">&quot;Sorry, the file &quot;</span> + filename + <span class="string">&quot; does not exist.&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># Count the approximate number of words in the file.</span></span><br><span class="line">    words = contents.split()</span><br><span class="line">    num_words = <span class="built_in">len</span>(words)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The file &quot;</span> + filename + <span class="string">&quot; has about &quot;</span> + <span class="built_in">str</span>(num_words) + <span class="string">&quot; words.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>在 else 程式區塊，先對 contents 變數（目前存放很長的字串，是 Dracula 這部作品全部內容）呼叫 split() 方法，<br>生成一個串列，內含這部作品中所有的單字。當使用 len() 來求出串列長度時，就知道字串中含有多少個單字了：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The file Dracula.txt has about 164424 words.</span><br></pre></td></tr></table></figure>
+
+<h4 id="處理多個檔案"><a href="#處理多個檔案" class="headerlink" title="處理多個檔案"></a>處理多個檔案</h4><p>接著加入更多對書籍的分析處理。再進行之前，先把這支程式的大部份內容移動到取名為 count_words() 函數中。<br>這樣對多本書籍進行分析時會更容易：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ef count_words(filename):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Count the approximate number of words in a file.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">            contents = f_obj.read()</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        msg = <span class="string">&quot;Sorry, the file &quot;</span> + filename + <span class="string">&quot; does not exist.&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(msg)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Count the approximate number of words in the file.</span></span><br><span class="line">        words = contents.split()</span><br><span class="line">        num_words = <span class="built_in">len</span>(words)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;The file &quot;</span> + filename + <span class="string">&quot; has about &quot;</span> + <span class="built_in">str</span>(num_words) + <span class="string">&quot; words.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filename = <span class="string">&#x27;Dracula.txt&#x27;</span></span><br><span class="line">count_words(filename)</span><br></pre></td></tr></table></figure>
+<p>現在可以寫一個簡單的迴圈，用來處理計算分析多個文字檔到底含有多少個單字。<br>把要分析的檔案名稱都存放入一個串列內，然後以迴圖遍訪串列中每個檔案，<br>並呼叫 count_word() 函式來處理。<br>假設先在要分析 Dracula、Siddhartha、Moby Dick、Little Women 等作品，<br>看看他們有多少個單字，這些作品都是版權沒問題可以取用的。<br>我們會故意沒有把 little_women.txt 放入 word_count.py 所在的資料夾內，<br>看看這支程式在處理找不到檔案是回應是如何：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">count_words</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Count the approximate number of words in a file.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">            contents = f_obj.read()</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        msg = <span class="string">&quot;Sorry, the file &quot;</span> + filename + <span class="string">&quot; does not exist.&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(msg)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Count the approximate number of words in the file.</span></span><br><span class="line">        words = contents.split()</span><br><span class="line">        num_words = <span class="built_in">len</span>(words)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;The file &quot;</span> + filename + <span class="string">&quot; has about &quot;</span> + <span class="built_in">str</span>(num_words) + <span class="string">&quot; words.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filenames = [<span class="string">&#x27;Dracula.txt&#x27;</span>, <span class="string">&#x27;siddhartha.txt&#x27;</span>, <span class="string">&#x27;little_women.txt&#x27;</span>, <span class="string">&#x27;moby_dick.txt&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">    count_words(filename)</span><br></pre></td></tr></table></figure>
+<p>就算 little_women.txt 檔不存在，也不受影響的處理分析其它檔案：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">The file Dracula.txt has about 164424 words.</span><br><span class="line">The file siddhartha.txt has about 42166 words.</span><br><span class="line">Sorry, the file little_women.txt does not exist.</span><br><span class="line">The file moby_dick.txt has about 215830 words.</span><br></pre></td></tr></table></figure>
+<p>這個範例中使用 try-except 程式區塊有兩個優點：</p>
+<ul>
+<li>避免讓使用者看到 traceback 訊息</li>
+<li>讓程式能繼續分析其它找得到的檔案</li>
+</ul>
+<h4 id="出錯時無聲無息"><a href="#出錯時無聲無息" class="headerlink" title="出錯時無聲無息"></a>出錯時無聲無息</h4><p>在前一個範例中，我們告知使用者有個檔案找不到，但並不是每次捉取到例外時都需要告知使用者，<br>有時候只希望程式在發生例外時無聲無息繼續執行。<br>可以像平常一樣編寫 try 程式碼區塊，但在 except 程式碼區塊中明確告知 <code>Python</code> 什麼都不做，<br><code>Python</code> 有一條 pass 陳述句，可在程式碼區塊中寫入，<code>Python</code> 就會無聲無息地跳過：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">count_words</span>(<span class="params">filename</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Count the approximate number of words in a file.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">            contents = f_obj.read()</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Count the approximate number of words in the file.</span></span><br><span class="line">        words = contents.split()</span><br><span class="line">        num_words = <span class="built_in">len</span>(words)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;The file &quot;</span> + filename + <span class="string">&quot; has about &quot;</span> + <span class="built_in">str</span>(num_words) + <span class="string">&quot; words.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filenames = [<span class="string">&#x27;Dracula.txt&#x27;</span>, <span class="string">&#x27;siddhartha.txt&#x27;</span>, <span class="string">&#x27;little_women.txt&#x27;</span>, <span class="string">&#x27;moby_dick.txt&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">    count_words(filename)</span><br></pre></td></tr></table></figure>
+<p>不同的地方在於 except 區塊內的 pass 陳述句。<br>當程式執行出現 FileNotFoundError 例外時，就會執行 except 區塊內的 pass 陳述句。<br>這種錯誤發生時也不會出現 trackback ，也沒有輸出，無聲無息。<br>使用者只會看到有存在的檔案算出有多少個單字，但沒有顯示其中有個檔案不存在的訊息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The file Dracula.txt has about 164424 words.</span><br><span class="line">The file siddhartha.txt has about 42166 words.</span><br><span class="line">The file moby_dick.txt has about 215830 words.</span><br></pre></td></tr></table></figure>
+<p>pass 陳述句也充當了佔位符號，提醒我們在程式的某個位置什麼都錯，<br>保留位置讓我們將來在這裡可以再進行些什麼處理。</p>
+<h4 id="決定回報哪些錯誤訊息"><a href="#決定回報哪些錯誤訊息" class="headerlink" title="決定回報哪些錯誤訊息"></a>決定回報哪些錯誤訊息</h4><p>如果使用者知道要分析哪些檔案，則可能希望在檔案沒有被分析時顯示一條訊息，將原因告知。<br>如果使用者只想看到結果，並不想知道分析了哪些檔案，則無需把哪些檔案不存在的訊息顯示出來。<br>向使用者顯示他們不想看到的訊息可能會降低程式的可用性。</p>
+<p>編寫得很好並經過詳細測試的程式碼不容易出現內部錯誤，但只要程式要依靠外部的因素，<br>如使用者輸入、存放在資料夾的檔案、網外連接等，就有可能出現例外。<br>藉由經驗的判斷可讓程式在什麼位置放入例外處理的程式區塊，以及出錯時要給使用者多少相關的訊息。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/exception/" rel="tag"># exception</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/files-read-write/" rel="next" title="檔案 － 讀取與寫入">
+                  <i class="fa fa-chevron-left"></i> 檔案 － 讀取與寫入
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/data-stored/" rel="prev" title="儲存資料">
+                  儲存資料 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%A4%96"><span class="nav-number">1.</span> <span class="nav-text">例外</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%95%E7%90%86-ZeroDivisionError-%E4%BE%8B%E5%A4%96"><span class="nav-number">1.1.</span> <span class="nav-text">處理 ZeroDivisionError 例外</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-try-except-%E7%A8%8B%E5%BC%8F%E5%8D%80%E5%A1%8A"><span class="nav-number">1.2.</span> <span class="nav-text">使用 try-except 程式區塊</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B%E5%A4%96%E9%81%BF%E5%85%8D%E7%A8%8B%E5%BC%8F%E7%95%B6%E6%8E%89"><span class="nav-number">1.3.</span> <span class="nav-text">使用例外避免程式當掉</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#else-%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%8D%80%E5%A1%8A"><span class="nav-number">1.4.</span> <span class="nav-text">else 程式碼區塊</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%95%E7%90%86-FileNotFoundError-%E4%BE%8B%E5%A4%96"><span class="nav-number">1.5.</span> <span class="nav-text">處理 FileNotFoundError 例外</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E6%96%87%E5%AD%97"><span class="nav-number">1.6.</span> <span class="nav-text">分析文字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%95%E7%90%86%E5%A4%9A%E5%80%8B%E6%AA%94%E6%A1%88"><span class="nav-number">1.7.</span> <span class="nav-text">處理多個檔案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BA%E9%8C%AF%E6%99%82%E7%84%A1%E8%81%B2%E7%84%A1%E6%81%AF"><span class="nav-number">1.8.</span> <span class="nav-text">出錯時無聲無息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%BA%E5%AE%9A%E5%9B%9E%E5%A0%B1%E5%93%AA%E4%BA%9B%E9%8C%AF%E8%AA%A4%E8%A8%8A%E6%81%AF"><span class="nav-number">1.9.</span> <span class="nav-text">決定回報哪些錯誤訊息</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

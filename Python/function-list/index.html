@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="傳入串列函式傳入串列是很好用的功能，把串列傳入函式後，函式就能直接存取其內容。 假設有個使用者串列，我們要對串列中每位使用者輸出問候文字： 12345678def greet_users(names):    &quot;&quot;&quot;Print a simple greeting to each user in the list.&quot;&quot;&quot;    for na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函式 － 串列應用與任意數量的引數">
+<meta property="og:url" content="https://shoudevops.github.io/Python/function-list/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="傳入串列函式傳入串列是很好用的功能，把串列傳入函式後，函式就能直接存取其內容。 假設有個使用者串列，我們要對串列中每位使用者輸出問候文字： 12345678def greet_users(names):    &quot;&quot;&quot;Print a simple greeting to each user in the list.&quot;&quot;&quot;    for na">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-12T01:15:11.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.889Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="list">
+<meta property="article:tag" content="function">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/function-list/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>函式 － 串列應用與任意數量的引數 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/function-list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          函式 － 串列應用與任意數量的引數
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-12 09:15:11" itemprop="dateCreated datePublished" datetime="2019-12-12T09:15:11+08:00">2019-12-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="傳入串列"><a href="#傳入串列" class="headerlink" title="傳入串列"></a>傳入串列</h3><p>函式傳入串列是很好用的功能，把串列傳入函式後，函式就能直接存取其內容。</p>
+<p>假設有個使用者串列，我們要對串列中每位使用者輸出問候文字：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">greet_users</span>(<span class="params">names</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Print a simple greeting to each user in the list.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> names:</span><br><span class="line">        msg = <span class="string">&quot;Hello, &quot;</span> + name.title() + <span class="string">&quot;!&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(msg)</span><br><span class="line"></span><br><span class="line">usernames = [<span class="string">&#x27;hannah&#x27;</span>, <span class="string">&#x27;ty&#x27;</span>, <span class="string">&#x27;margot&#x27;</span>]</span><br><span class="line">greet_users(usernames)</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>定義 greet_users() 能接收名字串列，並將其存放在 names 引數內。<br>函式以迴圈遍訪接收的串列，並對其中每位使用者輸出一條問候文句。<br>隨後定義一個 usernames 串列，然後呼叫 greet_users() 函式並把串列傳入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello, Hannah!</span><br><span class="line">Hello, Ty!</span><br><span class="line">Hello, Margot!</span><br></pre></td></tr></table></figure>
+<p>當要處理一組使用者並輸出問候文句時，可呼叫這個函式來處理。</p>
+<h4 id="在函式中修改串列"><a href="#在函式中修改串列" class="headerlink" title="在函式中修改串列"></a>在函式中修改串列</h4><p>串列傳入函式後，函式就可對串列進行修改。<br>函式中對中列所做的任何修改都是永久性的，能讓我們有效率地處理大量的資料。</p>
+<p>假設有一家 3D 列印模型的公司，能提供畢者提交設計來印出模型。<br>要印出模型的設計提案都儲存在一個串列內，印出後會移到另一個串列中。<br>下列是不使用函式的情況：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Star with some designs that need to be printed.</span></span><br><span class="line">unprinted_designs = [<span class="string">&#x27;iphone case&#x27;</span>, <span class="string">&#x27;robot pendant&#x27;</span>, <span class="string">&#x27;dodecahedron&#x27;</span>]</span><br><span class="line">completed_models = []</span><br><span class="line"></span><br><span class="line"><span class="comment"># Simulate printing each design, until none are left.</span></span><br><span class="line"><span class="comment"># Move each design to completed_models after printing.</span></span><br><span class="line"><span class="keyword">while</span> unprinted_designs:</span><br><span class="line">    current_design = unprinted_designs.pop()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Simulate creating a 3D print from the design.</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Printing model: &quot;</span> + current_design)</span><br><span class="line">    completed_models.append(current_design)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Display all completed models.</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nThe following models have been printed:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> completed_model <span class="keyword">in</span> completed_models:</span><br><span class="line">    <span class="built_in">print</span>(completed_model)</span><br></pre></td></tr></table></figure>
+<p>建立一個要印出的模型設計提案串列 unprinted_designs，還有建立一個空串列 completed_model 來存放列印完成的模型。<br>只要 unprinted_design 串列中還有設計項目，while 迴圈就會處理印出設計的過程：<br>從串列尾端提取一個設計項目並刪除它，並存放到 current_design 變數中，顯示一條正在印出目前項目的訊息，<br>隨後將設計項目新增到 completed_models 串列中。迴圈結束後，顯示已印出的所有設計項目：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Printing model: dodecahedron</span><br><span class="line">Printing model: robot pendant</span><br><span class="line">Printing model: iphone case</span><br><span class="line"></span><br><span class="line">The following models have been printed:</span><br><span class="line">dodecahedron</span><br><span class="line">robot pendant</span><br><span class="line">iphone case</span><br></pre></td></tr></table></figure>
+<p>確定範例中的程式沒有問題後，可以編寫兩個函式來重構這些程式碼，每個函式負責一件特定的工作。<br>第一個函式負責處理印出設計項目的工作，第二個函式則匯整印了哪些設計項目：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_models</span>(<span class="params">unprinted_designs, completed_models</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Simulate printing each design, util none are left.</span></span><br><span class="line"><span class="string">    Move each design to completed_models after printing.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">while</span> unprinted_designs:</span><br><span class="line">        current_design = unprinted_designs.pop()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Simulate creating a 3D print from the design.</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Printing model: &quot;</span> + current_design)</span><br><span class="line">        completed_models.append(current_design)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show_completed_models</span>(<span class="params">completed_models</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Show all the models that were printed.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nThe following models have been printed:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> completed_model <span class="keyword">in</span> completed_models:</span><br><span class="line">        <span class="built_in">print</span>(completed_model)</span><br><span class="line"></span><br><span class="line">unprinted_designs = [<span class="string">&#x27;iphone case&#x27;</span>, <span class="string">&#x27;robot pendant&#x27;</span>, <span class="string">&#x27;dodecahedron&#x27;</span>]</span><br><span class="line">completed_models = []</span><br><span class="line"></span><br><span class="line">print_models(unprinted_designs, completed_models)</span><br><span class="line">show_completed_models(completed_models)</span><br></pre></td></tr></table></figure>
+<p>定義了兩個函式之後，一併將兩個參數的內容定義完成，隨後只要呼叫並傳入正確的引數即可。<br>此程式的輸出與前面沒有用函式的版本相同，但程式的內容組織整理得更好，也更易於日後擴充和維護。<br>完成大部份工作的程式都移到這兩個函式內了，因為讓程式的主體更易讀好懂。<br>使用具有描述性的函式名稱，讓人在閱讀程式時很容易理解其功用，就算沒有任何注釋也沒關係。</p>
+<p>上面的程式示範了「每個函式都應只負責一件特定工作」的理念。<br>當您在設計和編寫函式時，若發現它處理的工作太多時，請試著將工作進行劃分，看能否分成兩個函式來處理。<br>請記住在函式中也可以呼叫另一個函式，這個觀念有助於把複雜的工作分割成一系列的處理步驟。</p>
+<h4 id="防止函式修改串列內容"><a href="#防止函式修改串列內容" class="headerlink" title="防止函式修改串列內容"></a>防止函式修改串列內容</h4><p>有時候我們希望程式要禁止函式修改串列的內容。<br>以上面的範例來看，就算印出了所有設計項目後，也要保留原本還沒印出模型的設計串列，用此串列當作紀錄備案。<br>但因為已將所有設計項目從 unprinted_designs 串列提取出來，這個串列變成空的了。<br>若想要解決這個問題，可以對函式傳入串列的複製品，而不是傳入原本的串列，這樣函式所進行的相關處理只會影響到複製品，<br>原本的串列則不受影響，呼叫函式傳入串列的複製品，作法如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">function_name(list_name[:])</span><br></pre></td></tr></table></figure>
+<p><code>[:]</code> 是切片表示法，可建立串列的複製品。<br>所以在上面範例中，若不想提取清空原本的 unprinted_design 串列，可以用下列的方式呼叫 print_models() 函式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_models(unprinted_designs[:], completed_models)</span><br></pre></td></tr></table></figure>
+<p>這樣 print_models() 函式用的就是 unprinted_designs 串列的複製品，不是原本的串列。<br>如之前的處理，completed_models 串列會蒐集已印出模型的設計項目名稱，<br>但函式所做的處理並不會影響原本的 unprinted_designs 串列。</p>
+<p>雖然對函式傳入串列的複製品可保留原本串 列的內容，但除非有充分的理由，<br>不然還是以原本的串列來進行傳入和處理是比較好的做法。<br>因為函式直接用原本的串列會比較有效率，可避免花費時間和記憶體空間來複製串列，當處理的串列很大時更是如此。</p>
+<hr>
+<h3 id="傳入任意數量的引數到函式內"><a href="#傳入任意數量的引數到函式內" class="headerlink" title="傳入任意數量的引數到函式內"></a>傳入任意數量的引數到函式內</h3><p>有時候我們預先不知道函式需要接收多少個引數，還好 <code>Python</code> 允許函式呼叫陳述句中可蒐集任意數量的引數。</p>
+<p>例如，有個製作披薩的函式要接收多種配料來製作，但無法預知顧客會選多少種配料。<br>下列的函式定義中只有一個參數 <code>*toppings</code>，這樣的定義後不管呼叫函式時提供了多少個引數，此參數都會把它們蒐集起來：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_pizza</span>(<span class="params">*toppings</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Print the list of toppings that have been requested.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(toppings)</span><br><span class="line"></span><br><span class="line">make_pizza(<span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>*toppings</code> 參數中的星號會讓 <code>Python</code> 建立一個名稱是 toppings 的空多元組，並將接收到的所有值都裝入這個多元組內。<br>函式本體內的 print 陳述句會輸出顯示來證實 <code>Python</code> 能處理用一個引數和三個引數呼叫函式的情形。<br>函式會以類似的方式處理不同的呼叫，請留意！ <code>Python</code> 都會把引數裝進一個多元組內 就算只有一個引數值也一樣：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;pepperoni&#x27;,)</span><br><span class="line">(&#x27;mushrooms&#x27;, &#x27;green peppers&#x27;, &#x27;extra cheese&#x27;)</span><br></pre></td></tr></table></figure>
+<p>現在可以把 print 陳述句換成迴圈，對配料串列以迴圈遍訪，並將所點的披薩的配料進行描述：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_pizza</span>(<span class="params">*toppings</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Summarize the pizza we are about to make.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nMaking a pizza with the following toppings:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;- &quot;</span> + topping)</span><br><span class="line"></span><br><span class="line">make_pizza(<span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>不論在呼叫函式時用一個引數或三個引數，這個函式都能好好處理：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Making a pizza with the following toppings:</span><br><span class="line">- pepperoni</span><br><span class="line"></span><br><span class="line">Making a pizza with the following toppings:</span><br><span class="line">- mushrooms</span><br><span class="line">- green peppers</span><br><span class="line">- extra cheese</span><br></pre></td></tr></table></figure>
+
+<h4 id="一起使用位置引數和任意數量引數"><a href="#一起使用位置引數和任意數量引數" class="headerlink" title="一起使用位置引數和任意數量引數"></a>一起使用位置引數和任意數量引數</h4><p>如果要讓函式接收不同型別的引數，就必須要在函式定義中把接收任意數量引數的參數設定放在最尾端。<br><code>Python</code> 會先比對位置引數和關鍵字引數，然後才把剩下的引數都蒐集到一個參數內。</p>
+<p>例如上面的程式內，函式還需要加一個代表披薩大小的引數，那就必須要把這個參數放在 <code>*toppings</code> 參數的前面：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">make_pizza</span>(<span class="params">size, *toppings</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Summarize the pizza we are about to make.&quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\nMaking a &quot;</span> + <span class="built_in">str</span>(size) + </span><br><span class="line">        <span class="string">&quot;-inch pizza with the following toppings:&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;- &quot;</span> + topping)</span><br><span class="line"></span><br><span class="line">make_pizza(<span class="number">16</span>, <span class="string">&#x27;pepperoni&#x27;</span>)</span><br><span class="line">make_pizza(<span class="number">12</span>, <span class="string">&#x27;mushrooms&#x27;</span>, <span class="string">&#x27;green peppers&#x27;</span>, <span class="string">&#x27;extra cheese&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><code>Python</code> 會把接收到第一個值存放到 size 參數內，並將其它所有值都存放到多元組 toppings。<br>函式呼叫中，先給定代表披薩大小的引數值，然後依照顧客給定任意數量的配料：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Making a 16-inch pizza with the following toppings:</span><br><span class="line">- pepperoni</span><br><span class="line"></span><br><span class="line">Making a 12-inch pizza with the following toppings:</span><br><span class="line">- mushrooms</span><br><span class="line">- green peppers</span><br><span class="line">- extra cheese</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用任意數量的關鍵字引數"><a href="#使用任意數量的關鍵字引數" class="headerlink" title="使用任意數量的關鍵字引數"></a>使用任意數量的關鍵字引數</h4><p>有時候我們會希望函式接收任意數量的引數，但預先卻不知道要傳入函式的是什麼樣的資訊。<br>這種情況下，可以讓函式變成能接收任意數量的鍵 － 值對，在呼叫函式時提供多少的鍵 － 對就接收多少對。<br>以下範列要從使用者接收資訊，但不確定收到什麼樣的資訊內容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">build_profile</span>(<span class="params">first, last, **user_info</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Build a dictionary containing everything we know about a user.&quot;&quot;&quot;</span></span><br><span class="line">    profile = &#123;&#125;</span><br><span class="line">    profile[<span class="string">&#x27;first_name&#x27;</span>] = first</span><br><span class="line">    profile[<span class="string">&#x27;last_name&#x27;</span>] = last</span><br><span class="line">    <span class="keyword">for</span> key, value <span class="keyword">in</span> user_info.items():</span><br><span class="line">        profile[key] = value</span><br><span class="line">    <span class="keyword">return</span> profile</span><br><span class="line"></span><br><span class="line">user_profile = build_profile(<span class="string">&#x27;albert&#x27;</span>, <span class="string">&#x27;einstein&#x27;</span>, location=<span class="string">&#x27;princeton&#x27;</span>, field=<span class="string">&#x27;physics&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(user_profile)</span><br></pre></td></tr></table></figure>
+<p>函式的定義中要求提供名（first）和姓（last），同時允許使用者依據需要提供任意數量的名字 － 值對。<br>**user_info 參數的兩個星號會讓 <code>Python</code> 建立 user_info 的空字典，並將接收到的所有名字 － 值對都裝入這個字典內。<br>再來以迴圈遍訪 user_info 中的鍵 － 值對項目，並把每個鍵 － 值對都新增到 profile 字典中。<br>最後把 profile 字典返回到呼叫函式的那一行指令：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;first_name&#x27;: &#x27;albert&#x27;, &#x27;last_name&#x27;: &#x27;einstein&#x27;, &#x27;location&#x27;: &#x27;princeton&#x27;, &#x27;field&#x27;: &#x27;physics&#x27;&#125;</span><br></pre></td></tr></table></figure>
+<p>返回字典中含有名和姓，以及求學地點與科系。<br>呼叫這個函式時不論額外提供多少的鍵 － 值對，這個函式都能正確處理。</p>
+<p>在設計編寫函式時，我們可以用各種方式混合使用位置引數、關鍵字引數和任意數量引數這三個應用。<br>目前就先使用最簡單的方式來完成程式工作就好了。<br>繼續往下學習，就能掌握在各種不同情況下要使用哪一種方法是最有效率的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/list/" rel="tag"># list</a>
+              <a href="/tags/function/" rel="tag"># function</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/function-return/" rel="next" title="函式 － 返回值">
+                  <i class="fa fa-chevron-left"></i> 函式 － 返回值
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/function-module/" rel="prev" title="函式 － 模組化應用">
+                  函式 － 模組化應用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%B3%E5%85%A5%E4%B8%B2%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">傳入串列</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%87%BD%E5%BC%8F%E4%B8%AD%E4%BF%AE%E6%94%B9%E4%B8%B2%E5%88%97"><span class="nav-number">1.1.</span> <span class="nav-text">在函式中修改串列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B2%E6%AD%A2%E5%87%BD%E5%BC%8F%E4%BF%AE%E6%94%B9%E4%B8%B2%E5%88%97%E5%85%A7%E5%AE%B9"><span class="nav-number">1.2.</span> <span class="nav-text">防止函式修改串列內容</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%B3%E5%85%A5%E4%BB%BB%E6%84%8F%E6%95%B8%E9%87%8F%E7%9A%84%E5%BC%95%E6%95%B8%E5%88%B0%E5%87%BD%E5%BC%8F%E5%85%A7"><span class="nav-number">2.</span> <span class="nav-text">傳入任意數量的引數到函式內</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E4%BD%8D%E7%BD%AE%E5%BC%95%E6%95%B8%E5%92%8C%E4%BB%BB%E6%84%8F%E6%95%B8%E9%87%8F%E5%BC%95%E6%95%B8"><span class="nav-number">2.1.</span> <span class="nav-text">一起使用位置引數和任意數量引數</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%BB%E6%84%8F%E6%95%B8%E9%87%8F%E7%9A%84%E9%97%9C%E9%8D%B5%E5%AD%97%E5%BC%95%E6%95%B8"><span class="nav-number">2.2.</span> <span class="nav-text">使用任意數量的關鍵字引數</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

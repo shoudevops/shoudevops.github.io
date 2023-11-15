@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="以上一篇安裝的Ubuntu 16.04 LTS為例，說明作業系統安裝完成後，如何設定網路 查詢目前網路卡與網路資訊用ifconfig或ip a可以查詢目前網路的資訊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 網路設定">
+<meta property="og:url" content="https://shoudevops.github.io/Linux/linux-setting-network/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="以上一篇安裝的Ubuntu 16.04 LTS為例，說明作業系統安裝完成後，如何設定網路 查詢目前網路卡與網路資訊用ifconfig或ip a可以查詢目前網路的資訊">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/network-ifconfig.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/network-interfaces.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/networking-flush.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/networking-18-ifconfig.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/networking-18-interfaces.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/networking-netplan-apply.jpg">
+<meta property="og:image" content="https://shoudevops.github.io/Linux/linux-setting-network/networking-ping.jpg">
+<meta property="article:published_time" content="2020-04-14T07:30:19.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.907Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="networking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shoudevops.github.io/Linux/linux-setting-network/network-ifconfig.jpg">
+
+<link rel="canonical" href="https://shoudevops.github.io/Linux/linux-setting-network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Linux 網路設定 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/linux-setting-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux 網路設定
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-14 15:30:19" itemprop="dateCreated datePublished" datetime="2020-04-14T15:30:19+08:00">2020-04-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>以上一篇安裝的Ubuntu 16.04 LTS為例，說明作業系統安裝完成後，如何設定網路</p>
+<h3 id="查詢目前網路卡與網路資訊"><a href="#查詢目前網路卡與網路資訊" class="headerlink" title="查詢目前網路卡與網路資訊"></a>查詢目前網路卡與網路資訊</h3><p>用<code>ifconfig</code>或<code>ip a</code>可以查詢目前網路的資訊</p>
+<img src="/Linux/linux-setting-network/network-ifconfig.jpg" class="" title="用ifconfig指令查詢">
+
+<span id="more"></span>
+
+<ul>
+<li><code>lo</code> 是Loopback，能用來作為測試作業系統內部迴圈所用的一個網域</li>
+<li><code>ens33</code> 是虛擬機建立時提供給它的網路卡一，整個區塊都是這張網路卡的資訊</li>
+<li><code>inet addr: 192.168.246.128</code> 是目前<code>ens33</code>這張網路卡所取得的私有IP</li>
+<li><code>Bcast: 192.168.246.255</code> 是目前172.16.122.xxx這個網段下的廣播IP</li>
+<li><code>Mask: 255.255.255.0</code> 是網路遮罩的十進位表示方法</li>
+</ul>
+<h3 id="設定-Network-interfaces-DNS"><a href="#設定-Network-interfaces-DNS" class="headerlink" title="設定 Network interfaces, DNS"></a>設定 Network interfaces, DNS</h3><p>Ubuntu 16版與Ubuntu 18版設定的檔案不同，因此這裡會分開介紹</p>
+<h4 id="Ubuntu-16-04-LTS"><a href="#Ubuntu-16-04-LTS" class="headerlink" title="Ubuntu 16.04 LTS"></a>Ubuntu 16.04 LTS</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
+<p>開啟<code>interfaces</code>這個檔案後，可以看到目前網路的預設內容</p>
+<img src="/Linux/linux-setting-network/network-interfaces.jpg" class="" title="開啟interfaces檔案設定網路">
+
+<p>若沒有指定特定IP位置，而且目前也可以正確的連線到Internet，也可以使用預設的DHCP自動取得的IP做使用<br>若想要安排在這個網段裡這台機器要使用哪個IP，就必需要自己設定了</p>
+<p>以下是要修改的interfaces檔案內容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">auto ens33    -&gt;  ens33 是機器的網路卡名稱，請自行修改。</span><br><span class="line">iface ens33 inet static</span><br><span class="line"></span><br><span class="line"># 下面的IP要修改為機器網段的IP</span><br><span class="line">address 192.168.246.168</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 192.168.246.2</span><br><span class="line"></span><br><span class="line"># 設定DNS Server</span><br><span class="line">dns-nameservers 168.95.1.1</span><br><span class="line">dns-nameservers 8.8.8.8</span><br></pre></td></tr></table></figure>
+
+<p>設定完成後存檔離開，再來就要刷新網路卡設定跟重新啟動網路卡</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 刷新設定</span><br><span class="line">sudo ip addr flush ens33    -&gt;  網路卡名稱要記得修改哦</span><br><span class="line"></span><br><span class="line"># 重啟網路卡（不是root權限會要求輸入密碼）</span><br><span class="line">/etc/init.d/networking restart</span><br></pre></td></tr></table></figure>
+
+<p>下查詢指令後會看到 IP已經更新</p>
+<img src="/Linux/linux-setting-network/networking-flush.jpg" class="" title="刷新網路卡設定再重啟網路卡">
+
+<h4 id="Ubuntu-18-04-LTS"><a href="#Ubuntu-18-04-LTS" class="headerlink" title="Ubuntu 18.04 LTS"></a>Ubuntu 18.04 LTS</h4><p>到Ubuntu 18.04的機器後，先查詢網路資訊</p>
+<img src="/Linux/linux-setting-network/networking-18-ifconfig.jpg" class="" title="Ubuntu 18.04 LTS ifconfig">
+
+<p>如果我們跟 Ubuntu 16.04 一樣開啟 &#x2F;etc&#x2F;network&#x2F;interfaces 的檔案，會看到：</p>
+<img src="/Linux/linux-setting-network/networking-18-interfaces.jpg" class="" title="查看interfaces檔案">
+
+<blockquote>
+<p>ifupdown has been replaced by netplan(5) on this system. See &#x2F;etc&#x2F;netplan for current configuration.</p>
+</blockquote>
+<p>安裝系統時如果有使用到網路，在 <code>/etc/netplan/</code>目錄下就應該會有基本的設定檔，<br>若完全沒有設定檔，可以使用以下指令自動產生預設的設定檔：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netplan generate</span><br></pre></td></tr></table></figure>
+
+<p>開啟 &#x2F;etc&#x2F;netplan&#x2F;50-cloud-init.yaml 設定檔（或其它設定檔），將相關資訊填入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">network:</span><br><span class="line">    ethernets:</span><br><span class="line">        ens33:</span><br><span class="line">            addresses: [192.168.246.188/24]  -&gt;  IP 位址與網路遮罩</span><br><span class="line">            gateway4: 192.168.246.2</span><br><span class="line">            nameservers:</span><br><span class="line">                addresses: [168.95.1.1, 8.8.8.8]</span><br><span class="line">            dhcp4: no</span><br><span class="line">    version: 2</span><br></pre></td></tr></table></figure>
+<p>修改並存檔後輸入以下指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netplan try</span><br></pre></td></tr></table></figure>
+<p>執行後會檢查設定檔格式，如果正確的話就會套用，並在120秒以後自動還原設定（如果設錯了在兩分鐘後會還原）！<br>在120秒按<code>ENTER</code>之後就會使用新的設定檔內容了！<br>也能在120秒以後輸入以下指令套用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netplan apply</span><br></pre></td></tr></table></figure>
+<p>再來查看設定是否生效：</p>
+<img src="/Linux/linux-setting-network/networking-netplan-apply.jpg" class="" title="查看網路介面設定">
+
+<hr>
+<h3 id="檢查網路是否可以連線"><a href="#檢查網路是否可以連線" class="headerlink" title="檢查網路是否可以連線"></a>檢查網路是否可以連線</h3><p>網路介面都設定完成後，要如何驗證是否可以正確的連線到Internet呢？<br>最簡單的方式就是<code>ping</code>一個不在同網段內的位址測試有沒有回應：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping 8.8.8.8</span><br></pre></td></tr></table></figure>
+<p>ping看看Google的DNS Server會不會有回應</p>
+<img src="/Linux/linux-setting-network/networking-ping.jpg" class="" title="Ping Google DNS Server">
+
+<p>可以看到Google DNS Server有回應，這樣就可以正常的連線到Internet囉！</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/networking/" rel="tag"># networking</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Linux/linux-installation/" rel="next" title="Linux 安裝">
+                  <i class="fa fa-chevron-left"></i> Linux 安裝
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Linux/linux-permission/" rel="prev" title="Linux 檔案權限介紹">
+                  Linux 檔案權限介紹 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%A9%A2%E7%9B%AE%E5%89%8D%E7%B6%B2%E8%B7%AF%E5%8D%A1%E8%88%87%E7%B6%B2%E8%B7%AF%E8%B3%87%E8%A8%8A"><span class="nav-number">1.</span> <span class="nav-text">查詢目前網路卡與網路資訊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Network-interfaces-DNS"><span class="nav-number">2.</span> <span class="nav-text">設定 Network interfaces, DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-16-04-LTS"><span class="nav-number">2.1.</span> <span class="nav-text">Ubuntu 16.04 LTS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ubuntu-18-04-LTS"><span class="nav-number">2.2.</span> <span class="nav-text">Ubuntu 18.04 LTS</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E7%B6%B2%E8%B7%AF%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E9%80%A3%E7%B7%9A"><span class="nav-number">3.</span> <span class="nav-text">檢查網路是否可以連線</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

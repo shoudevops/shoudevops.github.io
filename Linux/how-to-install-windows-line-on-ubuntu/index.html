@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Line 通訊軟體目前除了在手機的雙平台中使用，也可以在Windows、Mac OS 和Chrome 系統上執行。若要在Ubuntu 上使用電腦版Line 的作法，最方便的作法是用Chomre 瀏覽器的擴充功能達成，但只有文字訊息的功能，無法使用像是記事本、相簿…等功能。 而本文章的作法，可以讓你在Ubuntu-20.04 上安裝Windows 版本的Line軟體，可以使用電腦版完整的功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在Ubuntu-20.04 安裝Windows Line">
+<meta property="og:url" content="https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="Line 通訊軟體目前除了在手機的雙平台中使用，也可以在Windows、Mac OS 和Chrome 系統上執行。若要在Ubuntu 上使用電腦版Line 的作法，最方便的作法是用Chomre 瀏覽器的擴充功能達成，但只有文字訊息的功能，無法使用像是記事本、相簿…等功能。 而本文章的作法，可以讓你在Ubuntu-20.04 上安裝Windows 版本的Line軟體，可以使用電腦版完整的功能。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-04T00:57:18.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.932Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>如何在Ubuntu-20.04 安裝Windows Line | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何在Ubuntu-20.04 安裝Windows Line
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-04 08:57:18" itemprop="dateCreated datePublished" datetime="2021-05-04T08:57:18+08:00">2021-05-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Line 通訊軟體目前除了在手機的雙平台中使用，也可以在Windows、Mac OS 和Chrome 系統上執行。<br>若要在Ubuntu 上使用電腦版Line 的作法，最方便的作法是用Chomre 瀏覽器的擴充功能達成，<br>但只有文字訊息的功能，無法使用像是<code>記事本</code>、<code>相簿</code>…等功能。</p>
+<p>而本文章的作法，可以讓你在Ubuntu-20.04 上安裝Windows 版本的Line軟體，可以使用電腦版完整的功能。</p>
+<span id="more"></span>
+
+<h3 id="Wine"><a href="#Wine" class="headerlink" title="Wine"></a>Wine</h3><ul>
+<li>Wine 能讓您在Linux 上運行許多Windows 程式</li>
+</ul>
+<h4 id="安裝Ubuntu-版本的Wine"><a href="#安裝Ubuntu-版本的Wine" class="headerlink" title="安裝Ubuntu 版本的Wine"></a>安裝Ubuntu 版本的Wine</h4><ol>
+<li>從<code>Ubuntu Software</code>搜尋<code>wine</code>並安裝</li>
+<li>透過command line</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://dl.winehq.org/wine-builds/winehq.key</span><br><span class="line">sudo apt-key add winehq.key</span><br><span class="line">sudo apt-add-repository &#x27;https://dl.winehq.org/wine-builds/ubuntu/&#x27;</span><br><span class="line">sudo apt-get install --install-recommends winehq-stable</span><br></pre></td></tr></table></figure>
+
+<h4 id="初始設定"><a href="#初始設定" class="headerlink" title="初始設定"></a>初始設定</h4><p>Wine 安裝完成後，會建立一個假的Windows C: drive，能在其中安裝Windows 的應用程式，<br>可以輸入以下指令查看Windows 的設定</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winecfg</span><br></pre></td></tr></table></figure>
+
+<h4 id="用Wine-安裝Line"><a href="#用Wine-安裝Line" class="headerlink" title="用Wine 安裝Line"></a>用Wine 安裝Line</h4><ol>
+<li>下載Windows 版本的Line 安裝檔(LineInst.exe)</li>
+<li>打開Terminal，到Line 安裝檔的路徑下</li>
+<li>輸入指令安裝Line</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wine LineInst.exe</span><br></pre></td></tr></table></figure>
+
+<p>這時會看到Line的安裝視窗，接著就像安裝Windows Line相同的步驟執行即可。</p>
+<h4 id="執行Line"><a href="#執行Line" class="headerlink" title="執行Line"></a>執行Line</h4><p>安裝完成後，Line 的執行檔通常會在<code>~/.wine/drive_c/</code>的路徑下，後面的路徑就會跟Windows相同，<br>完整的路徑就會像是：</p>
+<pre><code>/home/username/.wine/drive_c/users/username/&#39;Local Settings&#39;/&#39;Application Data&#39;/LINE/bin/LineLauncher.exe&quot;
+</code></pre>
+<p>記得再將username換成自己的user name即可。</p>
+<p>要執行的指令就會是<code>wine application-path-app.exe</code>，就是上面的路徑前面加上<code>wine</code>就行了。</p>
+<pre><code>wine /home/username/.wine/drive_c/users/username/&#39;Local Settings&#39;/&#39;Application Data&#39;/LINE/bin/LineLauncher.exe&quot;
+</code></pre>
+<h3 id="自訂Line-捷徑"><a href="#自訂Line-捷徑" class="headerlink" title="自訂Line 捷徑"></a>自訂Line 捷徑</h3><p>上面有提到如何用指令開啟Line 程式，但每次要開啟都要輸入指令還是有些不方便，<br>其實可以使用自訂捷徑的方式，將這些非常規的軟體放入<code>應用程式列表</code>中，以後要開啟Line就會放便許多。</p>
+<p>在<code>~/.local/share/applications</code>路徑下新增一個捷徑檔</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim ~/.local/share/applications/Line.desktop</span><br></pre></td></tr></table></figure>
+
+<p>捷徑檔的內容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Encoding=UTF-8</span><br><span class="line">Name=Line</span><br><span class="line">Exec=wine /home/username/.wine/drive_c/users/username/&#x27;Local Settings&#x27;/&#x27;Application Data&#x27;/LINE/bin/LineLauncher.exe&quot;</span><br><span class="line">Icon=/home/username/.icons/line.png</span><br><span class="line">Terminal=false</span><br><span class="line">Type=Application</span><br><span class="line">Categories=Chat;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Name: 軟體名稱</li>
+<li>Exec: 軟體的執行方式</li>
+<li>Icon: 軟體圖示的路徑，Google 搜尋<code>line icon</code>就可以找到Line圖示</li>
+<li>Type: 該物件屬於Application</li>
+<li>Categories: 該程式的分類，分類的<a target="_blank" rel="noopener" href="https://specifications.freedesktop.org/menu-spec/latest/apa.html">相關規範</a></li>
+</ul>
+<p>存檔離開後，就可以在<code>應用程式列表</code>中找到Line 的軟體捷徑了。</p>
+<hr>
+<p>參考文件：</p>
+<p><a target="_blank" rel="noopener" href="https://help.ubuntu.com/community/Wine">Wine</a><br><a target="_blank" rel="noopener" href="https://notes.wadeism.net/linux/326/">Ubuntu 自訂應用程式捷徑</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Linux/ubuntu2004-windows10-time-locate-sync/" rel="next" title="Ubuntu-20.04 與Windows 10 系統時間同步">
+                  <i class="fa fa-chevron-left"></i> Ubuntu-20.04 與Windows 10 系統時間同步
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/" rel="prev" title="Ubuntu-20.04 安裝與設定Logitech Driver">
+                  Ubuntu-20.04 安裝與設定Logitech Driver <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Wine"><span class="nav-number">1.</span> <span class="nav-text">Wine</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DUbuntu-%E7%89%88%E6%9C%AC%E7%9A%84Wine"><span class="nav-number">1.1.</span> <span class="nav-text">安裝Ubuntu 版本的Wine</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E8%A8%AD%E5%AE%9A"><span class="nav-number">1.2.</span> <span class="nav-text">初始設定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8Wine-%E5%AE%89%E8%A3%9DLine"><span class="nav-number">1.3.</span> <span class="nav-text">用Wine 安裝Line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%B7%E8%A1%8CLine"><span class="nav-number">1.4.</span> <span class="nav-text">執行Line</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E8%A8%82Line-%E6%8D%B7%E5%BE%91"><span class="nav-number">2.</span> <span class="nav-text">自訂Line 捷徑</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

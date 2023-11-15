@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){
+    w[l]=w[l]||[];
+    w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),
+      dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true;
+      j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MXVMDS4S');
+</script>
+<!-- End Google Tag Manager -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Shou's 技術部落" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="繼承編寫類別時，不是一定都要從零開始，如果要編寫的類別已有另一個現成很相似的類別，可以用繼承（ inheritance ）的方式製作。一個類別繼承自另一個類別時，它會自動取得另一個類別的所有屬性和方法，原有的類別就稱為父類別（ parent class ），而新的類別稱為子類別（ child class ）。子類別繼承了父類別的所有屬性和方法，同時還可以定義自己專屬的屬性和方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="類別 － 繼承">
+<meta property="og:url" content="https://shoudevops.github.io/Python/class-inheritance/index.html">
+<meta property="og:site_name" content="Shou&#39;s 技術部落">
+<meta property="og:description" content="繼承編寫類別時，不是一定都要從零開始，如果要編寫的類別已有另一個現成很相似的類別，可以用繼承（ inheritance ）的方式製作。一個類別繼承自另一個類別時，它會自動取得另一個類別的所有屬性和方法，原有的類別就稱為父類別（ parent class ），而新的類別稱為子類別（ child class ）。子類別繼承了父類別的所有屬性和方法，同時還可以定義自己專屬的屬性和方法。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-17T08:17:32.000Z">
+<meta property="article:modified_time" content="2023-07-05T08:39:07.888Z">
+<meta property="article:author" content="Chen Hsiang">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="class">
+<meta property="article:tag" content="inheritance">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://shoudevops.github.io/Python/class-inheritance/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>類別 － 繼承 | Shou's 技術部落</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shou's 技術部落</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shoudevops.github.io/Python/class-inheritance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Chen Hsiang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shou's 技術部落">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          類別 － 繼承
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-17 16:17:32" itemprop="dateCreated datePublished" datetime="2019-12-17T16:17:32+08:00">2019-12-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="繼承"><a href="#繼承" class="headerlink" title="繼承"></a>繼承</h3><p>編寫類別時，不是一定都要從零開始，如果要編寫的類別已有另一個現成很相似的類別，可以用繼承（ inheritance ）的方式製作。<br>一個類別繼承自另一個類別時，它會自動取得另一個類別的所有屬性和方法，<br>原有的類別就稱為父類別（ parent class ），而新的類別稱為子類別（ child class ）。<br>子類別繼承了父類別的所有屬性和方法，同時還可以定義自己專屬的屬性和方法。</p>
+<span id="more"></span>
+
+<h4 id="子類別的-init-方法"><a href="#子類別的-init-方法" class="headerlink" title="子類別的 __init__() 方法"></a>子類別的 <code>__init__()</code> 方法</h4><p>建立子類別的實例時，<code>Python</code> 第一個要進行的工作是把值分配給父類別中的所有屬性。<br>若要做到這一點，子類別的 <code>__init__()</code> 方法需要父類別給予支援。</p>
+<p>以電動車的塑模來說明，電動車屬於一種特殊的車子，<br>因此我們可以<code>類別 － 建立類別和實例的運用</code>篇的 Car 類別為基礎來建立新的 <code>ElectricCar</code> 類別，<br>這樣只需對電動車特有的屬性和方法編寫新的程式碼：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes of the parent class.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br></pre></td></tr></table></figure>
+<p>一開始是原本 Car 類別的程式碼。在建立子類別時，父類別必須要放在目前的程式檔案內，且放置的位置要在子類別的前面。<br>之後定義一個新的 ElectricCar 子類別，定義子類別時，必須要在括號內放入父類別的名稱。<br><code>__init__()</code>方法接收建立 Car 實例所需要的資訊。<br><code>super()</code> 是個特殊的函式，會協助 <code>Python</code> 把父類別和子類別連接起來；<br><code>Python</code> 會呼叫 ElectricCar 父類別的 <code>__init__()</code>方法，讓 ElectricCar 實例含有父類別的所有屬性。<br>super 的名字來自於對父類別稱呼的慣例，父類別有另一個英文名稱 superclass，而子類別另一個英文名稱是 subclass。</p>
+<p>接著建立一個電動車實例來測試繼承是否有正確地發揮作用，在此提供 <code>tesla</code>、<code>model s</code>和2016等引數：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2016 Tesla Model S</span><br></pre></td></tr></table></figure>
+<p>這個階段還沒加入電動車特有的屬性和方法，只先確定電動車具備有一般車子的屬性和方法。</p>
+<h4 id="為子類別定義屬性和方法"><a href="#為子類別定義屬性和方法" class="headerlink" title="為子類別定義屬性和方法"></a>為子類別定義屬性和方法</h4><p>當有了一個從父類別繼承來的子類別時，可對子類別新增其專有的屬性和方法，這樣都與父類別的不相同。<br>我們要對電動車新增一個特有的屬性（例如電池），以及一個描述該屬性的方法，<br>這個屬性用來存放電池容量，並寫一個輸出描述電池的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery_size = <span class="number">70</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br><span class="line">my_tesla.describe_battery()</span><br></pre></td></tr></table></figure>
+<p>以 ElectricCar 類別建立的所有實例都會含有 self.battery_size 這個新屬性，但 Car 類別所建立的就沒有。<br>還有新增一個 describe_battery() 方法，功用是輸出關於電池的描述資訊。<br>呼叫這個方法時會看到一條描述電動車特有的說明文句：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Tesla Model S</span><br><span class="line">This car has a 70-kWh battery.</span><br></pre></td></tr></table></figure>
+<p>對 ElectricCar 類別進行個別特殊化的處理上並沒有限制，可以根據需要新增任意數量的屬性和方法，便於能更準確對電動車進行塑模。<br>如果有個屬性或方法是任何一台車都有，不是電動車特有的，那就應該把這個屬性或方法加到 Car 類別而不是 ElectricCar 類別中。<br>這樣使用 Car 類別都能取得其一般車子的功能，使用 ElectricCar 類別的就有專屬於電動車特殊的屬性（資訊）和方法（行為）。</p>
+<h4 id="覆寫父類別方法"><a href="#覆寫父類別方法" class="headerlink" title="覆寫父類別方法"></a>覆寫父類別方法</h4><p>如果父類別的方法不符合子類別想塑模事物的行為，都可以進行覆寫。<br>作法是在子類別中定義一個與父類別方法有相同名稱的方法，這樣 <code>Python</code> 就不會用父類別同名的方法，只會關注子類別中所定義的方法。</p>
+<p>假設 Car 類別中有個名為 fill_gas_tank() 方法。但此方法對電動車沒有作用，因此想要覆寫這個方法，示範如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery_size = <span class="number">70</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fill_gas_tank</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Electric cars don&#x27;t have gas tanks.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car doesn&#x27;t need a gas tank!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>現在如果呼叫電動車的 fill_gas_tank() 方法， <code>Python</code> 會忽略 Car 類別中的 fill_gas_tank() 方法，而執行這裡的程式。<br>使用繼承這項功能，既可以讓子類別保留父類別中想要的東西，也能覆寫刪除不符合需要的內容。</p>
+<h4 id="把實例當成屬性"><a href="#把實例當成屬性" class="headerlink" title="把實例當成屬性"></a>把實例當成屬性</h4><p>當類別中有愈來愈多的屬性和方法時，程式檔案也變得愈來愈長。這樣的情況下可能要把類別的某一部份再獨立成一個類別。<br>我們可以把大型的類別拆分成多個一起運作的小類別。</p>
+<p>假如持續對 ElectricCar 類別新增更多細節，就會發現其中含有很多屬於汽車電池相關的屬性和方法，<br>當遇到這種情況時，就不要再新增了，而是把電池相關的屬性和方法移動到另一個單獨的 Battery 類別中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Battery</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a battery for an electric car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, battery_size=<span class="number">70</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize the battery&#x27;s attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.battery_size = battery_size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery = Battery()</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br><span class="line">my_tesla.battery.describe_battery()</span><br></pre></td></tr></table></figure>
+<p>定義一個 Battery() 類別，沒有繼承任何類別。<br>定義<code>__init__()</code>方法除了 self 之外，還有另一個 battery_size 參數，此參數是可選擇性放入的，如果沒有提供值，就會使用預設值 70。<br>describe_battery() 方法也從 ElectricCar 類別移到 Battery 類別中。</p>
+<p>在 ElectricCar 類別中新增一個 self.battery 屬性，會讓 <code>Python</code> 建立一個新的 Battery 實例，並存放在 self.battery 屬性中。<br>每次 <code>__init__()</code> 方法被呼叫時都會執行這項處理，任何建立的 ElectricCar 實例現都會自動建立一個 Battery 實例當成其中一個屬性。</p>
+<p>隨後建立一台電動車實例，並將它儲存到 my_tesla 變數內。<br>若想要描述其電池屬性時，需要使用到電動車的 battery 屬性 <code>my_tesla.battery.describe_battery()</code>，<br>這樣會讓 <code>Python</code> 在 my_tesla 實例中找出 battery 屬性，並存放在 Battery 實例中的屬性呼叫 describe_battery() 方法：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2016 Tesla Model S</span><br><span class="line">This car has a 70-kWh battery.</span><br></pre></td></tr></table></figure>
+<p>這種類別的分拆能讓我們加入更新電池的細節，而且也不會讓 ElectricCar 類別變得很長很亂。<br>下面的範例再為 Battery 類別新增一個方法，可依據電池容量回報車子可行駛的續航里程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Car</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to represent a car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize attributes to describe a car.&quot;&quot;&quot;</span></span><br><span class="line">        self.make = make</span><br><span class="line">        self.model = model</span><br><span class="line">        self.year = year</span><br><span class="line">        self.odometer_reading = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_descriptive_name</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Return a neatly formatted descriptive name.&quot;&quot;&quot;</span></span><br><span class="line">        long_name = <span class="built_in">str</span>(self.year) + <span class="string">&#x27; &#x27;</span> + self.make + <span class="string">&#x27; &#x27;</span> + self.model</span><br><span class="line">        <span class="keyword">return</span> long_name.title()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">read_odometer</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement showing the car&#x27;s mileage.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has &quot;</span> + <span class="built_in">str</span>(self.odometer_reading) + <span class="string">&quot; miles on it.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_odometer</span>(<span class="params">self, mileage</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Set the odometer reading to the given value.</span></span><br><span class="line"><span class="string">        Reject the change if it attempts to roll the odometer back.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> mileage &gt;= self.odometer_reading:</span><br><span class="line">            self.odometer_reading = mileage</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;You can&#x27;t roll back an odometer!&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">increment_odometer</span>(<span class="params">self, miles</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Add the given amount to the odometer reading.&quot;&quot;&quot;</span></span><br><span class="line">        self.odometer_reading += miles</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Battery</span>():</span><br><span class="line">    <span class="string">&quot;&quot;&quot;A simple attempt to model a battery for an electric car.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, battery_size=<span class="number">70</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Initialize the battery&#x27;s attributes.&quot;&quot;&quot;</span></span><br><span class="line">        self.battery_size = battery_size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">describe_battery</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement describing the battery size.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;This car has a &quot;</span> + <span class="built_in">str</span>(self.battery_size) + <span class="string">&quot;-kWh battery.&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_range</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Print a statement about the range this battery provdies.&quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.battery_size == <span class="number">70</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">240</span></span><br><span class="line">        <span class="keyword">elif</span> self.battery_size == <span class="number">85</span>:</span><br><span class="line">            <span class="built_in">range</span> = <span class="number">270</span></span><br><span class="line">        </span><br><span class="line">        message = <span class="string">&quot;This car can go approximately &quot;</span> + <span class="built_in">str</span>(<span class="built_in">range</span>)</span><br><span class="line">        message += <span class="string">&quot; miles on a full charge.&quot;</span></span><br><span class="line">        <span class="built_in">print</span>(message)      </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ElectricCar</span>(<span class="title class_ inherited__">Car</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Represent aspects of a car, specific to electric vehicles.&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, make, model, year</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Initialize attributes of the parent class.</span></span><br><span class="line"><span class="string">        Then initialize attributes specific to an electric car.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>().__init__(make, model, year)</span><br><span class="line">        self.battery = Battery()</span><br><span class="line"></span><br><span class="line">my_tesla = ElectricCar(<span class="string">&#x27;tesla&#x27;</span>, <span class="string">&#x27;model s&#x27;</span>, <span class="number">2016</span>)</span><br><span class="line"><span class="built_in">print</span>(my_tesla.get_descriptive_name())</span><br><span class="line">my_tesla.battery.describe_battery()</span><br><span class="line">my_tesla.battery.get_range()</span><br></pre></td></tr></table></figure>
+<p>新增了 get_range() 方法，此方法做個簡單的分析，若電池容量為 70 kWh，可行駛的續航里程設為 240 英里，<br>若容量為 85 kWh，則可行駛的續航里程數設為 270 英里，隨後回報這個值。<br>最後在透過車子實例的 battery 屬性來呼叫這個方法：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2016 Tesla Model S</span><br><span class="line">This car has a 70-kWh battery.</span><br><span class="line">This car can go approximately 240 miles on a full charge.</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/class/" rel="tag"># class</a>
+              <a href="/tags/inheritance/" rel="tag"># inheritance</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/Python/class-create-and-use/" rel="next" title="類別 － 建立類別和實例的運用">
+                  <i class="fa fa-chevron-left"></i> 類別 － 建立類別和實例的運用
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/Python/class-import/" rel="prev" title="類別 － 匯入類別">
+                  類別 － 匯入類別 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B9%BC%E6%89%BF"><span class="nav-number">1.</span> <span class="nav-text">繼承</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%90%E9%A1%9E%E5%88%A5%E7%9A%84-init-%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">子類別的 __init__() 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%BA%E5%AD%90%E9%A1%9E%E5%88%A5%E5%AE%9A%E7%BE%A9%E5%B1%AC%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">為子類別定義屬性和方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A6%86%E5%AF%AB%E7%88%B6%E9%A1%9E%E5%88%A5%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">覆寫父類別方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%8A%E5%AF%A6%E4%BE%8B%E7%95%B6%E6%88%90%E5%B1%AC%E6%80%A7"><span class="nav-number">1.4.</span> <span class="nav-text">把實例當成屬性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Chen Hsiang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Chen Hsiang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
