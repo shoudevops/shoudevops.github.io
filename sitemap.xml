@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
+    <loc>https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/</loc>
+    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-chewing-on-ubuntu/</loc>
+    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-boshiamy-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-boshiamy-on-ubuntu/</loc>
+    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-chewing-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -281,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/conditional-test/</loc>
+    <loc>https://shoudevops.github.io/Python/data-stored/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -290,7 +290,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/data-stored/</loc>
+    <loc>https://shoudevops.github.io/Python/conditional-test/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -317,7 +317,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/dictionary/</loc>
+    <loc>https://shoudevops.github.io/Python/exception/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -326,7 +326,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/exception/</loc>
+    <loc>https://shoudevops.github.io/Python/dictionary/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/datatype-number/</loc>
+    <loc>https://shoudevops.github.io/Python/datatype-comment/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -398,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/datatype-comment/</loc>
+    <loc>https://shoudevops.github.io/Python/datatype-number/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -432,20 +432,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/datatype/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/number/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/tags/data-type/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -454,6 +440,20 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/comment/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/datatype/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/number/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -516,6 +516,13 @@
   </url>
   
   <url>
+    <loc>https://shoudevops.github.io/tags/data-processing/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://shoudevops.github.io/tags/conditional-test/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -524,13 +531,6 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/if/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/data-processing/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
