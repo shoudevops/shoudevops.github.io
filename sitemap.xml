@@ -20,6 +20,42 @@
   </url>
   
   <url>
+    <loc>https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Linux/ubuntu2004-windows10-time-locate-sync/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://shoudevops.github.io/Linux/configure-linux-tools/</loc>
     
     <lastmod>2023-07-05</lastmod>
@@ -38,34 +74,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Linux/ubuntu2004-windows10-time-locate-sync/</loc>
+    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-chewing-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -75,15 +84,6 @@
   
   <url>
     <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-boshiamy-on-ubuntu/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Linux/how-to-install-fcitx-chewing-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -173,7 +173,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Linux/linux-installation/</loc>
+    <loc>https://shoudevops.github.io/Python/function/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -191,25 +191,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/function/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/Python/input/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Python/while-loop/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -227,7 +209,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/function-list/</loc>
+    <loc>https://shoudevops.github.io/Python/while-loop/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -236,7 +218,25 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/function-return/</loc>
+    <loc>https://shoudevops.github.io/Linux/linux-installation/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Python/files-read-write/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Python/function-list/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/files-read-write/</loc>
+    <loc>https://shoudevops.github.io/Python/function-return/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -389,7 +389,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/datatype-comment/</loc>
+    <loc>https://shoudevops.github.io/Python/datatype-number/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -398,7 +398,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/datatype-number/</loc>
+    <loc>https://shoudevops.github.io/Python/datatype-comment/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -432,20 +432,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/data-type/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/comment/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/tags/datatype/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -454,6 +440,20 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/number/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/data-type/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/comment/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -496,20 +496,6 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/string/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/linux/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/networking/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -579,14 +565,14 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/function/</loc>
+    <loc>https://shoudevops.github.io/tags/files/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/return/</loc>
+    <loc>https://shoudevops.github.io/tags/function/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -600,7 +586,21 @@
   </url>
   
   <url>
+    <loc>https://shoudevops.github.io/tags/return/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://shoudevops.github.io/tags/input/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/refactoring/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -614,7 +614,14 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/files/</loc>
+    <loc>https://shoudevops.github.io/tags/linux/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/networking/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -635,20 +642,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/refactoring/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/docker/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/tags/windows/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -657,6 +650,13 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/wsl/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/docker/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -686,14 +686,14 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/categories/Docker/</loc>
+    <loc>https://shoudevops.github.io/categories/Windows/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/categories/Windows/</loc>
+    <loc>https://shoudevops.github.io/categories/Docker/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
