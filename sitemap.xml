@@ -20,6 +20,15 @@
   </url>
   
   <url>
+    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://shoudevops.github.io/Linux/how-to-install-windows-line-on-ubuntu/</loc>
     
     <lastmod>2023-07-05</lastmod>
@@ -30,15 +39,6 @@
   
   <url>
     <loc>https://shoudevops.github.io/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/Linux/ubuntu-update-home-path-folder-to-current-language/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -263,15 +263,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/class-import/</loc>
-    
-    <lastmod>2023-07-05</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/Python/class-inheritance/</loc>
     
     <lastmod>2023-07-05</lastmod>
@@ -281,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/Python/data-stored/</loc>
+    <loc>https://shoudevops.github.io/Python/class-import/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -291,6 +282,15 @@
   
   <url>
     <loc>https://shoudevops.github.io/Python/conditional-test/</loc>
+    
+    <lastmod>2023-07-05</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/Python/data-stored/</loc>
     
     <lastmod>2023-07-05</lastmod>
     
@@ -516,13 +516,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/data-processing/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/tags/conditional-test/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -531,6 +524,13 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/if/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/data-processing/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -628,20 +628,6 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/tags/postgresql/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://shoudevops.github.io/tags/database/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/tags/windows/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -650,6 +636,20 @@
   
   <url>
     <loc>https://shoudevops.github.io/tags/wsl/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/postgresql/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/tags/database/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -665,13 +665,6 @@
 
   
   <url>
-    <loc>https://shoudevops.github.io/categories/Linux/</loc>
-    <lastmod>2023-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://shoudevops.github.io/categories/Python/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -679,7 +672,7 @@
   </url>
   
   <url>
-    <loc>https://shoudevops.github.io/categories/PostgreSQL/</loc>
+    <loc>https://shoudevops.github.io/categories/Linux/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -687,6 +680,13 @@
   
   <url>
     <loc>https://shoudevops.github.io/categories/Windows/</loc>
+    <lastmod>2023-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://shoudevops.github.io/categories/PostgreSQL/</loc>
     <lastmod>2023-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
