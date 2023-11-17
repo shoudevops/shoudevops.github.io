@@ -135,8 +135,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -218,16 +217,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           Linux 網路設定
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -263,7 +262,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       
         <p>以上一篇安裝的Ubuntu 16.04 LTS為例，說明作業系統安裝完成後，如何設定網路</p>
 <h3 id="查詢目前網路卡與網路資訊"><a href="#查詢目前網路卡與網路資訊" class="headerlink" title="查詢目前網路卡與網路資訊"></a>查詢目前網路卡與網路資訊</h3><p>用<code>ifconfig</code>或<code>ip a</code>可以查詢目前網路的資訊</p>
-<img src="/Linux/linux-setting-network/network-ifconfig.jpg" class="" title="用ifconfig指令查詢">
+<img src="/Linux/linux-setting-network/network-ifconfig.jpg" class title="用ifconfig指令查詢">
 
 <span id="more"></span>
 
@@ -278,7 +277,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h4 id="Ubuntu-16-04-LTS"><a href="#Ubuntu-16-04-LTS" class="headerlink" title="Ubuntu 16.04 LTS"></a>Ubuntu 16.04 LTS</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/network/interfaces</span><br></pre></td></tr></table></figure>
 
 <p>開啟<code>interfaces</code>這個檔案後，可以看到目前網路的預設內容</p>
-<img src="/Linux/linux-setting-network/network-interfaces.jpg" class="" title="開啟interfaces檔案設定網路">
+<img src="/Linux/linux-setting-network/network-interfaces.jpg" class title="開啟interfaces檔案設定網路">
 
 <p>若沒有指定特定IP位置，而且目前也可以正確的連線到Internet，也可以使用預設的DHCP自動取得的IP做使用<br>若想要安排在這個網段裡這台機器要使用哪個IP，就必需要自己設定了</p>
 <p>以下是要修改的interfaces檔案內容：</p>
@@ -288,13 +287,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 刷新設定</span><br><span class="line">sudo ip addr flush ens33    -&gt;  網路卡名稱要記得修改哦</span><br><span class="line"></span><br><span class="line"># 重啟網路卡（不是root權限會要求輸入密碼）</span><br><span class="line">/etc/init.d/networking restart</span><br></pre></td></tr></table></figure>
 
 <p>下查詢指令後會看到 IP已經更新</p>
-<img src="/Linux/linux-setting-network/networking-flush.jpg" class="" title="刷新網路卡設定再重啟網路卡">
+<img src="/Linux/linux-setting-network/networking-flush.jpg" class title="刷新網路卡設定再重啟網路卡">
 
 <h4 id="Ubuntu-18-04-LTS"><a href="#Ubuntu-18-04-LTS" class="headerlink" title="Ubuntu 18.04 LTS"></a>Ubuntu 18.04 LTS</h4><p>到Ubuntu 18.04的機器後，先查詢網路資訊</p>
-<img src="/Linux/linux-setting-network/networking-18-ifconfig.jpg" class="" title="Ubuntu 18.04 LTS ifconfig">
+<img src="/Linux/linux-setting-network/networking-18-ifconfig.jpg" class title="Ubuntu 18.04 LTS ifconfig">
 
 <p>如果我們跟 Ubuntu 16.04 一樣開啟 &#x2F;etc&#x2F;network&#x2F;interfaces 的檔案，會看到：</p>
-<img src="/Linux/linux-setting-network/networking-18-interfaces.jpg" class="" title="查看interfaces檔案">
+<img src="/Linux/linux-setting-network/networking-18-interfaces.jpg" class title="查看interfaces檔案">
 
 <blockquote>
 <p>ifupdown has been replaced by netplan(5) on this system. See &#x2F;etc&#x2F;netplan for current configuration.</p>
@@ -309,13 +308,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>執行後會檢查設定檔格式，如果正確的話就會套用，並在120秒以後自動還原設定（如果設錯了在兩分鐘後會還原）！<br>在120秒按<code>ENTER</code>之後就會使用新的設定檔內容了！<br>也能在120秒以後輸入以下指令套用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netplan apply</span><br></pre></td></tr></table></figure>
 <p>再來查看設定是否生效：</p>
-<img src="/Linux/linux-setting-network/networking-netplan-apply.jpg" class="" title="查看網路介面設定">
+<img src="/Linux/linux-setting-network/networking-netplan-apply.jpg" class title="查看網路介面設定">
 
 <hr>
 <h3 id="檢查網路是否可以連線"><a href="#檢查網路是否可以連線" class="headerlink" title="檢查網路是否可以連線"></a>檢查網路是否可以連線</h3><p>網路介面都設定完成後，要如何驗證是否可以正確的連線到Internet呢？<br>最簡單的方式就是<code>ping</code>一個不在同網段內的位址測試有沒有回應：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping 8.8.8.8</span><br></pre></td></tr></table></figure>
 <p>ping看看Google的DNS Server會不會有回應</p>
-<img src="/Linux/linux-setting-network/networking-ping.jpg" class="" title="Ping Google DNS Server">
+<img src="/Linux/linux-setting-network/networking-ping.jpg" class title="Ping Google DNS Server">
 
 <p>可以看到Google DNS Server有回應，這樣就可以正常的連線到Internet囉！</p>
 
@@ -450,7 +449,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

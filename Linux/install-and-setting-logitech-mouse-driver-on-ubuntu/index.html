@@ -128,8 +128,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -211,16 +210,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           Ubuntu-20.04 安裝與設定Logitech Driver
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -259,7 +258,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span id="more"></span>
 
 <h3 id="Logiops"><a href="#Logiops" class="headerlink" title="Logiops"></a>Logiops</h3><p>Logitech 滑鼠、鍵盤的非官方驅動程式，<br>目前僅與HID ++&gt; 2.0 設備相容。</p>
-<h3 id="相容設備清單"><a href="#相容設備清單" class="headerlink" title="相容設備清單"></a>相容設備清單</h3><p><a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/blob/master/TESTED.md">Compatible Devices</a></p>
+<h3 id="相容設備清單"><a href="#相容設備清單" class="headerlink" title="相容設備清單"></a>相容設備清單</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/PixlOne/logiops/blob/master/TESTED.md">Compatible Devices</a></p>
 <h3 id="依賴套件"><a href="#依賴套件" class="headerlink" title="依賴套件"></a>依賴套件</h3><p>Logiops 需要依賴<code>cmake</code>, <code>libevdev</code>, <code>libudev</code>與<code>libconfig</code>，<br>以下提供幾個Linux發行版的安裝方式：</p>
 <p>Arch Linux: <code>sudo pacman -S cmake libevdev libconfig pkgconf</code></p>
 <p>Debian&#x2F;Ubuntu: <code>sudo apt install cmake libevdev-dev libudev-dev libconfig++-dev</code></p>
@@ -285,7 +284,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>這裡需要注意的是<code>ExecStart</code>這行的logid路徑<br>可以用以下指令確認路徑：</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which logid</span><br></pre></td></tr></table></figure>
 
-<img src="/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/which-logid.png" class="" title="find logid path">
+<img src="/Linux/install-and-setting-logitech-mouse-driver-on-ubuntu/which-logid.png" class title="find logid path">
 
 <ol start="4">
 <li>Create configuration file</li>
@@ -301,8 +300,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <h1 id="MX-Anywhere-3"><a href="#MX-Anywhere-3" class="headerlink" title="MX Anywhere 3"></a>MX Anywhere 3</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">devices: (</span><br><span class="line">&#123;</span><br><span class="line">  name: &quot;MX Anywhere 3&quot;;</span><br><span class="line">  smartshift:</span><br><span class="line">    &#123;</span><br><span class="line">      on: true;</span><br><span class="line">      threshold: 15;</span><br><span class="line">      default_threshold: 30;</span><br><span class="line">    &#125;;</span><br><span class="line">  hiresscroll:</span><br><span class="line">    &#123;</span><br><span class="line">        hires: true;</span><br><span class="line">        invert: false;</span><br><span class="line">        target: true;</span><br><span class="line">        up: &#123;</span><br><span class="line">            mode: &quot;Axis&quot;;</span><br><span class="line">            axis: &quot;REL_WHEEL_HI_RES&quot;;</span><br><span class="line">            axis_multiplier: 3;</span><br><span class="line">        &#125;,</span><br><span class="line">        down: &#123;</span><br><span class="line">            mode: &quot;Axis&quot;;</span><br><span class="line">            axis: &quot;REL_WHEEL_HI_RES&quot;;</span><br><span class="line">            axis_multiplier: -3;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    dpi: 1000;</span><br><span class="line">    buttons: (</span><br><span class="line">      &#123;</span><br><span class="line">        cid: 0xc4;</span><br><span class="line">        action = </span><br><span class="line">        &#123;</span><br><span class="line">          type: &quot;Gestures&quot;;</span><br><span class="line">          gestures: (</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Up&quot;;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTMETA&quot;, &quot;KEY_A&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Left&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_LEFT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;Right&quot;;</span><br><span class="line">              mode: &quot;Onrelease&quot;;</span><br><span class="line">              action =</span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTCTRL&quot;, &quot;KEY_LEFTALT&quot;, &quot;KEY_RIGHT&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              direction: &quot;None&quot;;</span><br><span class="line">              mode: &quot;OnRelease&quot;;</span><br><span class="line">              action = </span><br><span class="line">              &#123;</span><br><span class="line">                type: &quot;Keypress&quot;;</span><br><span class="line">                keys: [&quot;KEY_LEFTMETA&quot;];</span><br><span class="line">              &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">          )</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>設定內容的細項說明可參考<a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/wiki/Configuration">Configuration</a></li>
-<li>滑鼠按鍵對應的CID可參考<a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops/wiki/CIDs">CIDs</a></li>
+<li>設定內容的細項說明可參考<a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/PixlOne/logiops/wiki/Configuration">Configuration</a></li>
+<li>滑鼠按鍵對應的CID可參考<a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/PixlOne/logiops/wiki/CIDs">CIDs</a></li>
 </ul>
 <ol start="6">
 <li>設定Service Startup 與Service Start</li>
@@ -316,8 +315,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <hr>
 <p>參考文件：</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/PixlOne/logiops">Logiops Github</a></p>
-<p><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/1149310/logitech-mx-master-2s-via-bluetooth-change-pointer-speed/1246278#1246278">Ask Ubuntu</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/PixlOne/logiops">Logiops Github</a></p>
+<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://askubuntu.com/questions/1149310/logitech-mx-master-2s-via-bluetooth-change-pointer-speed/1246278#1246278">Ask Ubuntu</a></p>
 
     </div>
 
@@ -383,7 +382,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logiops"><span class="nav-number">1.</span> <span class="nav-text">Logiops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AE%B9%E8%A8%AD%E5%82%99%E6%B8%85%E5%96%AE"><span class="nav-number">2.</span> <span class="nav-text">相容設備清單</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">依賴套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DLogiops"><span class="nav-number">4.</span> <span class="nav-text">安裝Logiops</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MX-Anywhere-3"><span class="nav-number"></span> <span class="nav-text">MX Anywhere 3</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Logiops"><span class="nav-number">1.</span> <span class="nav-text">Logiops</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%AE%B9%E8%A8%AD%E5%82%99%E6%B8%85%E5%96%AE"><span class="nav-number">2.</span> <span class="nav-text">相容設備清單</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%9D%E8%B3%B4%E5%A5%97%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">依賴套件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9DLogiops"><span class="nav-number">4.</span> <span class="nav-text">安裝Logiops</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#MX-Anywhere-3"><span class="nav-number"></span> <span class="nav-text">MX Anywhere 3</span></a></li></div>
       </div>
       <!--/noindex-->
 
@@ -449,7 +448,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

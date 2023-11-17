@@ -127,8 +127,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -210,16 +209,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           例外
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -300,7 +299,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>如果出現 FileNotFoundError 錯誤，會輸出一條較友善的文字訊息，而不是顯示 traceback:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sorry, the file alice.txt does <span class="keyword">not</span> exist.</span><br></pre></td></tr></table></figure>
 <p>假如檔案不存在，那麼程式就什麼都不用做，因此錯誤側理的程式就意義不大。<br>下面會繼續擴充這個範例，看看使用多個檔案時，例外處理能幫上什麼忙。</p>
-<h4 id="分析文字"><a href="#分析文字" class="headerlink" title="分析文字"></a>分析文字</h4><p>很多文學作品都是用簡單的純文字檔格式儲存，因為這些作品已經沒有版權問題，不受版權限制。<br>這裡使用的文字是取自於 Gutenberg （古騰堡計劃，<a target="_blank" rel="noopener" href="http://gutenberg.org/%EF%BC%89%EF%BC%8C">http://gutenberg.org/），</a><br>這個計劃專案的網站中提供了一系列可自由使用、沒有版權問題。</p>
+<h4 id="分析文字"><a href="#分析文字" class="headerlink" title="分析文字"></a>分析文字</h4><p>很多文學作品都是用簡單的純文字檔格式儲存，因為這些作品已經沒有版權問題，不受版權限制。<br>這裡使用的文字是取自於 Gutenberg （古騰堡計劃，<a target="_blank" rel="external nofollow noopener noreferrer" href="http://gutenberg.org/%EF%BC%89%EF%BC%8C">http://gutenberg.org/），</a><br>這個計劃專案的網站中提供了一系列可自由使用、沒有版權問題。</p>
 <p>讓我們來試著計算「Dracula」這部作品文字檔中的單字數量有幾個。<br>這裡會使用 <code>split()</code> 方法，此方法會從字串來建立一個單字串列。<br><code>split()</code> 方法會以空格為分隔符號來把字串分拆成獨立項目，並把這些項目存到一個串列中。<br>這個結果是一個含有該字串所有單字的串列，這種分拆法會讓有些單字含有逗號。<br>現在要計算「Dracula」這部作品到底含有多少單字，因此對整篇小說呼叫 <code>split()</code> 方法，<br>然後再計算取得的串列含有多少個項目元素，就能算出這部作品有多少單字了：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">filename = <span class="string">&#x27;Dracula.txt&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(filename) <span class="keyword">as</span> f_obj:</span><br><span class="line">        contents = f_obj.read()</span><br><span class="line"><span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">    msg = <span class="string">&quot;Sorry, the file &quot;</span> + filename + <span class="string">&quot; does not exist.&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(msg)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># Count the approximate number of words in the file.</span></span><br><span class="line">    words = contents.split()</span><br><span class="line">    num_words = <span class="built_in">len</span>(words)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;The file &quot;</span> + filename + <span class="string">&quot; has about &quot;</span> + <span class="built_in">str</span>(num_words) + <span class="string">&quot; words.&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>在 else 程式區塊，先對 contents 變數（目前存放很長的字串，是 Dracula 這部作品全部內容）呼叫 split() 方法，<br>生成一個串列，內含這部作品中所有的單字。當使用 len() 來求出串列長度時，就知道字串中含有多少個單字了：</p>
@@ -456,7 +455,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

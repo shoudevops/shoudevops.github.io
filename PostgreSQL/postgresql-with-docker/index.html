@@ -137,8 +137,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -220,16 +219,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           PostgreSQL for Docker
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -264,13 +263,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       
         <p>使用Docker 建立PostgreSQL 環境<br>Installation PostgreSQL with Docker</p>
-<h3 id="安裝Docker"><a href="#安裝Docker" class="headerlink" title="安裝Docker"></a>安裝Docker</h3><p>如果還沒有Docker 環境，可以到<a target="_blank" rel="noopener" href="https://www.docker.com/get-started">Get Started with Docker</a>取得</p>
+<h3 id="安裝Docker"><a href="#安裝Docker" class="headerlink" title="安裝Docker"></a>安裝Docker</h3><p>如果還沒有Docker 環境，可以到<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.docker.com/get-started">Get Started with Docker</a>取得</p>
 <h3 id="Docker-Volume"><a href="#Docker-Volume" class="headerlink" title="Docker Volume"></a>Docker Volume</h3><p>使用Docker Volume 為資料庫建立持久化<br>建立一個名稱為<code>postgresql-data</code>的docker volume：</p>
 <span id="more"></span>
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker volume create --name postgresql-data</span><br></pre></td></tr></table></figure>
 
-<h3 id="PostgreSQL-Container"><a href="#PostgreSQL-Container" class="headerlink" title="PostgreSQL Container"></a>PostgreSQL Container</h3><p>到Docker Hub找到由官方釋出的<a target="_blank" rel="noopener" href="https://hub.docker.com/_/postgres/">PostgreSQL Image</a><br>本教程使用PostgreSQL 10.13做範例，建立 PostgreSQL Container，執行以下指令：</p>
+<h3 id="PostgreSQL-Container"><a href="#PostgreSQL-Container" class="headerlink" title="PostgreSQL Container"></a>PostgreSQL Container</h3><p>到Docker Hub找到由官方釋出的<a target="_blank" rel="external nofollow noopener noreferrer" href="https://hub.docker.com/_/postgres/">PostgreSQL Image</a><br>本教程使用PostgreSQL 10.13做範例，建立 PostgreSQL Container，執行以下指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name postgres --restart always -p 5432:5432 -v postgresql-data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pgpassword postgres:10.13</span><br></pre></td></tr></table></figure>
 <ul>
 <li>-d：在背景執行容器</li>
@@ -286,37 +285,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <h5 id="移動到掛載目錄"><a href="#移動到掛載目錄" class="headerlink" title="移動到掛載目錄"></a>移動到掛載目錄</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /Users/chenhsiang/Documents/Temp/Docker/PostgreSQL</span><br><span class="line"></span><br><span class="line">docker run -d --name postgres --restart always -p 5432:5432 -v $PWD/postgresql-data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=pgpassword postgres:10.13</span><br></pre></td></tr></table></figure>
 
-<h3 id="PostgreSQL-管理工具-pgAdmin-4"><a href="#PostgreSQL-管理工具-pgAdmin-4" class="headerlink" title="PostgreSQL 管理工具 - pgAdmin 4"></a>PostgreSQL 管理工具 - pgAdmin 4</h3><p>從<a target="_blank" rel="noopener" href="https://www.pgadmin.org/download/">官方Download 頁面</a>可以看到目前有釋出的版本。</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_download_page.jpg" class="" title="Download Page">
+<h3 id="PostgreSQL-管理工具-pgAdmin-4"><a href="#PostgreSQL-管理工具-pgAdmin-4" class="headerlink" title="PostgreSQL 管理工具 - pgAdmin 4"></a>PostgreSQL 管理工具 - pgAdmin 4</h3><p>從<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.pgadmin.org/download/">官方Download 頁面</a>可以看到目前有釋出的版本。</p>
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_download_page.jpg" class title="Download Page">
 
-<p>開啟Docker Hub pgAdmin4的<a target="_blank" rel="noopener" href="https://hub.docker.com/r/dpage/pgadmin4/">連結</a><br>依文件說明加入對應的參數執行，指令如下：</p>
+<p>開啟Docker Hub pgAdmin4的<a target="_blank" rel="external nofollow noopener noreferrer" href="https://hub.docker.com/r/dpage/pgadmin4/">連結</a><br>依文件說明加入對應的參數執行，指令如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name pgadmin4 --restart always -e &quot;PGADMIN_DEFAULT_EMAIL=example@mail.com&quot; -e &quot;PGADMIN_DEFAULT_PASSWORD=give_a_password&quot; -p 8080:80 dpage/pgadmin4:4.24</span><br></pre></td></tr></table></figure>
 <ul>
 <li>-e：註冊一組pgAdmin4 的帳號密碼，注意是pgAdmin4，不是PostgreSQL 資料庫的帳號</li>
 <li>-p：容器的80 Port 映射到Docker 本機的8080 Port（本機port 可以自訂開啟Browser所使用的port number）</li>
 </ul>
-<p>完成後開啟<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080/</a>，就會看到pgAdmin4的登入頁面</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_login_page.jpg" class="" title="Login Page">
+<p>完成後開啟<a target="_blank" rel="external nofollow noopener noreferrer" href="http://localhost:8080/">http://localhost:8080/</a>，就會看到pgAdmin4的登入頁面</p>
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_login_page.jpg" class title="Login Page">
 <p>使用Docker 指令註冊的pgAdmin4帳號密碼進行登入</p>
-<h3 id="與PostgreSQL-資料庫建立連線"><a href="#與PostgreSQL-資料庫建立連線" class="headerlink" title="與PostgreSQL 資料庫建立連線"></a>與PostgreSQL 資料庫建立連線</h3><h4 id="點擊Add-New-Server-新增資料庫"><a href="#點擊Add-New-Server-新增資料庫" class="headerlink" title="點擊Add New Server 新增資料庫"></a>點擊Add New Server 新增資料庫</h4><img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server.jpg" class="" title="Add New Server">
+<h3 id="與PostgreSQL-資料庫建立連線"><a href="#與PostgreSQL-資料庫建立連線" class="headerlink" title="與PostgreSQL 資料庫建立連線"></a>與PostgreSQL 資料庫建立連線</h3><h4 id="點擊Add-New-Server-新增資料庫"><a href="#點擊Add-New-Server-新增資料庫" class="headerlink" title="點擊Add New Server 新增資料庫"></a>點擊Add New Server 新增資料庫</h4><img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server.jpg" class title="Add New Server">
 
-<h4 id="Create-Server-畫面，General-→-Name-可以自行命名"><a href="#Create-Server-畫面，General-→-Name-可以自行命名" class="headerlink" title="Create - Server 畫面，General → Name 可以自行命名"></a>Create - Server 畫面，General → Name 可以自行命名</h4><img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_name.jpg" class="" title="Server Name">
+<h4 id="Create-Server-畫面，General-→-Name-可以自行命名"><a href="#Create-Server-畫面，General-→-Name-可以自行命名" class="headerlink" title="Create - Server 畫面，General → Name 可以自行命名"></a>Create - Server 畫面，General → Name 可以自行命名</h4><img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_name.jpg" class title="Server Name">
 
 <h4 id="Create-Server-畫面，Connection-→-Hostname-x2F-address"><a href="#Create-Server-畫面，Connection-→-Hostname-x2F-address" class="headerlink" title="Create - Server 畫面，Connection → Hostname&#x2F;address"></a>Create - Server 畫面，Connection → Hostname&#x2F;address</h4><p>這裡有兩個選擇：輸入本機的Internal IP 或Docker network 的IP</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname.jpg" class="" title="Server Hostname">
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname.jpg" class title="Server Hostname">
 <p>本機的Internal IP查詢方式：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Windows: </span><br><span class="line">ipconfig</span><br><span class="line"></span><br><span class="line">MacOS/ Linux: </span><br><span class="line">ifconfig</span><br></pre></td></tr></table></figure>
 <p>ipconfig：</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_ipconfig.jpg" class="" title="Server Hostname ipconfig">
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_ipconfig.jpg" class title="Server Hostname ipconfig">
 <p>ifconfig：</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_ifconfig.jpg" class="" title="Server Hostname ifconfig">
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_ifconfig.jpg" class title="Server Hostname ifconfig">
 
 <p>容器的IPAddress查詢方式：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect postgres | grep &quot;IPAddress&quot;</span><br></pre></td></tr></table></figure>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_container_ip.jpg" class="" title="Server Hostname Container IP">
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_hostname_container_ip.jpg" class title="Server Hostname Container IP">
 
 <h4 id="填上Hostname-Username-Password"><a href="#填上Hostname-Username-Password" class="headerlink" title="填上Hostname, Username, Password"></a>填上Hostname, Username, Password</h4><p>Hostname填入上一步查詢的結果（擇一）<br>Username預設是postgres<br>Password是建立PostgreSQL 容器時帶的環境變𣤋<code>POSTGRES_PASSWORD</code>的值<br>填入後點擊<code>Save</code>即完成與資料庫建立連線</p>
-<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_complete.jpg" class="" title="Complete and Save">
+<img src="/PostgreSQL/postgresql-with-docker/pgadmin4_add_new_server_complete.jpg" class title="Complete and Save">
     </div>
 
     
@@ -448,7 +447,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

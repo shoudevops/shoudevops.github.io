@@ -156,8 +156,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -239,16 +238,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           Linux 安裝
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -283,8 +282,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       
         <p>介紹安裝步驟時會以 <strong>Ubuntu 16.04 LTS 伺服器版本</strong> 進行，並以VMWare虛擬機示範安裝，有興趣也可以使用最新版本進行安裝練習，觀念上都是相同的。</p>
-<p>Ubuntu 下載位置：<a target="_blank" rel="noopener" href="https://www.ubuntu-tw.org/modules/tinyd0/">https://www.ubuntu-tw.org/modules/tinyd0/</a></p>
-<img src="/Linux/linux-installation/linux-download.jpg" class="" title="Download Linux">
+<p>Ubuntu 下載位置：<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.ubuntu-tw.org/modules/tinyd0/">https://www.ubuntu-tw.org/modules/tinyd0/</a></p>
+<img src="/Linux/linux-installation/linux-download.jpg" class title="Download Linux">
 
 <span id="more"></span>
 
@@ -299,81 +298,81 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </blockquote>
 <p>Ubuntu 16.04及之前版本預設桌面是Unity，18.04開始是Gnome3，但可以手動安裝Unity並切換。</p>
 <h3 id="Ubuntu-安裝"><a href="#Ubuntu-安裝" class="headerlink" title="Ubuntu 安裝"></a>Ubuntu 安裝</h3><p>先在VMWare建立一台虛擬機（BIOS使用UEFI模式，避免在用中文語系安裝時出現錯誤），硬體規格選擇最小的即可，再把下載的Ubuntu映像檔放入虛擬光碟機中，開啟虛擬機時就會出現安裝畫面。</p>
-<h4 id="選擇第一個-Install-Ubuntu-Server-進行Ubuntu的安裝程序"><a href="#選擇第一個-Install-Ubuntu-Server-進行Ubuntu的安裝程序" class="headerlink" title="選擇第一個 Install Ubuntu Server 進行Ubuntu的安裝程序"></a>選擇第一個 <strong>Install Ubuntu Server</strong> 進行Ubuntu的安裝程序</h4><img src="/Linux/linux-installation/grub-screen.jpg" class="" title="GNU GRUB">
+<h4 id="選擇第一個-Install-Ubuntu-Server-進行Ubuntu的安裝程序"><a href="#選擇第一個-Install-Ubuntu-Server-進行Ubuntu的安裝程序" class="headerlink" title="選擇第一個 Install Ubuntu Server 進行Ubuntu的安裝程序"></a>選擇第一個 <strong>Install Ubuntu Server</strong> 進行Ubuntu的安裝程序</h4><img src="/Linux/linux-installation/grub-screen.jpg" class title="GNU GRUB">
 <ul>
 <li>OEM install (for manufacturers)：提供給電腦製造商（Asus, Acer, MSI…等）使用</li>
 <li>Install MAAS xxx：安裝雲端套件（如：Google Cloud SDK）</li>
 <li>Check disc for defects：檢查目前使用的安裝程式是否正常</li>
 <li>Rescue a broken system：修復毀損的作業系統</li>
-<li>Boot and Install with the HWE kernel：使用 HWE kernel進行安裝<br/>（HWE Kernel：HWE Kernel版本僅在發佈後六個月提供安全性更新，下一個HWE Kernel會被自動升級。最新的HEW Kernel版本是下一個LTS的主要版本的Kernel版本。）</li>
+<li>Boot and Install with the HWE kernel：使用 HWE kernel進行安裝<br>（HWE Kernel：HWE Kernel版本僅在發佈後六個月提供安全性更新，下一個HWE Kernel會被自動升級。最新的HEW Kernel版本是下一個LTS的主要版本的Kernel版本。）</li>
 </ul>
-<h4 id="選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系"><a href="#選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系" class="headerlink" title="選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系"></a>選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系</h4><img src="/Linux/linux-installation/select-a-language.jpg" class="" title="選擇安裝與系統預設語系_Select a language">
+<h4 id="選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系"><a href="#選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系" class="headerlink" title="選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系"></a>選擇安裝流程的顯示語系，也會是安裝完成後預設的系統語系</h4><img src="/Linux/linux-installation/select-a-language.jpg" class title="選擇安裝與系統預設語系_Select a language">
 <blockquote>
 <p><em>選擇中文或英文都可以，選擇中文到安裝完成後，還需要自行安裝中文語言套件包，否則終端機中文會顯示不出來。</em></p>
 </blockquote>
-<h4 id="選擇你的所在地點（other-→-Asia-→-Taiwan）"><a href="#選擇你的所在地點（other-→-Asia-→-Taiwan）" class="headerlink" title="選擇你的所在地點（other → Asia → Taiwan）"></a>選擇你的所在地點（other → Asia → Taiwan）</h4><img src="/Linux/linux-installation/select-your-location.jpg" class="" title="選擇所在地點_Select your location">
+<h4 id="選擇你的所在地點（other-→-Asia-→-Taiwan）"><a href="#選擇你的所在地點（other-→-Asia-→-Taiwan）" class="headerlink" title="選擇你的所在地點（other → Asia → Taiwan）"></a>選擇你的所在地點（other → Asia → Taiwan）</h4><img src="/Linux/linux-installation/select-your-location.jpg" class title="選擇所在地點_Select your location">
 
 <h4 id="設定語言環境（因步驟2-選擇英文，在步驟3-選地點時，Ubuntu-沒有合適的語言環境選項，就需要自行設定）"><a href="#設定語言環境（因步驟2-選擇英文，在步驟3-選地點時，Ubuntu-沒有合適的語言環境選項，就需要自行設定）" class="headerlink" title="設定語言環境（因步驟2. 選擇英文，在步驟3. 選地點時，Ubuntu 沒有合適的語言環境選項，就需要自行設定）"></a>設定語言環境（因步驟2. 選擇英文，在步驟3. 選地點時，Ubuntu 沒有合適的語言環境選項，就需要自行設定）</h4>
 <blockquote>
 <p><em>這裡選擇<code>United States</code>就可以。</em></p>
 </blockquote>
-<h4 id="設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）"><a href="#設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）" class="headerlink" title="設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）"></a>設定鍵盤（選<code>Yes</code>系統會詢問幾個文字是否有出現在鍵盤上，選<code>No</code>會手動選擇鍵盤）</h4><img src="/Linux/linux-installation/configure-the-keyboard.jpg" class="" title="是否指定鍵盤佈置_Detect keyboard layout?">
+<h4 id="設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）"><a href="#設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）" class="headerlink" title="設定鍵盤（選Yes系統會詢問幾個文字是否有出現在鍵盤上，選No會手動選擇鍵盤）"></a>設定鍵盤（選<code>Yes</code>系統會詢問幾個文字是否有出現在鍵盤上，選<code>No</code>會手動選擇鍵盤）</h4><img src="/Linux/linux-installation/configure-the-keyboard.jpg" class title="是否指定鍵盤佈置_Detect keyboard layout?">
 <blockquote>
 <p>下圖是選擇<code>NO</code>之後出現的手動選擇鍵盤畫面</p>
 </blockquote>
-<img src="/Linux/linux-installation/configure-the-keyboard-2.jpg" class="" title="Country of origin for the keyboard">
-<img src="/Linux/linux-installation/configure-the-keyboard-3.jpg" class="" title="Keyboard layout">
+<img src="/Linux/linux-installation/configure-the-keyboard-2.jpg" class title="Country of origin for the keyboard">
+<img src="/Linux/linux-installation/configure-the-keyboard-3.jpg" class title="Keyboard layout">
 
-<h4 id="設定網路（主機名稱）"><a href="#設定網路（主機名稱）" class="headerlink" title="設定網路（主機名稱）"></a>設定網路（主機名稱）</h4><img src="/Linux/linux-installation/configure-the-network.jpg" class="" title="Enter the hostname s">
+<h4 id="設定網路（主機名稱）"><a href="#設定網路（主機名稱）" class="headerlink" title="設定網路（主機名稱）"></a>設定網路（主機名稱）</h4><img src="/Linux/linux-installation/configure-the-network.jpg" class title="Enter the hostname s">
 
-<h4 id="設定使用者全名（這裡不是登入的username）"><a href="#設定使用者全名（這裡不是登入的username）" class="headerlink" title="設定使用者全名（這裡不是登入的username）"></a>設定使用者全名（這裡不是登入的username）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords.jpg" class="" title="設定使用者全名_Full name for the new user">
+<h4 id="設定使用者全名（這裡不是登入的username）"><a href="#設定使用者全名（這裡不是登入的username）" class="headerlink" title="設定使用者全名（這裡不是登入的username）"></a>設定使用者全名（這裡不是登入的username）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords.jpg" class title="設定使用者全名_Full name for the new user">
 
-<h4 id="設定使用者帳戶名稱（這裡才是登入的username）"><a href="#設定使用者帳戶名稱（這裡才是登入的username）" class="headerlink" title="設定使用者帳戶名稱（這裡才是登入的username）"></a>設定使用者帳戶名稱（這裡才是登入的username）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-2.jpg" class="" title="設定使用者帳戶名稱 Username for your account">
+<h4 id="設定使用者帳戶名稱（這裡才是登入的username）"><a href="#設定使用者帳戶名稱（這裡才是登入的username）" class="headerlink" title="設定使用者帳戶名稱（這裡才是登入的username）"></a>設定使用者帳戶名稱（這裡才是登入的username）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-2.jpg" class title="設定使用者帳戶名稱 Username for your account">
 
-<h4 id="設定使用者登入密碼"><a href="#設定使用者登入密碼" class="headerlink" title="設定使用者登入密碼"></a>設定使用者登入密碼</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-3.jpg" class="" title="設定使用者登入密碼 Choose a password for the new user">
+<h4 id="設定使用者登入密碼"><a href="#設定使用者登入密碼" class="headerlink" title="設定使用者登入密碼"></a>設定使用者登入密碼</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-3.jpg" class title="設定使用者登入密碼 Choose a password for the new user">
 <p>再次輸入密碼驗證</p>
-<img src="/Linux/linux-installation/set-up-users-and-passwords-4.jpg" class="" title="再次輸入密碼 Re-enter password to verify">
+<img src="/Linux/linux-installation/set-up-users-and-passwords-4.jpg" class title="再次輸入密碼 Re-enter password to verify">
 
-<h4 id="設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）"><a href="#設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）" class="headerlink" title="設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）"></a>設定是否加密<code>家目錄</code>（一般使用的情況下不需要加密，若系統毀損資料還救得回來）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-5.jpg" class="" title="加密家目錄 Encrypt your home directory">
+<h4 id="設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）"><a href="#設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）" class="headerlink" title="設定是否加密家目錄（一般使用的情況下不需要加密，若系統毀損資料還救得回來）"></a>設定是否加密<code>家目錄</code>（一般使用的情況下不需要加密，若系統毀損資料還救得回來）</h4><img src="/Linux/linux-installation/set-up-users-and-passwords-5.jpg" class title="加密家目錄 Encrypt your home directory">
 <blockquote>
 <p>在銀行或是金融業等使用的伺服器安全性需求較高的時候，就需要加密家目錄。</p>
 </blockquote>
-<h4 id="設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）"><a href="#設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）" class="headerlink" title="設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）"></a>設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）</h4><img src="/Linux/linux-installation/configure-the-clock.jpg" class="" title="設定時區 Configure the clock">
+<h4 id="設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）"><a href="#設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）" class="headerlink" title="設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）"></a>設定時區（有連上網路的情況下，一般都會自動校正所在地的時區）</h4><img src="/Linux/linux-installation/configure-the-clock.jpg" class title="設定時區 Configure the clock">
 
 <h4 id="分割磁區"><a href="#分割磁區" class="headerlink" title="分割磁區"></a><strong>分割磁區</strong></h4><ul>
 <li><code>Guided</code> 開頭的會整個根目錄分割一個磁碟，不會依照資料夾來分割（不想管那麼多可以直接選這個）</li>
 <li><code>LVM</code> 是動態分配磁碟的功能，若目前分割的空間不足，可以再動態增加，不用重新分割</li>
-<li><code>Manual</code> 是手動分配各資料夾要掛載到哪個磁碟、多少容量<img src="/Linux/linux-installation/partition-disks.jpg" class="" title="分割磁碟_Partition disks">
-<strong>這裡會示範手動分配磁碟</strong>（自動分配應該沒什麼好示範吧…）<br>選擇掛載到虛擬機的磁碟<img src="/Linux/linux-installation/partition-disks-2.jpg" class="" title="手動分配磁碟">
-會出現詢問<code>是否要建立一個空的分割表在這個磁碟上</code>，選擇<code>Yes</code><img src="/Linux/linux-installation/partition-disks-3.jpg" class="" title="建立空的分割表_new empty partition table">
-選擇<code>FREE SPACE</code>的選項（容量看虛擬機掛載的硬碟空間大小而有不同的顯示）<img src="/Linux/linux-installation/partition-disks-4.jpg" class="" title="選擇磁碟_Select a disk">
-選擇<code>建立新的Partition</code><img src="/Linux/linux-installation/partition-disks-5.jpg" class="" title="建立新的分割磁碟_Create a new partition">
-輸入要分配的磁區空間（這裡要分配給&#x2F;boot 資料夾，只有開機的時候會用到，給300MB即可）<img src="/Linux/linux-installation/partition-disks-6.jpg" class="" title="分配空間_New partition size">
-詢問要分割的磁碟要在可用空間的開頭還是結尾，選擇<code>Beginning</code>就好<img src="/Linux/linux-installation/partition-disks-7.jpg" class="" title="磁碟起始位置_Location for the new partition">
-編輯磁碟相關的資訊（基本上就是改<code>Mount point</code>到指定的路徑就好），編輯完成後選<code>Done setting up the partition</code><img src="/Linux/linux-installation/partition-disks-8.jpg" class="" title="設定磁碟_Partition settings">
+<li><code>Manual</code> 是手動分配各資料夾要掛載到哪個磁碟、多少容量<img src="/Linux/linux-installation/partition-disks.jpg" class title="分割磁碟_Partition disks">
+<strong>這裡會示範手動分配磁碟</strong>（自動分配應該沒什麼好示範吧…）<br>選擇掛載到虛擬機的磁碟<img src="/Linux/linux-installation/partition-disks-2.jpg" class title="手動分配磁碟">
+會出現詢問<code>是否要建立一個空的分割表在這個磁碟上</code>，選擇<code>Yes</code><img src="/Linux/linux-installation/partition-disks-3.jpg" class title="建立空的分割表_new empty partition table">
+選擇<code>FREE SPACE</code>的選項（容量看虛擬機掛載的硬碟空間大小而有不同的顯示）<img src="/Linux/linux-installation/partition-disks-4.jpg" class title="選擇磁碟_Select a disk">
+選擇<code>建立新的Partition</code><img src="/Linux/linux-installation/partition-disks-5.jpg" class title="建立新的分割磁碟_Create a new partition">
+輸入要分配的磁區空間（這裡要分配給&#x2F;boot 資料夾，只有開機的時候會用到，給300MB即可）<img src="/Linux/linux-installation/partition-disks-6.jpg" class title="分配空間_New partition size">
+詢問要分割的磁碟要在可用空間的開頭還是結尾，選擇<code>Beginning</code>就好<img src="/Linux/linux-installation/partition-disks-7.jpg" class title="磁碟起始位置_Location for the new partition">
+編輯磁碟相關的資訊（基本上就是改<code>Mount point</code>到指定的路徑就好），編輯完成後選<code>Done setting up the partition</code><img src="/Linux/linux-installation/partition-disks-8.jpg" class title="設定磁碟_Partition settings">
 比較懶的做法就把<code>boot</code>跟<code>usr</code>另外分割出來，其它都分給<code>root</code>，再按<code>Finish partitioning ...</code>的選項就完成</li>
 <li>如果BIOS是UEFI格式，要再多分一個ESP(EFI System Partition)格式的空間</li>
-<li>SWAP 置換空間不一定要分割，用途只有在記憶體不足的時候才會利用硬碟空間當作記憶體使用<img src="/Linux/linux-installation/partition-disks-9.jpg" class="" title="分割表_Partition table">
+<li>SWAP 置換空間不一定要分割，用途只有在記憶體不足的時候才會利用硬碟空間當作記憶體使用<img src="/Linux/linux-installation/partition-disks-9.jpg" class title="分割表_Partition table">
 <blockquote>
 <p>可以再分割其它的資料夾磁碟，但測試用的就20GB，其它如：<code>/home</code>, <code>/bin</code>, <code>/etc</code>等其它目錄要如何分割，就看機器的用途來做配置</p>
 </blockquote>
 </li>
 </ul>
 <p>確認是否要依照分割表的內容寫入到磁碟，選擇<code>Yes</code>就會開始執行磁碟分割並安裝系統</p>
-<img src="/Linux/linux-installation/partition-disks-10.jpg" class="" title="確認分割表並寫入磁碟_Write the changes to disks?">
+<img src="/Linux/linux-installation/partition-disks-10.jpg" class title="確認分割表並寫入磁碟_Write the changes to disks?">
 
 <h4 id="設定HTTP-Proxy"><a href="#設定HTTP-Proxy" class="headerlink" title="設定HTTP Proxy"></a>設定HTTP Proxy</h4><p>過程中會詢問是否需要透過<code>HTTP Proxy</code>連到網路，不需要的話留空就好</p>
-<img src="/Linux/linux-installation/configure-the-package-manager.jpg" class="" title="HTTP Proxy">
+<img src="/Linux/linux-installation/configure-the-package-manager.jpg" class title="HTTP Proxy">
 
 <h4 id="設定系統更新"><a href="#設定系統更新" class="headerlink" title="設定系統更新"></a>設定系統更新</h4><p>詢問如何管理系統更新，就看個人如何安排，示範就選擇<code>No automatic updates</code></p>
-<img src="/Linux/linux-installation/configuring-tasksel.jpg" class="" title="管理系統更新方式_Manage upgrades on this system">
+<img src="/Linux/linux-installation/configuring-tasksel.jpg" class title="管理系統更新方式_Manage upgrades on this system">
 
 <h4 id="可選擇的軟體套件"><a href="#可選擇的軟體套件" class="headerlink" title="可選擇的軟體套件"></a>可選擇的軟體套件</h4><p>可以選擇希望安裝的套件軟體，示範最小安裝，僅安裝<code>OpenSSH Server</code>可以使用SSH協定進行連線</p>
-<img src="/Linux/linux-installation/software-selection.jpg" class="" title="選擇安裝套件軟體_Choose software to install">
+<img src="/Linux/linux-installation/software-selection.jpg" class title="選擇安裝套件軟體_Choose software to install">
 
 <h4 id="安裝完成！"><a href="#安裝完成！" class="headerlink" title="安裝完成！"></a>安裝完成！</h4><p>將安裝檔從（虛擬）光碟機中移除再選擇<code>Contunue</code>重新開機，就會進到Ubuntu的登入畫面了～</p>
-<img src="/Linux/linux-installation/finish-the-installation.jpg" class="" title="完成安裝_Finish the installation">
-<img src="/Linux/linux-installation/login-screen.jpg" class="" title="登入畫面_Login">
+<img src="/Linux/linux-installation/finish-the-installation.jpg" class title="完成安裝_Finish the installation">
+<img src="/Linux/linux-installation/login-screen.jpg" class title="登入畫面_Login">
     </div>
 
     
@@ -504,7 +503,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

@@ -136,8 +136,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -219,16 +218,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           Linux 檔案權限介紹
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -268,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>顯示當前目錄路徑下有什麼檔案與屬性</p>
 <span id="more"></span>
 
-<img src="/Linux/linux-permission/list-file.jpg" class="" title="查看檔案">
+<img src="/Linux/linux-permission/list-file.jpg" class title="查看檔案">
 <blockquote>
 <p>ls是「list」的意思，「-al」選擇表示列出所的的檔案詳細權限與屬性<br>檔名開頭是「.」的表示隱藏檔案</p>
 </blockquote>
@@ -316,20 +315,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <li>GROUP：群組名稱，要變更<code>$filename</code>到<code>$GROUP</code>群組</li>
 </ul>
 <p>這裡先用<code>ls -al</code>指令查看目前檔案所屬群組</p>
-<img src="/Linux/linux-permission/check-file-permission.jpg" class="" title="查看所屬群組">
+<img src="/Linux/linux-permission/check-file-permission.jpg" class title="查看所屬群組">
 <p>可以看到擁用者與所屬群組都是<code>chenhsiang</code>，接著用<code>chgrp</code>指令變更所屬群組</p>
-<img src="/Linux/linux-permission/error-change-group.jpg" class="" title="變更錯誤">
+<img src="/Linux/linux-permission/error-change-group.jpg" class title="變更錯誤">
 <p>咦？這裡系統報錯了，原因是沒有<code>charles</code>這個群組<br>（前面有提到要在<code>/etc/group</code>這個檔案裡存在的群組才能變更）</p>
-<img src="/Linux/linux-permission/change-group.jpg" class="" title="變更群組並查看">
+<img src="/Linux/linux-permission/change-group.jpg" class title="變更群組並查看">
 <p>上圖我們就能看到已經改變檔案所屬的群組。</p>
 <h4 id="改變檔案擁有者：chown"><a href="#改變檔案擁有者：chown" class="headerlink" title="改變檔案擁有者：chown"></a>改變檔案擁有者：chown</h4><p>跟<code>chgrp</code>一樣，<code>chown</code>就是<code>change owner</code>的縮寫，使用者必須是已經存在系統中的帳號，<br>在<code>etc/passwd</code>這個檔案中有紀錄的使用者名稱才能改變。<br><code>chown</code>還可以直接修改群組的名稱，<strong>要將目錄下的所有目錄或檔案更改檔案擁有者，直接加上 -R 的選項即可</strong>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown [-R] [OWNER] FILE</span><br><span class="line">chown [-R] [OWNER]:[GROUP] FILE</span><br></pre></td></tr></table></figure>
 <p>試著變更檔案的擁有者給<code>bin</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown bin blog.txt</span><br></pre></td></tr></table></figure>
-<img src="/Linux/linux-permission/change-owner.jpg" class="" title="變更擁有者">
+<img src="/Linux/linux-permission/change-owner.jpg" class title="變更擁有者">
 <p>再將擁有者與群組都變更為<code>root</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown root:root blog.txt</span><br></pre></td></tr></table></figure>
-<img src="/Linux/linux-permission/change-owner-root.jpg" class="" title="變更擁有者與群組">
+<img src="/Linux/linux-permission/change-owner-root.jpg" class title="變更擁有者與群組">
 <p>這樣就會同時修改檔案擁有者與所屬群組囉</p>
 <h4 id="改變權限：chmod"><a href="#改變權限：chmod" class="headerlink" title="改變權限：chmod"></a>改變權限：chmod</h4><p>權限設定的方法可以使用數字或是符號來進行變更</p>
 <h5 id="數字類型改變檔案權限"><a href="#數字類型改變檔案權限" class="headerlink" title="數字類型改變檔案權限"></a>數字類型改變檔案權限</h5><p>檔案的基本權限有九個，分別是<code>owner/group/others</code>三種身份各有自己的<code>read/write/execute</code>權限，<br>各權限的分數對照如下：</p>
@@ -348,7 +347,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod [-R] MODE FILE</span><br></pre></td></tr></table></figure>
 <p>如果要將<code>blog.txt</code>這個檔案所有權限都設定啟用，那指令就是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 blog.txt</span><br></pre></td></tr></table></figure>
-<img src="/Linux/linux-permission/change-mode.jpg" class="" title="變更檔案權限">
+<img src="/Linux/linux-permission/change-mode.jpg" class title="變更檔案權限">
 <p>通當新增一個文字檔批次檔後，它的權限是 [-rw-rw-r–]也就是664，<br>如果要將該檔案變成可執行檔，並且不要讓其它人修改檔案的話，就需要[-rwxr-xr-x]，<br>這時候就要使用指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 755 test.sh</span><br></pre></td></tr></table></figure>
 
@@ -358,9 +357,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <thead>
 <tr>
 <th>chmod</th>
-<th align="center">u<br />g<br />o<br />a</th>
-<th>+(加入)<br />-(除去)<br />&#x3D;(設定)</th>
-<th>r<br />w<br />x</th>
+<th align="center">u<br>g<br>o<br>a</th>
+<th>+(加入)<br>-(除去)<br>&#x3D;(設定)</th>
+<th>r<br>w<br>x</th>
 <th>檔案或目錄</th>
 </tr>
 </thead>
@@ -372,11 +371,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </ul>
 <p>所以就是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u=rwx,go=rx blog.txt</span><br></pre></td></tr></table></figure>
-<img src="/Linux/linux-permission/change-mode-symbo.jpg" class="" title="用符號變更檔案權限">
+<img src="/Linux/linux-permission/change-mode-symbo.jpg" class title="用符號變更檔案權限">
 
 <p>如果不知道原先檔案屬性，而只想要增加 blog.txt 這個檔案的每個人均可寫人的權限，<br>那就可以使用指令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+w blog.txt</span><br></pre></td></tr></table></figure>
-<img src="/Linux/linux-permission/change-mode-symbo-2.jpg" class="" title="用符號變更檔案權限">
+<img src="/Linux/linux-permission/change-mode-symbo-2.jpg" class title="用符號變更檔案權限">
 
 <p><code>+</code>與<code>-</code>的狀態下，只要是沒有指定到的項目，該權限**<code>不會被變動</code>**<br>假如想讓一個程式擁有可執行的權限，但又不知道該檔案原本的權限為何，此時利用：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x filename</span><br></pre></td></tr></table></figure>
@@ -512,7 +511,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         

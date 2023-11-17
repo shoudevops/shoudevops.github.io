@@ -135,8 +135,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <body itemscope itemtype="http://schema.org/WebPage">
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-558BV442" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
   <div class="container use-motion">
     <div class="headband"></div>
@@ -218,16 +217,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Chen Hsiang">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Shou's 技術部落">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+        <h2 class="post-title" itemprop="name headline">
           Docker on WSL
-        </h1>
+        </h2>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -270,17 +269,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <span id="more"></span>
 
 <h3 id="開啟Windows-Hyper-V"><a href="#開啟Windows-Hyper-V" class="headerlink" title="開啟Windows Hyper-V"></a>開啟Windows Hyper-V</h3><p>開啟Hyper-V 的方式有分為指令與UI 操作，這裡僅介紹UI 操作<br>在【控制台】可以找到【程式和功能】</p>
-<img src="/Windows/wsl-with-docker/controlpanel_programs.jpg" class="" title="程式與功能">
+<img src="/Windows/wsl-with-docker/controlpanel_programs.jpg" class title="程式與功能">
 
 <p>左邊選單可以找到【開啟或關閉Windows 功能】</p>
-<img src="/Windows/wsl-with-docker/programs_open_close_windows.jpg" class="" title="開啟或關閉Windows 功能">
+<img src="/Windows/wsl-with-docker/programs_open_close_windows.jpg" class title="開啟或關閉Windows 功能">
 
 <p>【Windows 功能】視窗內將【Hyper-V】勾選</p>
-<img src="/Windows/wsl-with-docker/windows_functions_hyper_v.jpg" class="" title="勾選Hyper-V">
+<img src="/Windows/wsl-with-docker/windows_functions_hyper_v.jpg" class title="勾選Hyper-V">
 
 <p>按下【確定】後，Windows 會自動下載必要檔案進行安裝，並要求重新啟動，重新啟動後就可以進行下個步驟</p>
-<h3 id="安裝與設定Docker-Desktpo-for-Windows"><a href="#安裝與設定Docker-Desktpo-for-Windows" class="headerlink" title="安裝與設定Docker Desktpo for Windows"></a>安裝與設定Docker Desktpo for Windows</h3><p>到Docker Hub的<a target="_blank" rel="noopener" href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">Docker Desktop for Windows</a><br>點擊【Get Stable】下載安裝檔</p>
-<img src="/Windows/wsl-with-docker/docker_get_stable.jpg" class="" title="Get Stable">
+<h3 id="安裝與設定Docker-Desktpo-for-Windows"><a href="#安裝與設定Docker-Desktpo-for-Windows" class="headerlink" title="安裝與設定Docker Desktpo for Windows"></a>安裝與設定Docker Desktpo for Windows</h3><p>到Docker Hub的<a target="_blank" rel="external nofollow noopener noreferrer" href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/">Docker Desktop for Windows</a><br>點擊【Get Stable】下載安裝檔</p>
+<img src="/Windows/wsl-with-docker/docker_get_stable.jpg" class title="Get Stable">
 
 <p>安裝步驟就一直點【Next】就好，就不再描述，之後就可以在WSL 安裝Docker</p>
 <h3 id="WSL-安裝Docker"><a href="#WSL-安裝Docker" class="headerlink" title="WSL 安裝Docker"></a>WSL 安裝Docker</h3><p>進到WSL 的Terminal ，並執行下列指令安裝Docker</p>
@@ -291,17 +290,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p>這是因為WSL 本身無法支援Docker Engine（WSL2有支援）。<br>若希望能在WSl 中運行Docker，就需要將Docker Client expose 到Windows 的Docker Engine（這就是需要安裝Docker Desktop for Windows）</p>
 <p>開啟<code>Docker Desktop for Windows</code> 的<code>Settings</code> 介面，並在<code>General</code> 中勾選</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Expose daemon on tcp://localhost:2375 without TLS</span><br></pre></td></tr></table></figure>
-<img src="/Windows/wsl-with-docker/docker_expose_daemon.jpg" class="" title="Expose daemon">
+<img src="/Windows/wsl-with-docker/docker_expose_daemon.jpg" class title="Expose daemon">
 
 <p>之後將以下指令加入到<code>~/.profile</code> 中：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export DOCKER_HOST=127.0.0.1:2375</span><br></pre></td></tr></table></figure>
-<img src="/Windows/wsl-with-docker/add_to_profile.jpg" class="" title="Add command to profile">
+<img src="/Windows/wsl-with-docker/add_to_profile.jpg" class title="Add command to profile">
 
 <p>並將該檔案更新</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.profile</span><br></pre></td></tr></table></figure>
 
 <p>就可以執行Docker 指令了！</p>
-<img src="/Windows/wsl-with-docker/docker_command.jpg" class="" title="Docker Version">
+<img src="/Windows/wsl-with-docker/docker_command.jpg" class title="Docker Version">
     </div>
 
     
@@ -433,7 +432,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v6.3.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="external nofollow noopener noreferrer" target="_blank">NexT.Pisces</a> v7.5.0
   </div>
 
         
